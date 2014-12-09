@@ -1,0 +1,189 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[a4paper]{geometry}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{hyperref}
+
+\graphicspath{{images/}}
+
+\hypersetup{hidelinks}
+
+\setlength\righthyphenmin{62}
+\setlength\lefthyphenmin{62}
+\widowpenalties 1 10000
+
+\begin{document}
+
+
+% Title page
+\title{
+	{Todo}\\
+	\large{Interim Report}\\
+	\large{Dublin Institute of Technology}\\
+	Student Number: C11426252\\
+	Supervisor: Brian Keegan
+}
+\author{Declan Curran}
+\maketitle
+\newpage
+
+% Table of Contents
+\setcounter{tocdepth}{3}
+\tableofcontents
+\newpage
+
+\section{Project Statement}
+\section{Research}
+\subsection{Background Research}
+
+Web-based applications are becoming increasingly popular as the web develops; they are often favoured over traditional desktop applications when it comes to things like writing documents (Google Drive, Office Live) or backing up files. Desktop applications will often require downloading large installation files, dependencies (Java, .NET), and can often be limited to a single platform. Web apps are now becoming the norm, as they are far more flexible, can be updated and distributed instantly, and with the rise of HTML5 and cloud storage; web apps are becoming extremely powerful and pleasing to use.
+
+% Ref: Web becoming popular: Johan Harjono, Gloria Ng, Ding Kong, and Jimmy Lo. 2010. Building smarter web applications with HTML5.
+
+
+While web apps are becoming extremely popular, there are still many types of applications that haven't been created for the web. Game engine suites such as Unity, CryEngine or Unreal Engine still require downloading a huge application to be able create games for the desktop. This can make getting into game development seem very complicated for new users. A web application could be created in this area to make it easier for new game developers, easing game development by creating, publishing and playing games all in the cloud.
+
+% Ref: Unity, CryEngine, Unreal
+
+
+Building a 3D game engine in the browser requires significant performance over normal JavaScript usage, which wouldn't be possible with HTML5 and WebGL. 
+
+% ``the new standard for 3D graphics on the Web'' (Parisi, 2012)
+% http://www.reedbushey.com/85Webgl%20Up%20and%20Running.pdf
+
+
+WebGL is an open-source API for rendering 3D graphics in the browser, which is based on OpenGL; a commonly used graphics processing API that is used in a lot of games today. JavaScript is used to tell WebGL what to do, but it can be rather complicated to program. ``To do anything more than the most basic tasks using [WebGL] out of the box requires serious effort and literally hundreds of lines of code.'' (Parisi, 2014)
+
+% Ref: OpenGL
+
+
+Because WebGL is so complicated to start out with, it often turns programmers with no OpenGL experience off of making games using it. The solution to WebGL's complexity is to use a library that wraps WebGL and simplifies the interface. The Three.js javascript library accomplishes this by providing easy to use classes such as models, lighting, scenes and cameras. ``A program written in raw WebGL style using hundreds of lines of code can be expressed in just a few dozen lines of code with Three.js'' (Parisi, 2014)
+
+% Ref: Three.js
+
+
+While Three.js greatly simplifies the process of rendering scenes in the browser, it's not good enough for the development of games, as it only provides a framework for rendering without any game processes. Game engines such as Unity are able to easily build scenes and entities by simply dragging and dropping of components onto entities to create scenes with minimal programming required. 
+
+% Ref: Unity
+
+
+The architecture of the game engine is extremely important for how accessible it is to developers. The Entity-Component-System is a pattern used to simplify how game objects are defined by separating behavior into smaller components. Each game object can be made up of many components, for example; a cube object could have a model component, giving it something to render, and a physics component which will allow it to collide with the world and other physics objects. This type of game engine architecture allows users who have minimal programming skill to modify the game logic easily.
+
+% Ref: ECS
+% http://t-machine.org/index.php/2007/09/03/entity-systems-are-the-future-of-mmog-development-part-1/
+
+% Talk about editor?
+
+
+By combining the aspects of an Entity Component System into a game engine built on the web with a fully featured editor and cloud storage, inexperienced or hobbyist game developers will be able to easily create games and publish them without needing to invest a lot of time in installing software, learning APIs and just get straight to making their game.
+
+\subsection{Alternative Existing Solutions}
+\subsubsection{Unity}
+Unity is a 3D game engine with an integrated editor and a huge online library full of assets such as models, sounds and various scripts or tools. Unity is a cross-platform engine that is used on Windows, Linux, Mac OSX, mobiles (Android, iOS, Windows, BlackBerry), consoles (PS3, Xbox360, Wii U) and even in browsers.
+
+% Integrated editor: http://unity3d.com/unity/workflow/integrated-editor
+% Multi-platform: http://unity3d.com/unity/multiplatform
+
+Unity's ability to publish games to the web via the Unity Web Player browser plugin make it a powerful solution to creating games for the web. The only downside to the web player is that the user must install the runtime plugin to be able to play.
+
+% Web Player: http://unity3d.com/unity/multiplatform/web
+
+The Unity game engine is based on the Entity-Component-System pattern, with the majority of components used being supplied by the engine (Such as lighting, physics, models). Unity games can be scripted in one of three languages; C\#, Boo or JavaScript.
+
+% Ref scripting: http://docs.unity3d.com/ScriptReference/
+
+The Unity scene editor allows complex entities to be created simply by adding a number of components to an empty entity in a drag-and-drop style. The properties for each component can then be edited in the `Inspector', such as changing the model or colour of an object. 
+
+% Add pic of inspector
+% Ref editor again?
+
+\subsubsection{PlayCanvas}
+PlayCanvas is a browser based game engine and editor with cloud storage. 
+
+% Ref: https://playcanvas.com
+
+\subsubsection{CopperLicht}
+``CopperLicht is an open source WebGL library and JavaScript 3D engine for creating games and 3D applications in the webbrowser. It uses the WebGL canvas supported by modern browsers and is able to render hardware accelerated 3d graphics without any plugins.''
+
+% Ref: http://www.ambiera.com/copperlicht/
+
+The CopperLicht game engine uses an OOP style approach to the architecture of a game, with entities being defined via scripting rather than by selecting a group of components as Unity does. The CopperLicht engine will handle rendering, physics and animations, any extra functionality must be added manually by the user with a script.
+
+
+The CopperLicht world editor, \emph{CopperCube} is an editor designed to create the worlds used in a CopperLicht game. CopperCube is only available for Windows and Mac.
+
+% Ref: http://www.ambiera.com/copperlicht/features.html
+
+When a user is finished creating their world, CopperCube creates a world file and generates a basic HTML page to render the scene. The game logic script is added to this HTML page manually by the user, where they can add user interactions via HTML events (keydown, mousedown).
+
+% Ref: http://www.ambiera.com/copperlicht/documentation/tutorials/tutorial-02.html
+
+
+\subsection{Technologies Researched}
+\subsubsection{Web Service Frameworks}
+Node
+
+Django
+
+Flask
+
+Go
+
+
+\subsubsection{Web Application Hosting}
+Server
+
+
+AWS Elastic Beanstalk
+
+
+AWS EC2
+
+
+\subsubsection{Project Storage}
+Git
+
+
+GitHub API
+
+
+AWS S3
+
+
+AWS EBS
+
+
+MongoDB GridFS
+
+
+\subsubsection{Alternative Scripting Languages}
+Dart
+
+
+TypeScript
+
+
+\subsubsection{JavaScript Libraries}
+Rendering
+
+
+Physics
+
+
+
+
+
+\subsection{Other Relevant Research}
+\subsection{Resultant Findings / Requirements}
+\subsection{Bibliography}
+\section{Analysis}
+\section{Approach and Methodology}
+\section{Design}
+\subsection{Technical Architecture}
+\section{Prototyping and Development}
+\section{Testing}
+\section{Issues and Risks}
+\section{Plan and Future Work}
+\section{Conclusions}
+\end{document}
