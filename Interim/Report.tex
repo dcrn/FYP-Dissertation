@@ -29,6 +29,7 @@
 	% Student Number: C11426252\\
 	% Supervisor: Brian Keegan
 	% TODO
+	% http://alvinalexander.com/blog/post/latex/reference-figure-or-table-within-latex-document
 }
 \author{Declan Curran}
 \maketitle
@@ -56,7 +57,7 @@ While web apps are becoming extremely popular, there are still many types of app
 
 Building a 3D game engine in the browser requires significant performance over normal JavaScript usage, which wouldn't be possible without HTML5 and WebGL. 
 
-% http://www.reedbushey.com/85Webgl%20Up%20and%20Running.pdf
+% Ref: http://www.reedbushey.com/85Webgl%20Up%20and%20Running.pdf
 
 
 WebGL is an open-source API for rendering 3D graphics in the browser, which is based on OpenGL; a commonly used graphics processing API that is used in a lot of games today. WebGL is quickly becoming ``the new standard for 3D graphics on the Web'' (Parisi, 2012) as it is the most powerful and flexible way to render graphics in-browser without extra dependencies or plugins. JavaScript is used to tell WebGL what to do, but it can be rather complicated to program; ``To do anything more than the most basic tasks using [WebGL] out of the box requires serious effort and literally hundreds of lines of code.'' (Parisi, 2014)
@@ -65,8 +66,10 @@ WebGL is an open-source API for rendering 3D graphics in the browser, which is b
 % Ref: OpenGL
 
 
-Because WebGL is so complicated to start out with, it often turns programmers with no OpenGL experience off of making games using it. The solution to WebGL's complexity is to use a library that wraps WebGL and simplifies the interface. The Three.js javascript library accomplishes this by providing easy to use classes such as models, lighting, scenes and cameras. ``A program written in raw WebGL style using hundreds of lines of code can be expressed in just a few dozen lines of code with Three.js'' (Parisi, 2014)
+Because WebGL is so complicated to start out with, it often turns programmers with no OpenGL experience off of making games using it. The solution to WebGL's complexity is to use a library that wraps WebGL and simplifies the interface. The Three.js JavaScript library accomplishes this by providing easy to use classes such as models, lighting, scenes and cameras. ``A program written in raw WebGL style using hundreds of lines of code can be expressed in just a few dozen lines of code with Three.js'' (Parisi, 2014)
 
+% Ref parisi book first sentence
+% Ref quote
 % Ref: Three.js
 
 
@@ -75,7 +78,7 @@ While Three.js greatly simplifies the process of rendering scenes in the browser
 % Ref: Unity
 
 
-The architecture of the game engine is extremely important for how accessible it is to developers. The Entity-Component-System is a pattern used to simplify how game objects are defined by separating behavior into smaller components. Each game object can be made up of many components, for example; a cube object could have a model component, giving it something to render, and a physics component which will allow it to collide with the world and other physics objects. This type of game engine architecture allows users who have minimal programming skill to modify the game logic easily.
+The architecture of the game engine is extremely important for how accessible it is to developers. The Entity-Component-System is a pattern used to simplify how game objects are defined by separating behaviour into smaller components. Each game object can be made up of many components, for example; a cube object could have a model component, giving it something to render, and a physics component which will allow it to collide with the world and other physics objects. This type of game engine architecture allows users who have minimal programming skill to modify the game logic easily.
 
 % Ref: ECS
 % http://t-machine.org/index.php/2007/09/03/entity-systems-are-the-future-of-mmog-development-part-1/
@@ -100,7 +103,7 @@ The Unity game engine is based on the Entity-Component-System pattern, with the 
 
 % Ref scripting: http://docs.unity3d.com/ScriptReference/
 
-The Unity scene editor allows complex entities to be created simply by adding a number of components to an empty entity in a drag-and-drop style. The properties for each component can then be edited in the `Inspector', such as changing the model or colour of an object. 
+The Unity scene editor allows complex entities to be created simply by adding a number of components to an empty entity in a drag-and-drop style. The properties for each component can then be edited in the \emph{properties inspector}, such as changing the model or colour of an object. 
 
 % Add pic of inspector
 % Ref editor again?
@@ -113,10 +116,11 @@ PlayCanvas is a browser based game engine and editor with cloud storage.
 \subsubsection{CopperLicht}
 ``CopperLicht is an open source WebGL library and JavaScript 3D engine for creating games and 3D applications in the webbrowser. It uses the WebGL canvas supported by modern browsers and is able to render hardware accelerated 3d graphics without any plugins.''
 
-% Ref: http://www.ambiera.com/copperlicht/
+% Quote Ref: http://www.ambiera.com/copperlicht/
 
 The CopperLicht game engine uses an OOP style approach to the architecture of a game, with entities being defined via scripting rather than by selecting a group of components as Unity does. The CopperLicht engine will handle rendering, physics and animations, any extra functionality must be added manually by the user with a script.
 
+% Ref: CopperLicht
 
 The CopperLicht world editor, \emph{CopperCube} is an editor designed to create the worlds used in a CopperLicht game. CopperCube is only available for Windows and Mac.
 
@@ -126,11 +130,12 @@ When a user is finished creating their world, CopperCube creates a world file an
 
 % Ref: http://www.ambiera.com/copperlicht/documentation/tutorials/tutorial-02.html
 
-
 \subsection{Technologies Researched}
 \subsubsection{Web Application Hosting}
 \paragraph{Criteria.}
-This project requires a powerful and scalable hardware solution, preferrably with some sort of virtualization and automatic scaling and load balancing. TODO ref
+TODO. This project requires a powerful and scalable hardware solution, with virtualization, automatic scaling, load balancing ...
+
+% TODO ref
 
 \paragraph{Dedicated Server.}
 The first option is to use a dedicated server without any distributed computing. For this case I would use my own server which is provided by Hetzner; Root Server EX40. As I would be using my own server, this option would be the most cost-effective, however the performance and scalability of the platform would not be scalable enough for the final release of the project.
@@ -139,6 +144,7 @@ The first option is to use a dedicated server without any distributed computing.
 
 It would be possible to make this option viable by manually setting up load balancing and other performance increasing tools, but it would be too much work.
 
+% Ref: memcached paper, performance etc
 % Ref: http://www.hetzner.de/de/hosting/produkte_rootserver/ex40
 
 \paragraph{Amazon Elastic Compute Cloud.}
@@ -154,7 +160,9 @@ Amazon EC2 Container Service (ECS) brings EC2 one step further by making deploym
 Using ECS would significantly speed up the time required to set up the necessary EC2 instances, especially if multiple instances are required; such as a reverse proxy, application and a database.
 
 \paragraph{Heroku.}
-Heroku is a `Platform as a Service' web application platform for deploying scalable web apps in the cloud. Heroku will automaticaly scale and manage applications deployed on the platform, making sure the application performs perfectly even under stress. Heroku has support for deploying applications built in languages including Java, Node.js and Python.
+Heroku is a \emph{Platform as a Service} web application platform for deploying scalable web apps in the cloud. Heroku will automatically scale and manage applications deployed on the platform, making sure the application performs perfectly even under stress. Heroku has support for deploying applications built in many languages including Java, Node.js and Python.
+
+% Ref Heroku
 
 \paragraph{Amazon Elastic Beanstalk.}
 Amazon Elastic Beanstalk is a web application deployment service similar to Heroku. Elastic Beanstalk takes a web app and deploys it to an EC2 instance, automatically setting up and managing load balancing, scaling and any capacity needs.
@@ -167,7 +175,7 @@ Using Elastic Beanstalk in my project would make deployment quick and painless, 
 \subsubsection{Web Application Frameworks}
 \paragraph{Criteria.}
 \begin{itemize}
-\item{TODO}
+\item{TODO: Write shit here instead of bullets}
 \item{Should be able to handle JSON data from the client well.}
 \item{Lightweight}
 \item{Support for HTTP requests}
@@ -201,7 +209,7 @@ Django is a web application framework built on Python, which uses an MVC-like ap
 While Django makes web application development simple, it is bloated with features that may not be used at all in a lot of projects.?? todo
 
 \paragraph{Flask.}
-Flask is lightweight Python-based web application `microframework' that comes only with a server and templating engine. Flask is designed to be relatively simple at it's core, but becomes powerful through the use of modules that add extra functionality if needed. The simplistic nature of Flask means it can be up and running relatively quick compared to other frameworks.
+Flask is lightweight Python-based web application microframework that comes only with a server and a templating engine. Flask is designed to be relatively simple at it's core, but becomes powerful through the use of modules that add extra functionality if needed. The simplistic nature of Flask means it can be up and running relatively quick compared to other frameworks.
 
 % Ref Flask: http://flask.pocoo.org/
 
@@ -229,7 +237,7 @@ Storing user projects via the GitHub API without any server-side storage was the
 % Ref github
 % Ref github API
 
-There are a few problems with this approach. First is that it is very volatile; changes made by the user may be discarded if the user leaves the page without commiting. Secondly, using the GitHub API does not do any merging of files, but instead overwrites files entirely, making collaboration hard for the users. This is discussed in greater detail in the Prototyping and Development area of this report (Section 6).
+There are a few problems with this approach. First is that it is very volatile; changes made by the user may be discarded if the user leaves the page without committing. Secondly, using the GitHub API does not do any merging of files, but instead overwrites files entirely, making collaboration hard for the users. This is discussed in greater detail in the Prototyping and Development area of this report (Section 6).
 
 % Ref Json?
 
@@ -243,7 +251,7 @@ While EBS has no form of version control, local Git repositories could be used t
 % Ref Git
 
 \paragraph{Amazon Simple Storage Service.}
-Amazon Simple Storage Service (S3) is a storage system that is accessible through a REST-like API, which can be used with the AWS SDK which is available for several languages. S3 stores data as objects inside a container called a `bucket'. S3 does not have any version control mechanisms, so version control would need to be implemented manually.
+Amazon Simple Storage Service (S3) is a storage system that is accessible through a REST-like API, which can be used with the AWS SDK which is available for several languages. S3 stores data as objects inside a container called a \emph{bucket}. S3 does not have any version control mechanisms, so version control would need to be implemented manually.
 
 \paragraph{MongoDB GridFS.}
 MongoDB GridFS is a high performance file system based on the MongoDB document database. It is designed to be used when documents that are larger than 16MB are to be stored in a MongoDB database, but can be used for small documents for consistency without any significant performance loss. 
@@ -256,29 +264,42 @@ Because GridFS is based on MongoDB, it is extremely suitable for horizontal scal
 
 
 \subsubsection{Alternative Scripting Languages}
-Criteria
+\paragraph{Criteria.}
+Alternative browser-based scripting languages could be used to add typing and Object Oriented Programming to the game engine and user made games. While JavaScript has limited OOP functionality (Prototype chaining for inheritance), it is still a valid choice.
 
+\paragraph{Dart.}
+Dart is a compiled JavaScript alternative created by Google, which supports OOP principals and static typing. Dart can also be compiled to JavaScript which allows dynamic loading of either the Dart file or the JavaScript file depending on what is supported by the browser. Dart supports interaction with standard JavaScript libraries such as jQuery without needing to be modified in any way.
 
-Dart
+Dart runs in it's own Dart VM which boasts huge performance gains over JavaScript virtual machines, however the Dart VM is currently only supported on the \emph{Dartium} browser; a branch of Google Chrome.
 
+% Ref Dart
 
-TypeScript
+\paragraph{TypeScript.}
+TypeScript is another alternative to JavaScript that was created by Microsoft to replace JavaScript. TypeScript is compiled directly to JavaScript without the need for a different virtual machine. In order to use existing JavaScript libraries with TypeScript, a header file is required to make the functions visible to TypeScript.
 
+% Ref TS
 
 \subsubsection{JavaScript Libraries}
-Criteria
 
+\paragraph{Rendering.}
+Three.js
 
-Rendering
+SpiderGL
 
+SceneJS
 
-Physics
+\paragraph{Physics.}
+Comparison of Physics Frameworks for WebGL-Based Game Engine 
 
+Resa Yogya and Raymond Kosalaa
+
+% http://www.epj-conferences.org/articles/epjconf/pdf/2014/05/epjconf_icas2013_00035.pdf
 
 
 
 
 \subsection{Other Relevant Research}
+
 \subsection{Resultant Findings / Requirements}
 \subsection{Bibliography}
 \section{Analysis}
