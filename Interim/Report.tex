@@ -5,24 +5,29 @@
 \usepackage{parskip}
 \usepackage{hyperref}
 
+% Set the images directory
 \graphicspath{{images/}}
 
+% Show links in the TOC
 \hypersetup{hidelinks}
 
+% Disable line breaks
 \setlength\righthyphenmin{62}
 \setlength\lefthyphenmin{62}
+
+% Disable paragraph breaks
 \widowpenalties 1 10000
 
+% Start writing the document
 \begin{document}
-
 
 % Title page
 \title{
-	{Todo}\\
+	{Cloud Game Engine}\\
 	\large{Interim Report}\\
-	\large{Dublin Institute of Technology}\\
-	Student Number: C11426252\\
-	Supervisor: Brian Keegan
+	%\large{Dublin Institute of Technology}\\
+	%Student Number: C11426252\\
+	%Supervisor: Brian Keegan
 }
 \author{Declan Curran}
 \maketitle
@@ -33,6 +38,7 @@
 \tableofcontents
 \newpage
 
+% Document contents
 \section{Project Statement}
 \section{Research}
 \subsection{Background Research}
@@ -47,14 +53,14 @@ While web apps are becoming extremely popular, there are still many types of app
 % Ref: Unity, CryEngine, Unreal
 
 
-Building a 3D game engine in the browser requires significant performance over normal JavaScript usage, which wouldn't be possible with HTML5 and WebGL. 
+Building a 3D game engine in the browser requires significant performance over normal JavaScript usage, which wouldn't be possible without HTML5 and WebGL. 
 
-% ``the new standard for 3D graphics on the Web'' (Parisi, 2012)
 % http://www.reedbushey.com/85Webgl%20Up%20and%20Running.pdf
 
 
-WebGL is an open-source API for rendering 3D graphics in the browser, which is based on OpenGL; a commonly used graphics processing API that is used in a lot of games today. JavaScript is used to tell WebGL what to do, but it can be rather complicated to program. ``To do anything more than the most basic tasks using [WebGL] out of the box requires serious effort and literally hundreds of lines of code.'' (Parisi, 2014)
+WebGL is an open-source API for rendering 3D graphics in the browser, which is based on OpenGL; a commonly used graphics processing API that is used in a lot of games today. WebGL is quickly becoming ``the new standard for 3D graphics on the Web'' (Parisi, 2012) as it is the most powerful and flexible way to render graphics in-browser without extra dependencies or plugins. JavaScript is used to tell WebGL what to do, but it can be rather complicated to program; ``To do anything more than the most basic tasks using [WebGL] out of the box requires serious effort and literally hundreds of lines of code.'' (Parisi, 2014)
 
+% Fix Parisi reference.
 % Ref: OpenGL
 
 
