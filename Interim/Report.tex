@@ -127,7 +127,46 @@ When a user is finished creating their world, CopperCube creates a world file an
 
 
 \subsection{Technologies Researched}
+\subsubsection{Web Application Hosting}
+\paragraph{Criteria.}
+This project requires a powerful and scalable hardware solution, preferrably with some sort of virtualization and automatic scaling and load balancing. TODO ref
+
+\paragraph{Dedicated Server}
+The first option is to use a dedicated server without any distributed computing. For this case I would use my own server which is provided by Hetzner; Root Server EX40. As I would be using my own server, this option would be the most cost-effective, however the performance and scalability of the platform would not be scalable enough for the final release of the project.
+
+% Ref: Hetzner EX40
+
+It would be possible to make this option viable by manually setting up load balancing and other performance increasing tools, but it would be too much work.
+
+% Ref: http://www.hetzner.de/de/hosting/produkte_rootserver/ex40
+
+\paragraph{AWS EC2.}
+Amazon Web Services EC2 is a web service that provides scalable virtual servers which can be used TODO
+
+% Ref EC2
+
+\paragraph{AWS EC2 Container Service.}
+EC2 Container Service (ECS) brings EC2 one step further by making deployment as simple as possible. Docker.io \emph{dockerfiles} are used to automatically create EC2 instances based on a specification created in a simple text file. These instances can then be populated with apps and data specified in the dockerfile.
+
+% Ref: Docker, ECS
+
+Using ECS would greatly speed up the time required to set up the necessary EC2 instances, especially if multiple instances are required; such as a reverse proxy, application and a database.
+
+\paragraph{Heroku.}
+Heroku is a `Platform as a Service' web application platform for deploying scalable web apps in the cloud. Heroku will automaticaly scale and manage applications deployed on the platform, making sure the application performs perfectly even under stress. Heroku has support for deploying applications built in languages including Java, Node.js and Python.
+
+\paragraph{AWS Elastic Beanstalk.}
+Amazon Web Services Elastic Beanstalk is a web application deployment service similar to Heroku. Elastic Beanstalk takes a web app and deploys it to an AWS EC2 instance, automatically setting up and managing load balancing, scaling and any capacity needs.
+
+% Ref: http://aws.amazon.com/elasticbeanstalk/
+
+Using Elastic Beanstalk in my project would make deployment quick and painless, but may not be fully suitable as it does not have the same level of control as deploying EC2 instances manually. This would be more suited to a simple web application without extra layers such as a database.
+
+
 \subsubsection{Web Service Frameworks}
+Criteria
+
+
 Node
 
 Django
@@ -137,17 +176,10 @@ Flask
 Go
 
 
-\subsubsection{Web Application Hosting}
-Server
-
-
-AWS Elastic Beanstalk
-
-
-AWS EC2
-
-
 \subsubsection{Project Storage}
+Criteria
+
+
 Git
 
 
@@ -164,6 +196,9 @@ MongoDB GridFS
 
 
 \subsubsection{Alternative Scripting Languages}
+Criteria
+
+
 Dart
 
 
@@ -171,6 +206,9 @@ TypeScript
 
 
 \subsubsection{JavaScript Libraries}
+Criteria
+
+
 Rendering
 
 
@@ -185,6 +223,7 @@ Physics
 \subsection{Bibliography}
 \section{Analysis}
 \section{Approach and Methodology}
+% Github, Trello
 \section{Design}
 \subsection{Technical Architecture}
 \section{Prototyping and Development}
