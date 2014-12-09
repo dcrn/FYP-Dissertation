@@ -25,9 +25,10 @@
 \title{
 	{Cloud Game Engine}\\
 	\large{Interim Report}\\
-	%\large{Dublin Institute of Technology}\\
-	%Student Number: C11426252\\
-	%Supervisor: Brian Keegan
+	% \large{Dublin Institute of Technology}\\
+	% Student Number: C11426252\\
+	% Supervisor: Brian Keegan
+	% TODO
 }
 \author{Declan Curran}
 \maketitle
@@ -131,7 +132,7 @@ When a user is finished creating their world, CopperCube creates a world file an
 \paragraph{Criteria.}
 This project requires a powerful and scalable hardware solution, preferrably with some sort of virtualization and automatic scaling and load balancing. TODO ref
 
-\paragraph{Dedicated Server}
+\paragraph{Dedicated Server.}
 The first option is to use a dedicated server without any distributed computing. For this case I would use my own server which is provided by Hetzner; Root Server EX40. As I would be using my own server, this option would be the most cost-effective, however the performance and scalability of the platform would not be scalable enough for the final release of the project.
 
 % Ref: Hetzner EX40
@@ -140,59 +141,118 @@ It would be possible to make this option viable by manually setting up load bala
 
 % Ref: http://www.hetzner.de/de/hosting/produkte_rootserver/ex40
 
-\paragraph{AWS EC2.}
-Amazon Web Services EC2 is a web service that provides scalable virtual servers which can be used TODO
+\paragraph{Amazon Elastic Compute Cloud.}
+Amazon Elastic Compute Cloud (EC2), part of the Amazon Web Services (AWS) collection, is one of the largest \emph{Infrastructure as a Service} cloud services in production today. It is used by hundreds of large companies to host their web applications or even game servers. EC2 provides scalable virtual servers which can TODO
 
-% Ref EC2
+% Ref AWS, EC2
 
-\paragraph{AWS EC2 Container Service.}
-EC2 Container Service (ECS) brings EC2 one step further by making deployment as simple as possible. Docker.io \emph{dockerfiles} are used to automatically create EC2 instances based on a specification created in a simple text file. These instances can then be populated with apps and data specified in the dockerfile.
+\paragraph{Amazon EC2 Container Service.}
+Amazon EC2 Container Service (ECS) brings EC2 one step further by making deployment as simple as possible. Docker.io \emph{dockerfiles} are used to automatically create EC2 instances based on a specification created in a simple text file. These instances can then be populated with apps and data specified in the dockerfile.
 
 % Ref: Docker, ECS
 
-Using ECS would greatly speed up the time required to set up the necessary EC2 instances, especially if multiple instances are required; such as a reverse proxy, application and a database.
+Using ECS would significantly speed up the time required to set up the necessary EC2 instances, especially if multiple instances are required; such as a reverse proxy, application and a database.
 
 \paragraph{Heroku.}
 Heroku is a `Platform as a Service' web application platform for deploying scalable web apps in the cloud. Heroku will automaticaly scale and manage applications deployed on the platform, making sure the application performs perfectly even under stress. Heroku has support for deploying applications built in languages including Java, Node.js and Python.
 
-\paragraph{AWS Elastic Beanstalk.}
-Amazon Web Services Elastic Beanstalk is a web application deployment service similar to Heroku. Elastic Beanstalk takes a web app and deploys it to an AWS EC2 instance, automatically setting up and managing load balancing, scaling and any capacity needs.
+\paragraph{Amazon Elastic Beanstalk.}
+Amazon Elastic Beanstalk is a web application deployment service similar to Heroku. Elastic Beanstalk takes a web app and deploys it to an EC2 instance, automatically setting up and managing load balancing, scaling and any capacity needs.
 
 % Ref: http://aws.amazon.com/elasticbeanstalk/
 
 Using Elastic Beanstalk in my project would make deployment quick and painless, but may not be fully suitable as it does not have the same level of control as deploying EC2 instances manually. This would be more suited to a simple web application without extra layers such as a database.
 
 
-\subsubsection{Web Service Frameworks}
-Criteria
+\subsubsection{Web Application Frameworks}
+\paragraph{Criteria.}
+\begin{itemize}
+\item{TODO}
+\item{Should be able to handle JSON data from the client well.}
+\item{Lightweight}
+\item{Support for HTTP requests}
+\item{Doesn’t need built-in database functionality (bloat)}
+\item{MVC}
+\item{Templating}
+\item{Flexible}
+\item{Performance}
+\end{itemize}
+
+\paragraph{Node.js.}
+Node.js is a platform for building applications using JavaScript as the main language. It uses Google's V8 JavaScript engine to increase the performance of JavaScript by compiling standard JavaScript to machine code.
+
+% Ref Node
+
+By default, Node.js isn't a web application framework, but can be made into a powerful one using one of many libraries available on the Node Package Manager. An example of this would be using the Express library and a template engine such as EJS or Jade.
+
+% Ref NPM
+% Ref http://expressjs.com/
+% Ref http://paularmstrong.github.io/node-templates/
 
 
-Node
+\paragraph{Django.}
+Django is a web application framework built on Python, which uses an MVC-like approach to designing websites. Django is designed to allow common web development tasks to be completed quickly and easily. It does this by providing APIs for Object-Relational Modelling to ease database usage, a powerful templating engine and automatic administration interface generation.
 
-Django
+% Ref Django
+% Ref common: https://docs.djangoproject.com/en/1.7/intro/overview/
+% Ref ORM: https://docs.djangoproject.com/en/1.7/intro/overview/
+% Ref admin: https://docs.djangoproject.com/en/1.7/intro/tutorial02/
 
-Flask
+While Django makes web application development simple, it is bloated with features that may not be used at all in a lot of projects.?? todo
 
-Go
+\paragraph{Flask.}
+Flask is lightweight Python-based web application `microframework' that comes only with a server and templating engine. Flask is designed to be relatively simple at it's core, but becomes powerful through the use of modules that add extra functionality if needed. The simplistic nature of Flask means it can be up and running relatively quick compared to other frameworks.
+
+% Ref Flask: http://flask.pocoo.org/
+
+
+\paragraph{JavaServer Pages.}
+JavaServer Pages (JSP) is ... todo
+
+% Ref JSP
+
+Can’t handle JSON very well
+
+bloated
+
 
 
 \subsubsection{Project Storage}
-Criteria
+\paragraph{Criteria.}
+User project storage is an extremely important part of this project. How the projects are stored will define how the application performs while saving projects, serving project files to players, and managing how users will collaborate on projects.
 
+The project storage medium should be able to support some kind of version control, have good read/write performance, and should be scalable to some extent.
 
-Git
+\paragraph{GitHub API.}
+Storing user projects via the GitHub API without any server-side storage was the original proposed approach for this project. All storage would be done directly through API requests to GitHub by submitting the user's files without any storage on disk. This provides both version control and the cloud-based user storage this project requires.
 
+% Ref github
+% Ref github API
 
-GitHub API
+There are a few problems with this approach. First is that it is very volatile; changes made by the user may be discarded if the user leaves the page without commiting. Secondly, using the GitHub API does not do any merging of files, but instead overwrites files entirely, making collaboration hard for the users. This is discussed in greater detail in the Prototyping and Development area of this report (Section 6).
 
+% Ref Json?
 
-AWS S3
+\paragraph{Amazon Elastic Block Storage.}
+Amazon Elastic Block Storage (EBS) is a scalable solution to storage for use on Amazon EC2 instances. Performance on EBS is very high, as there are options for selecting between high/normal performance SSDs and standard hard drives. EBS volumes can be mounted directly to EC2 instances allowing standard file storage without any APIs.
 
+% Ref AWS EBS
 
-AWS EBS
+While EBS has no form of version control, local Git repositories could be used to manage version control. Since EBS can be mounted directly onto an EC2 instance, the command-line Git tool can be used to directly perform Git operations such as committing or even pushing to a remote server such as GitHub.
 
+% Ref Git
 
-MongoDB GridFS
+\paragraph{Amazon Simple Storage Service.}
+Amazon Simple Storage Service (S3) is a storage system that is accessible through a REST-like API, which can be used with the AWS SDK which is available for several languages. S3 stores data as objects inside a container called a `bucket'. S3 does not have any version control mechanisms, so version control would need to be implemented manually.
+
+\paragraph{MongoDB GridFS.}
+MongoDB GridFS is a high performance file system based on the MongoDB document database. It is designed to be used when documents that are larger than 16MB are to be stored in a MongoDB database, but can be used for small documents for consistency without any significant performance loss. 
+
+% Ref GridFS: http://docs.mongodb.org/manual/core/gridfs/
+
+Because GridFS is based on MongoDB, it is extremely suitable for horizontal scaling, but it does not support any atomic operations. The lack of atomic operations could make collaboration and version control hard to implement.
+
+% Ref atomic: http://docs.mongodb.org/manual/faq/developers/
 
 
 \subsubsection{Alternative Scripting Languages}
@@ -229,6 +289,7 @@ Physics
 \section{Prototyping and Development}
 \section{Testing}
 \section{Issues and Risks}
+% Using Git with OAuth tokens
 \section{Plan and Future Work}
 \section{Conclusions}
 \end{document}
