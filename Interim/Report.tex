@@ -57,7 +57,7 @@ The solution to the WebGL API's complexity is to use a library that wraps it and
 
 The architecture of the game engine is critical to how accessible it is to developers. The Entity-Component-System is a pattern used to simplify how game objects are defined by separating behaviour into smaller components. Each game object can be made up of many components, for example; a cube object could have a model component, giving it something to render, and a physics component which will allow it to collide with the world and other physics objects.\cite{gregory2014game} This type of game engine architecture allows users who have minimal programming skill to modify the game logic easily.
 
-An ECS-based game engine with an integrated editor will give users the power to build games even with minimal programming knowledge. A good example of this is Unity, which allows users to build their games just by creating their scene, adding entities such as walls, and adding physics components to those entities.\cite{unitycreatingscenes} Adding a controller such as the `First Person Controller' to their project allows the player to input and explore the scene just like in a standard first person shooter game.\cite{unitycharactercontrol}
+An ECS-based game engine with an integrated editor will give users the power to build games even with minimal programming knowledge. A good example of this is Unity, which allows users to build their games just by creating their scene, adding entities such as a floor, and adding physics components to those entities.\cite{unitycreatingscenes} Adding a controller such as the `First Person Controller' to their project allows the player to input and explore the scene just like in a standard first person shooter game.\cite{unitycharactercontrol}
 
 By combining the aspects of an Entity Component System into a game engine built on the web with a fully featured editor and cloud storage, inexperienced or hobbyist game developers will be able to easily create games and publish them without needing to invest a lot of time in installing software or learning APIs, so they can get straight to making their game.
 
@@ -86,7 +86,7 @@ CopperLicht is an open source WebGL library and JavaScript 3D engine for creatin
 
 The CopperLicht game engine uses an OOP style approach to the architecture of a game, with entities being defined via scripting rather than by selecting a group of components as Unity does. The CopperLicht engine will handle rendering, physics and animations, any extra functionality must be added manually by the user with a script.\cite{copperlichtfeatures}
 
-The CopperLicht world editor, \emph{CopperCube} is an editor designed to create the worlds used in a CopperLicht game. It works by generating a scene file which is loaded by a HTML file, generated Android APK, Windows EXE or Mac OSX App.\cite{coppercubefeatures} Actions and behaviours can be added to the game by JavaScript scripting, or by using predefined behaviours defined in CopperLicht such as `Fly in a Circle'.\cite{copperlichtbehaviors}
+The CopperLicht world editor, \emph{CopperCube} is an editor designed to create the worlds used in a CopperLicht game. It works by generating a scene file which is loaded by a HTML file, generated Android APK, Windows EXE or Mac OSX App.\cite{coppercubefeatures} Actions and behaviours can be added to the game by JavaScript scripting, or by using predefined behaviours defined in CopperLicht such as `Fly in a Circle'.\cite{copperlichtbehaviours}
 
 \subsection{Technologies Researched}
 \subsubsection{Web Application Hosting}
@@ -101,7 +101,7 @@ It would be possible to make this option viable by manually setting up load bala
 \paragraph{Amazon Elastic Compute Cloud.}
 Amazon Elastic Compute Cloud (EC2), part of the Amazon Web Services (AWS) collection, is an \emph{Infrastructure as a Service}.\cite{awsec2} It is used by hundreds of large companies to host their web applications or even game servers. EC2 provides scalable virtual servers which can be made to fit any requirement by allowing the developer to install the required operating system and any type of application needed.
 
-EC2 provides the flexibility, scalability and power needed for this project by automatically scaling up and down EC2 instances as needed.\cite{awsec2} The only downside to using EC2 is that each EC2 instance will require setting up and deploying which could increase the workload significantly.
+EC2 provides the flexibility, scalability and power needed for this project by automatically scaling up and down EC2 instances as needed.\cite{awsec2} Load balancing can be achieved using the Elastic Load Balancing service provided by Amazon.\cite{elasticloadbalancing} The only downside to using EC2 is that each EC2 instance will require setting up and deploying which could increase the workload significantly.
 
 \paragraph{Amazon EC2 Container Service.}
 Amazon EC2 Container Service (ECS) brings EC2 one step further by making deployment as simple as possible. Docker.io \emph{dockerfiles} are used to automatically create EC2 instances based on a specification created in a simple text file.\cite{awsecs} These instances can then be populated with apps and data specified in the dockerfile.\cite{dockerfile}
@@ -116,55 +116,27 @@ Heroku itself has no storage systems available apart from their PostGRES databas
 \paragraph{Amazon Elastic Beanstalk.}
 Amazon Elastic Beanstalk is a web application deployment service similar to Heroku. Elastic Beanstalk takes a web app and deploys it to an EC2 instance, automatically setting up and managing load balancing, scaling and any capacity needs.\cite{awselasticbeanstalk}
 
-Using Elastic Beanstalk in my project would make deployment quick and painless, but may not be fully suitable as it does not have the same level of control as deploying EC2 instances manually. This would be more suited to a simple web application without extra layers such as a database.
+Using Elastic Beanstalk in my project would make deployment quick and painless, while still maintaining the same level of control that a standard EC2 instance has. The automatic load balancing process used with Elastic Beanstalk will automatically generate multiple instances of the application as needed so it can always be available no matter how many users are accessing it without any manual management.
 
-% Das it mane
-
-% Comparison table
+\paragraph{Comparison.}
+% TODO: Comparison table
 
 \subsubsection{Web Application Frameworks}
 \paragraph{Criteria.}
 The web application framework should be as lightweight as possible, allowing the application to scale as needed. The framework should be flexible in use and support the Model-View-Controller pattern to be used in development. A strong template engine should be available to allow dynamic front-end pages to be built efficiently.
 
 \paragraph{Node.js.}
-Node.js is a platform for building applications using JavaScript as the main language. It uses Google's V8 JavaScript engine to increase the performance of JavaScript by compiling standard JavaScript to machine code.
+Node.js is a platform for building applications using JavaScript as the main language. It uses Google's V8 JavaScript engine to increase the performance of JavaScript by compiling standard JavaScript to machine code.\cite{nodejs}
 
-% Ref Node
-
-By default, Node.js isn't a web application framework, but can be made into a powerful one using one of many libraries available on the Node Package Manager. An example of this would be using the Express library and a template engine such as EJS or Jade.
-
-% Add pros and cons
-
-% Ref NPM
-% Ref http://expressjs.com/
-% Ref http://paularmstrong.github.io/node-templates/
-
+By default, Node.js isn't a web application framework, but can be made into a powerful one using one of many libraries available on the Node Package Manager.\cite{npmjs} An example of this would be using the lightweight Express web framework library and a template engine such as EJS or Jade.
 
 \paragraph{Django.}
 Django is a web application framework built on Python, which uses an MVC-like approach to designing websites.\cite{django} Django is designed to allow common web development tasks to be completed quickly and easily. It does this by providing APIs for Object-Relational Modelling to ease database usage, a powerful templating engine and automatic administration interface generation.\cite{djangooverview}
 
-While Django makes complex web application development simple, it is bloated with features that may not be used at all in a lot of projects. For the purpose of creating my project, Object-Relational Modelling and automatic administration page generation may be entirely unused. 
+While Django makes complex web application development simple, it is bloated with features that may not be used at all in a lot of projects. For the purpose of creating this project, Object-Relational Modelling and automatic administration page generation may be entirely unused. 
 
 \paragraph{Flask.}
 Flask is lightweight Python-based web application microframework that comes only with a server and a templating engine. Flask is designed to be relatively simple at it's core, but becomes powerful through the use of modules that add extra functionality if needed.\cite{flask} The simplistic nature of Flask means it can be up and running relatively quick compared to other frameworks.
-
-% TODO: Pros and Cons / scalability
-
-\paragraph{JavaServer Pages.}
-JavaServer Pages (JSP) is ... todo
-
-% Pros and cons
-% Ref JSP
-
-Can’t handle JSON very well
-
-bloated
-
-
-%
-% Comparison table
-%
-
 
 \subsubsection{Project Storage}
 \paragraph{Criteria.}
@@ -184,6 +156,8 @@ Amazon Elastic Block Storage (EBS) is a scalable solution to storage for use on 
 
 While EBS has no form of version control, local Git repositories could be used to manage version control. Since EBS can be mounted directly onto an EC2 instance, the command-line Git tool can be used to directly perform Git operations such as committing or even pushing to a remote server such as GitHub. Using GitHub with this option also means collaboration between users may be possible.
 
+Implementing load balancing while using a mounted storage such as this may be problematic, since EBS volumes may only be mounted on a single EC2 instance. A workaround to this would be to use a single instance to write to the disk and then connect to that from the load balancing instances.
+
 \paragraph{Amazon Simple Storage Service.}
 Amazon Simple Storage Service (S3) is a storage system that is accessible through a REST-like API, which can be used with the AWS SDK which is available for several languages.\cite{awss3} S3 stores data as objects inside a container called a \emph{bucket}, where buckets can store any number of files up to 5GB each.
 
@@ -198,26 +172,20 @@ Because GridFS is based on MongoDB, it is extremely suitable for horizontal scal
 \paragraph{Criteria.}
 Alternative browser-based scripting languages could be used to add typing and Object Oriented Programming to the game engine and user made games. While JavaScript has limited OOP functionality (Prototype chaining for inheritance), it is still a valid choice.
 
-% Maybe add JavaScript paragraph for later comparison
-\paragraph{JavaScript.}
-TODO
-
-\paragraph{Dart.}
-Dart is a compiled JavaScript alternative created by Google, with it's own virtual machine that supports OOP principals and static typing. Dart can also be transcompiled to JavaScript which allows dynamic loading of either the Dart file or the JavaScript file depending on what is supported by the browser. Dart supports interaction with standard JavaScript libraries such as jQuery without needing to be modified in any way.
-
-Dart runs in it's own Dart VM which boasts huge performance gains over JavaScript virtual machines, however the Dart VM is currently only supported on the \emph{Dartium} browser; a branch of Google Chrome. When using other browsers such as Firefox or the standard version of Chrome, Dart code transcompiled to JavaScript will often perform worse compared to standard JavaScript.\cite{dartperformance}
-
-% Ref Dart
-% Ref: Performance https://www.dartlang.org/performance/
-
 \paragraph{TypeScript.}
 TypeScript is another alternative to JavaScript that was created by Microsoft to replace JavaScript. It provides a strong level of OOP functionality, scalability for large projects and optional type declarations on top of standard JavaScript syntax.\cite{typescript} In order to use existing JavaScript libraries with TypeScript, a header file is required to make the functions visible to TypeScript. TypeScript is transcompiled directly to JavaScript, and because of this it will often perform just as well as JavaScript does and doesn't require a virtual machine.
 
-% Add comparison table
+\paragraph{Dart.}
+Dart is a compiled JavaScript alternative created by Google, with it's own virtual machine that supports OOP principals and static typing. Dart can also be transcompiled to JavaScript which allows dynamic loading of either the Dart file or the JavaScript file depending on what is supported by the browser.\cite{dart} Dart supports interaction with standard JavaScript libraries such as jQuery without needing to be modified in any way.
+
+Dart runs in it's own Dart VM which boasts huge performance gains over JavaScript virtual machines, however the Dart VM is currently only supported on the \emph{Dartium} browser; a branch of Google Chrome. When using other browsers such as Firefox or the standard version of Chrome, Dart code transcompiled to JavaScript will often perform worse compared to standard JavaScript.\cite{dartperformance}
 
 \subsubsection{JavaScript Libraries}
 
 \paragraph{Rendering.}
+
+TODO
+
 Three.js
 
 SpiderGL
@@ -227,6 +195,7 @@ SceneJS
 % Compare?
 
 \paragraph{Physics.}
+TODO
 Existing research completed by Yogya and Kosalaa determined ...
 
 % Comparison of Physics Frameworks for WebGL-Based Game Engine 
@@ -234,16 +203,19 @@ Existing research completed by Yogya and Kosalaa determined ...
 
 % http://www.epj-conferences.org/articles/epjconf/pdf/2014/05/epjconf_icas2013_00035.pdf
 
+\paragraph{Web Audio.}
+TODO
+
 \subsection{Other Relevant Research}
 I have used WebGL in the past to create a simple rendering application. My experience with using WebGL was comparable to how it is mentioned in Programming 3D Applications in HTML5 and WebGL by Tony Parisi (2014)\cite{parisi2014programming}. The whole application was exactly TODO lines, and it was only capable of rendering a single multi-coloured box as seen in Fig TODO.
 
 WebGL has great potential as the foundation for a powerful game engine, with it's strengths becoming evident while using OpenGL's shader language GLSL. Though it is powerful, the workload associated with using WebGL for even a small application was excessive.
 
+TODO: Analysis of Editors
+
 \subsection{Resultant Findings / Requirements}
 
-Based on the research completed, the following requirements have been determined to be the optimal choices for technologies and architectures used in the project.
-
-
+Based on the research completed, the following requirements have been determined, including optimal choices for technologies and architectures used in the project.
 
 
 
@@ -254,15 +226,21 @@ Based on the research completed, the following requirements have been determined
 
 \section{Analysis}
 
-The project will be separated into three major components; the backend serverside application, the game engine itself, and the editor for building games with the engine.
+The project will be separated into three major components; the web application, the game engine itself, and the editor for building games with the engine.
 
-\subsection{Server}
-The serverside application will be constructed using Flask, the Python microframework. Flask will allow the server ~~
+\subsection{Web Application}
+\paragraph{Hosting.}
+The web application will be hosted using the Amazon Elastic Beanstalk Service, with additional EC2 Container System instances being used for EBS mounted storage and database hosting if necessary.
 
-ECS/EC2, other mongo etc
+The load balancing system of Elastic Beanstalk will automatically duplicate the web application instance as needed when many users are accessing it. Since there may be many of these instances at one time, the EBS volume cannot be used directly from the application instance, so an extra instance will be created that will access the volume. All application instances created by Elastic Beanstalk will then communicate with this intermediary instance to access the volume. This instance will only be accessible internally.
 
-\paragraph{Storage.}
-User project storage will be achieved using Amazon EBS to store local git repositories. This will allow the user to maintain a version management system for their project, and can be used to facilitate collaboration by pushing and pulling to a remote repository on GitHub.
+\paragraph{Framework.}
+The web application framework that will be used is Flask, which provides a lightweight framework that is easy to work with. Modules for added functionality will be added to Flask as needed.
+
+The web application will provide users with a view of their projects and allow them to create new projects, fork example or public projects, and delete projects as needed. When a user selects one of their projects they will be brought straight into the editor, where they can build their game. A list of publicly published games will be on the website, where unregistered users will be able to select a game and play it.
+
+\paragraph{Project Storage.}
+User project storage will be achieved using an Amazon EBS volume mounted on an EC2 container, and will store local git repositories for each project. This will allow the user to maintain a version management system for their project, and can be used to facilitate collaboration by pushing and pulling to a remote repository on GitHub.
 
 Users will log into the application using their GitHub credentials, which are authenticated using the GitHub OAuth system. When the credentials are verified, an OAuth key is generated to be used for accessing the repository for the user's project.
 
@@ -270,12 +248,47 @@ Git operations will be performed on the local repository from Python via the Git
 
 To allow collaboration between users on the same repository, each collaborator of a repository will have their own git repository stored on the server. Collaborating through these repositories will be achieved by merging locally with the remote server on GitHub, then pushing the merge to the remote server.
 
+\subsection{Game Engine}
+\paragraph{Scripting language.}
+Standard JavaScript will be used as the scripting language for both developing the game engine and creating games using the engine. This was chosen as the alternatives require compilation/transcompilation which would complicate the process of serving games to players.
+
+\paragraph{Architecture.}
+The game engine will be built in standard JavaScript using the Entity-Component-System pattern, with rendering powered by Three.js. Standard components including collision, lighting, camera, model and position will be created as a base for creating games in the engine. The creation of custom components through scripting will be possible, allowing users to add their own component-based functionality as needed.
+
+\paragraph{Physics.}
+The physics engine used will be todo
+
+\subsection{Game Editor}
+The editor will be created using HTML5 and JavaScript, using Three.js for rendering components in the scene. Multiple views will be available on the editor UI, allowing the user to switch between free-look, top-down, and camera views to ease in the creation of the scene.
+
+The editor will allow users to create their scenes using predefined entities such as cameras and lights, or by creating new entities with a list of components attached to them. Component properties for each entity will be editable by the user when selected. The user will be able to switch between multiple scenes for story progression.
+
+Scene data will be stored in a serialized JSON format, so it can be stored in the user's project as a file and delivered easily to the player when the game is published.
+
+A script editor will be built into the editor, allowing the user to modify scripts and other ascii files directly, instead of having to change page or re-upload scripts.
+
+All of the Git functionality will be available through the editor interface, which will allow users to quickly sync up with collaborators. An interface will be created specifically to merge changes with the server before pushing, as this is required for collaboration via Git.
+
 \section{Approach and Methodology}
-% Github, Trello
+
+A Scrum-like software development methodology will be used for the duration of this project, along with elements from the Kanban method.
+
+Scrum is a kind of agile development methodology that is based on a series of iterative cycles of development called \emph{sprints}. These sprints will often begin with a brief planning session, can last from 1 to 4 weeks, then finish with a sprint retrospective to review how it went.
+
+Scrum is usually a heavily team-based process, involving several roles such as `Scrum Master`, `Product Owner' and the Scrum team. Daily 15 minute team meetings are held to assess how the sprint is going, with each role and team member talking about what they did and what they plan to do. Since this project will be completed by a single person, I will be focusing on the iterative, planning and review aspects of the Scrum methodology rather than the daily meetings and roles.
+
+A \emph{kanban board} will be used during each sprint. Trello will be used to manage what tasks need to be completed by adding a list for each iteration in the development process. Cards will be added to these lists for each task, and labels will be used as kanban columns by using labels such as `Ready', `In Progress', and `Completed'. If cards are overdue, they can be moved to the next sprint list as a backlog, by dragging and dropping.
+
+Git will be used throughout the development process to provide version control and project management through branches. Branching will be used to manage the status of the project via stable and development branches. The Git repository will be hosted both locally and remotely on GitHub for a backup.
+
+Towards the end of the project, evaluations will carried out to determine if each aspect of the project has met it's requirements. Heuristic evaluations will be performed to identify usability problems with the user interface for the website and game editor. User testing will also be performed at this stage, with feedback from the users that will determine if any features should be added or removed before final release.
+
 \section{Design}
 \subsection{Technical Architecture}
+\subsection{Other Design Documents}
 \section{Prototyping and Development}
 \section{Testing}
+Integrated testing (regression)
 \section{Issues and Risks}
 % Using Git with OAuth tokens
 % ECS Preview access
