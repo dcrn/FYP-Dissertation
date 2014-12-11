@@ -5,6 +5,8 @@
 \usepackage{graphicx}
 \usepackage{parskip}
 \usepackage{hyperref}
+\usepackage{pifont} % Checkmarks
+\usepackage{float} % Fix table floats
 
 % Set the images directory
 \graphicspath{{images/}}
@@ -19,18 +21,24 @@
 % Disable paragraph breaks
 \widowpenalties 1 10000
 
+% Fix table floats
+\restylefloat{table}
+
 % Start writing the document
 \begin{document}
 
 % Title page
 \title{
-	{Cloud Game Engine}\\
-	\large{Interim Report}\\
-	% \large{Dublin Institute of Technology}\\
-	% Student Number: C11426252\\
-	% Supervisor: Brian Keegan
-	% TODO
-	% http://alvinalexander.com/blog/post/latex/reference-figure-or-table-within-latex-document
+	{Interim Report}\\
+	\large{Dublin Institute of Technology}\\
+	~\\
+	\begin{tabular}{| c | c | c |}
+		\hline
+		\multicolumn{3}{| c |}{\textbf{Project Title}} \\
+		\multicolumn{3}{| c |}{Game Engine as a Cloud Service}\\ \hline
+		\textbf{Student Name} & \textbf{Student Number} & \textbf{Supervisor} \\
+		Declan Curran & C11426252 & Brian Keegan \\ \hline
+	\end{tabular}
 }
 \author{Declan Curran}
 \maketitle
@@ -39,10 +47,13 @@
 % Table of Contents
 \setcounter{tocdepth}{3}
 \tableofcontents
+\listoffigures
+\listoftables
 \newpage
 
 % Document contents
 \section{Project Statement}
+This project is a game engine and editor based in a web application, designed to create games that run in the browser using WebGL. 
 \section{Research}
 \subsection{Background Research}
 
@@ -72,10 +83,13 @@ The Unity scene editor allows complex entities to be created simply by adding a 
 % Add pic of inspector
 
 \subsubsection{PlayCanvas}
-PlayCanvas is a browser based game engine and editor with cloud storage. 
+\begin{quote}
+PlayCanvas is a visual development platform for 3D web content. Both the tools and the web apps you build are powered by HTML5. The entire software platform is web hosted so there's nothing to install and you can access your work from any device that runs one of the supported web browsers.\cite{playcanvas}
+\end{quote}
 
-% TODO
-% Ref: https://playcanvas.com
+PlayCanvas features the ability to publish games, fork public and example projects, collaborate with multiple users and sync project files to GitHub. The game engine is based on the Entity-Component-System pattern, with several components being provided for building simple games out of the box, and support to create new scripted components using JavaScript.\cite{playcanvas}
+
+The PlayCanvas game editor features impressive real-time collaboration with multiple users, however it only has features intended for scene editing. The user must leave the editor to manage their project for simple tasks such as editing scripts, syncing to GitHub, and publish their project.
 
 \subsubsection{CopperLicht}
 \begin{quote}
@@ -87,7 +101,26 @@ The CopperLicht game engine uses an OOP style approach to the architecture of a 
 The CopperLicht world editor, \emph{CopperCube} is an editor designed to create the worlds used in a CopperLicht game. It works by generating a scene file which is loaded by a HTML file, generated Android APK, Windows EXE or Mac OSX App.\cite{coppercubefeatures} Actions and behaviours can be added to the game by JavaScript scripting, or by using predefined behaviours defined in CopperLicht such as `Fly in a Circle'.\cite{copperlichtbehaviours}
 
 \subsubsection{Comparison of Solutions}
-Table, descriptions
+\begin{table}[H]
+	\begin{tabular}{| l | c | c | c | c | c | c | c |}
+	\hline
+	& VC & Git & Realtime & Editor & ECS & Forking & Publish\\\hline
+	Unity 		& \ding{56}	& \ding{52}	& \ding{56}	
+				& \ding{52}	& \ding{52}	& \ding{56}	& \ding{56}\\\hline
+	PlayCanvas 	& \ding{56}	& \ding{56}	& \ding{52}	
+				& \ding{56}	& \ding{52}	& \ding{52}	& \ding{52}\\\hline
+	CopperLicht & \ding{56}	& \ding{52}	& \ding{56}	
+				& \ding{56}	& \ding{56}	& \ding{56}	& \ding{56}\\\hline
+	My Solution & \ding{52}	& \ding{52}	& \ding{56}	
+				& \ding{52}	& \ding{52}	& \ding{52}	& \ding{52}\\\hline
+	\end{tabular}
+	\caption{Comparison of alternative solutions.}
+	\label{tab:solutions}
+\end{table}
+
+A comparison of my solution and alternative solutions has been performed, comparing the features available. The results of this comparison are visible in Table \ref{tab:solutions}. The features compared are: Built-in version control (VC), Git usage (Git), Realtime collaboration (Realtime), Conglomerated editor features like scripting (Editor), Entity-Component System architecture (ECS), Built-in forking of example / public projects (Forking) and one-click publishing (Publish).
+
+
 
 \subsection{Technologies Researched}
 \subsubsection{Web Application Hosting}
@@ -118,9 +151,6 @@ Heroku itself has no storage systems available apart from their PostGRES databas
 Amazon Elastic Beanstalk is a web application deployment service similar to Heroku. Elastic Beanstalk takes a web app and deploys it to an EC2 instance, automatically setting up and managing load balancing, scaling and any capacity needs.\cite{awselasticbeanstalk}
 
 Using Elastic Beanstalk in my project would make deployment quick and painless, while still maintaining the same level of control that a standard EC2 instance has. The automatic load balancing process used with Elastic Beanstalk will automatically generate multiple instances of the application as needed so it can always be available no matter how many users are accessing it without any manual management.
-
-\paragraph{Comparison.}
-% TODO: Comparison table
 
 \subsubsection{Web Application Frameworks}
 \paragraph{Criteria.}
@@ -186,9 +216,9 @@ Dart runs in it's own Dart VM which boasts huge performance gains over JavaScrip
 \paragraph{Rendering.}
 Alternatives to Three.js were examined to determine their suitability to the project. The rendering library used should be suited to use in game development and have a flexible API.
 
-SpiderGL is a WebGL wrapper that does very little abstraction to the API, making using WebGL slightly easier while still having low level objects such as vertex buffer objects.\cite{spidergl} In comparison to Three.js, Spider lacks a lot of features for rendering complex scenes, as well as being significantly harder to use.
+SpiderGL is a WebGL wrapper that does very little abstraction to the API, making using WebGL slightly easier while still having low level objects such as vertex buffer objects.\cite{spidergl} In comparison to Three.js, SpiderGL lacks a lot of features for rendering complex scene components, as well as being significantly harder to use.
 
-SceneJS is a rendering library for JavaScript suited towards visualising highly accurate scenes with large amounts of detail similar to Computer-Aided Design (CAD). This library can be used to create and explore medical or engineering recreations, for example; the human body.
+SceneJS is a rendering library for JavaScript suited towards visualising highly accurate scenes with large amounts of detail similar to Computer-Aided Design (CAD). This library can be used to create and explore medical or engineering recreations, for example; the human body.\cite{scenejs}
 
 \paragraph{Physics.}
 Existing research completed by Yogya and Kosalaa determined that out of several possible JavaScript physics engines including Bullet, Cannon and JibLib, ``Bullet is the best physics framework to be integrated into the WebGL-based game engine''.\cite{yogya2014comparison} Their conclusion is based on several factors, including performance, accuracy an compatibility with multiple browsers. 
@@ -249,13 +279,17 @@ Elastic Block Storage, which is a simple mounted volume which could be used with
 Alternative scripting languages, Dart and TypeScript, were examined and compared to JavaScript. As the alternatives require compilation/transcompilation, standard JavaScript was decided as the optimal choice for use in this project. Implementing transcompilation in the web application is unnecessary as standard JavaScript can be used without major loss of functionality.
 
 \paragraph{JavaScript Libraries.}
-As a result of the research into several rendering libraries based on WebGL, Three.js was determined to be the most suitable for this project, as it has the features, flexibility, stability and power needed for use in game engines. The API it provides is abstracted significantly from the WebGL API to provide simple methods for doing normally complex tasks.
+As a result of the research into several rendering libraries based on WebGL, Three.js was determined to be the most suitable for this project, as it has the features, flexibility, stability and optimisation needed for use in game engines. The API it provides is abstracted significantly from the WebGL API to provide simple methods for doing normally complex tasks.
 
-The Bullet physics engine and Web Audio API are highly suited for use in this project as explored in the research.
+The Bullet physics engine and Web Audio API are highly suited for use in this project as explored in the research. TODO
 
 \subsection{Bibliography}
-\bibliography{Report}{}
-\bibliographystyle{unsrt}
+
+\begingroup
+	\def\section*#1{}
+	\bibliography{Report}{}
+	\bibliographystyle{unsrt}
+\endgroup
 
 \section{Analysis}
 
@@ -265,11 +299,11 @@ The project will be divided into three major components; the web application whi
 \paragraph{Hosting.}
 The web application will be hosted using the Amazon Elastic Beanstalk Service, with additional EC2 Container System instances being used for EBS mounted storage and database hosting.
 
-The load balancing system of Elastic Beanstalk will automatically duplicate the web application instance as needed when many users are accessing it, providing multiple running web applications that are chosen per-user on the fly. Since EBS volumes can only be mounted on a single instance and there may be many of these instances at one time, the EBS volume cannot be used directly from the web application. An intermediary instance will be created specifically for file access. 
+The load balancing system of Elastic Beanstalk will automatically duplicate the web application instance as needed when many users are accessing it, providing multiple running web applications that are chosen per-user on the fly. Since EBS volumes can only be mounted on a single instance and there may be many of these instances at one time, the EBS volume cannot be used directly from the web application. An intermediary instance will be created using EC2 Container Service, specifically for file access. 
 
 This intermediary instance will run another Flask server designed only to access the EBS volume. An API will be created allowing the web application instances to perform actions such as store, retrieve and perform operations on the files stored on the volume. All web application instances created by Elastic Beanstalk will then communicate with this intermediary instance to access the volume. This instance will only be accessible internally, and will depend heavily on user authentication to provide security of the user files.
 
-A simple MongoDB database instance will also be set up for use with the web application, which will provide a method to store and query a list of games that have been published by users of the application.
+A simple database instance will also be set up for use with the web application, which will provide a method to store and query a list of games that have been published by users of the application.
 
 \paragraph{Framework.}
 The web application framework that will be used is Flask, which provides a lightweight framework that is easy to work with. Modules for added functionality will be added to Flask as needed.
@@ -301,7 +335,7 @@ The editor will allow users to create their scenes using predefined entities suc
 
 Scene data will be stored in a serialized JSON format, so it can be stored in the user's project as a file and delivered easily to the player when the game is published.
 
-A script editor will be built into the editor, allowing the user to modify scripts and other ascii files directly, instead of having to change page or re-upload scripts.
+A script editor will be built into the editor, allowing the user to modify scripts and other ascii files directly, without the need to change page or re-upload files.
 
 All of the Git functionality will be available through the editor interface, which will allow users to quickly sync up with collaborators. An interface will be created specifically to merge changes with the server before pushing, as this is required for collaboration via Git.
 
@@ -322,6 +356,8 @@ Scrum is usually a heavily team-based process, involving several roles such as `
 Using an Agile methodology like Scrum means that most of the design of the application will be done as needed, rather than up front like the waterfall model. Design documents such as UML diagrams or entity-relationship diagrams will be left until they are necessary for the continuation of the development process, or if another part of the project depends on the design being completed.
 
 A \emph{kanban board} will be used to manage tasks during each sprint. Trello will be used as the board by adding a list for each iteration in the development process. Cards will be added to these lists for each task, and labels will be used as kanban columns by using labels such as `Ready', `In Progress', and `Completed' as can be seen in Figure \ref{fig:kanban}. If cards are overdue, they can be moved to the next sprint list as a backlog, by dragging and dropping.
+
+% Ref kanban
 
 \begin{figure}[h]
 	\centering
@@ -363,10 +399,30 @@ Git operations are performed on the EBS volume from the Flask app; which allows 
 The presentation side of the diagram displays the aspects of the web application that will be visible to the user. Published games are served from the web to the user's browser, along with the game engine to run the game. The game editor will be accessible to logged in users, where they can edit and create games. The game editor requires the game engine for rendering the scene and play-testing.
 
 \subsection{Other Design Documents}
-As discussed in the Approach and Methodology section, the choice of using the Scrum methodology will allow me to produce design documents as needed rather than having all design completed before development begins as in the Waterfall model. Detailed design documents for each aspect of the application will be created as development begins in these areas.
+No further design documents have been created. As discussed in the Approach and Methodology section, the choice of using the Scrum methodology will allow me to produce design documents as needed rather than having all design completed before development begins as in the Waterfall model. This allows focusing on development rather than spending weeks on design. Detailed design documents for each aspect of the application will be created as development begins in these areas.
 
 \section{Prototyping and Development}
+A concept application was created to explore the plausibility of using the GitHub API for project storage, version control and collaboration. The application was developed using Flask, JavaScript and the Python 3 libraries urllib and json. The interface of the application can be seen in Figure \ref{fig:proto1}.
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.6]{proto1}
+	\caption{GitHub API concept application}
+	\label{fig:proto1}
+\end{figure}
+
+The functionality implemented in the concept application included creating or deleting files in the repository, modifying the content of files and committing the changes that were made.
+
+The process of creating and pushing a commit using the GitHub API involves 5 steps, as observed by Matt Swanson\cite{githubapicommit}:
+\begin{enumerate}
+	\item Retrieve the hash value of the latest commit.
+	\item Retrieve the hash value of the tree in the commit.
+	\item Create a new tree, based on the current one. This will store the changes in the commit, such as file contents.
+	\item Create a new commit pointing to the new tree.
+	\item Submit the new commit as the HEAD reference, which will change the latest commit to the new one.
+\end{enumerate}
+
+From developing this concept application I was able to determine that the GitHub API was not suitable for the needs of this project. The process of committing a file through the API severely limits collaboration methods by overwriting changes entirely; no merging of changes will happen unlike the standard usage of Git. The GitHub API was also rather slow to access, taking up to 10 seconds to complete a commit.
 
 \section{Testing}
 The Scrum methodology that will be used has a strong emphasis on integrated testing. Integration testing methods will be used during the development process, to validate that each task that was completed will work correctly in the project.
@@ -385,11 +441,34 @@ User testing will also be performed at this stage, with feedback from the users 
 Users will be asked to fill in a survey of their experience after using the web application. Areas such as usability, functionality, stability, learning curve and performance, will all be evaluated using this process. The feedback from this process will provide necessary details in improving the project further before final release of the application.
 
 \section{Issues and Risks}
-% Using Git with OAuth tokens
-% ECS Preview access
+The usage of the GitHub API was proposed originally as a method of version control, collaboration and project storage. This was a huge risk involved in the project. As evaluated in the Prototype and Development section (Section 6), GitHub API usage was deemed unsuitable as it is incapable of merging changes made by multiple users for the purpose of collaboration on game development projects.
+
+Collaboration will be one of the most problematic challenges to work out, as some types of files may not merge correctly using Git. An example of this would be the scene data, which when merged may be an entirely unwanted result. This may have to be worked around by creating a specific user interface for merging scene data.
+
+One risk that may be problematic is the use of Git on the server through python on a mounted Elastic Block Storage volume. Git must be able to access the user's remote repository using the authentication provided by GitHub, and I was unable to determine if this was possible from the GitHub OAuth documentation.
+
+The use of Amazon EC2 Container Service is another risk. This service is currently in a preview state, with access being given out on a first come first serve basis. An application to this preview was submitted in November, and still hasn't been accepted; so an alternative solution may need to be decided upon.
+
 \section{Plan and Future Work}
-% Prototype/Concept application: Try out local git with oauth tokens
-% Use ssh keys instead - programmatically add one to github with API
-% Continue work on application
+Trello is being used to plan the tasks that will occur in the weekly sprints. This can be seen in Figure \ref{fig:trello1}, where the sprints for January are planned with a list of tasks associated with each. Development will be on hold during exams, and will continue straight after they are finished, beginning with the development of the web application back-end.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{trello1}
+	\caption{January's weekly sprints and tasks in Trello}
+	\label{fig:trello1}
+\end{figure}
+
+\paragraph{January.}
+The sprints for January will mainly focus on the development of the back-end architecture and functionality, specifically project storage. The first week will be exams, so no development will be completed. The second week will focus on evaluating the use of Git with OAuth keys, then move on to setting up the web application services.
+
+The third week of January will focus on the logic of the web application, implementing user authentication via GitHub OAuth, and setting up the systems for project storage using EBS and Git. The last week will be dedicated to the implementation of project storage, which may take quite a bit of time.
+
+\paragraph{February.}
+The plan for February is to complete development of the game engine in the first two weeks, focusing mainly on the architecture (Entity-component system), rendering and physics integration. The last two weeks will then focus on the development of the game editor, which will interact heavily with the game engine.
+
+\paragraph{March.}
+The sprints in March will aim to finalise the development of the application, tying everything together and improving the usability of the interface. Evaluations will be carried out beginning in the second week of March; starting with heuristic evaluations, and ending with user testing. After user testing, feedback will be checked to find any issues and improve them if necessary.
+
 \section{Conclusions}
 \end{document}
