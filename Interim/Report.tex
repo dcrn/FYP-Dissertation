@@ -49,13 +49,13 @@
 Web-based applications are becoming increasingly popular as the web develops; they are often favoured over traditional desktop applications when it comes to things like writing documents (Google Drive, Office Live) or backing up files.\cite{6068340} Desktop applications will often require downloading large installation files, dependencies (Java, .NET), and can often be limited to a single platform. Web apps are now becoming the norm, as they are far more flexible, can be updated or distributed instantly and are almost entirely cross platform.\cite{5936687}
 
 According to Taivalsaari and Mikkonen, ``Towards the end of this decade, the Web will become the dominant platform for the majority of 
-end user software''.\cite{6068340} It's only a matter of time until game engine suites such as Unity\cite{unity}, CryEngine\cite{cryengine} and Unreal Engine\cite{unreal} adapt to the web. Creating a web application in this area now will make it easier for new game developers to get started on building games without having to download software. This also eases game publishing significantly by publishing instantly to the cloud with one click.
+end user software''.\cite{6068340} It's only a matter of time until game engine suites such as Unity\cite{unity}, CryEngine\cite{cryengine} and Unreal Engine\cite{unreal} adapt to the web. Creating a web application in this area now will make it easier for new game developers to get started on building games without having to download software. This also eases game publishing significantly by allowing users to publish their games instantly to the cloud with a single click.
 
 WebGL is an open-source API for rendering 3D graphics in the browser, which is based on OpenGL ES; a commonly used graphics processing API that powers 3D graphics on the iPhone, iPad and Android devices.\cite{parisi2012webgl} WebGL is quickly becoming ``the new standard for 3D graphics on the Web''\cite[p2]{parisi2012webgl} as it is the most powerful and flexible way to render graphics in-browser without any extra dependencies or plugins needed. The JavaScript programming language is used to access the WebGL API, which can be rather complicated to program with; ``To do anything more than the most basic tasks using [WebGL] out of the box requires serious effort and literally hundreds of lines of code.''\cite[p44]{parisi2014programming}
 
 The solution to the WebGL API's complexity is to use a library that wraps it and simplifies the interface. The Three.js\cite{threejs} JavaScript library accomplishes this by providing easy to use classes such as models, lighting, scenes and cameras. ``A program written in raw WebGL style using hundreds of lines of code can be expressed in just a few dozen lines of code with Three.js.''\cite[p57]{parisi2014programming} While Three.js greatly simplifies the process of rendering scenes in the browser, it's not good enough for the development of games, as it only provides a framework for rendering scenes without any game logic.
 
-The architecture of the game engine is critical to how accessible it is to developers. The Entity-Component-System is a pattern used to simplify how game objects are defined by separating behaviour into smaller components. Each game object can be made up of many components, for example; a cube object could have a model component, giving it something to render, and a physics component which will allow it to collide with the world and other physics objects.\cite{gregory2014game} This type of game engine architecture allows users who have minimal programming skill to modify the game logic easily.
+The architecture of the game engine is critical to how accessible it is to developers. The Entity-Component-System is a pattern that can simplify how game objects are defined by separating behaviour into smaller components. Each empty game object can be made up of many components, which will add up to produce a dynamic and interesting object, for example; a blank `cube' object could have a model component, giving it something to render, and a physics component which will allow it to collide with the world and other physics objects.\cite{gregory2014game} This pattern essentially reduces game objects from what would normally be a class inherited from a base object, to a list of components and properties.
 
 An ECS-based game engine with an integrated editor will give users the power to build games even with minimal programming knowledge. A good example of this is Unity, which allows users to build their games just by creating their scene, adding entities such as a floor, and adding physics components to those entities.\cite{unitycreatingscenes} Adding a controller such as the `First Person Controller' to their project allows the player to input and explore the scene just like in a standard first person shooter game.\cite{unitycharactercontrol}
 
@@ -87,6 +87,9 @@ CopperLicht is an open source WebGL library and JavaScript 3D engine for creatin
 The CopperLicht game engine uses an OOP style approach to the architecture of a game, with entities being defined via scripting rather than by selecting a group of components as Unity does. The CopperLicht engine will handle rendering, physics and animations, any extra functionality must be added manually by the user with a script.\cite{copperlichtfeatures}
 
 The CopperLicht world editor, \emph{CopperCube} is an editor designed to create the worlds used in a CopperLicht game. It works by generating a scene file which is loaded by a HTML file, generated Android APK, Windows EXE or Mac OSX App.\cite{coppercubefeatures} Actions and behaviours can be added to the game by JavaScript scripting, or by using predefined behaviours defined in CopperLicht such as `Fly in a Circle'.\cite{copperlichtbehaviours}
+
+\subsubsection{Comparison of Solutions}
+Table, descriptions
 
 \subsection{Technologies Researched}
 \subsubsection{Web Application Hosting}
@@ -183,41 +186,43 @@ Dart runs in it's own Dart VM which boasts huge performance gains over JavaScrip
 \subsubsection{JavaScript Libraries}
 
 \paragraph{Rendering.}
-
-TODO
-
-Three.js
+Alternatives to Three.js were examined to determine their suitability to the project. The rendering library used should be suited to use in game development and have a flexible API.
 
 SpiderGL
 
-SceneJS
+SceneJS is a rendering library for JavaScript suited towards rendering scenes with high detail, similar to CAD, for use in medical or engineering areas.
 
-% Compare?
+Compare
 
 \paragraph{Physics.}
-TODO
-Existing research completed by Yogya and Kosalaa determined ...
-
-% Comparison of Physics Frameworks for WebGL-Based Game Engine 
-% Resa Yogya and Raymond Kosalaa
-
-% http://www.epj-conferences.org/articles/epjconf/pdf/2014/05/epjconf_icas2013_00035.pdf
+Existing research completed by Yogya and Kosalaa determined that out of several possible JavaScript physics engines including Bullet, Cannon and JibLib, ``Bullet is the best physics framework to be integrated into the WebGL-based game engine''.\cite{yogya2014comparison} Their conclusion is based on several factors, including performance, accuracy an compatibility with multiple browsers. 
 
 \paragraph{Web Audio.}
-TODO
+Research into the use of audio in JavaScript has proven that the W3C Web Audio API is a sufficient option for this project's requirements. The Web Audio API supports the use of Cartesian coordinates to project sound effects using binaural positioning in a 3-Dimensional environment.\cite{webaudio} Binaural positioning is crucial to establishing the atmosphere in games such as first person shooters; where directional audio is necessary to create a sense of immersion.
+
+The Web Audio API has support for real-time DSP sound filtering effects, which could be useful in the production of a game. DSP filters could be used to add distortion to ambient sounds based on events in the game such as an explosion.
+
+Real-time audio can be examined in-detail with the Web Audio API using an audio analyser, which outputs a Fast Fourier Transform table (FFT). This table contains a set of volumes at specific frequencies. Games could be built around analysing these frequencies and performing specific actions, for example: triggering rendering effects when music becomes particularly intense.
 
 \subsection{Other Relevant Research}
-I have used WebGL in the past to create a simple rendering application. My experience with using WebGL was comparable to how it is mentioned in Programming 3D Applications in HTML5 and WebGL by Tony Parisi (2014)\cite{parisi2014programming}. The whole application was exactly TODO lines, and it was only capable of rendering a single multi-coloured box as seen in Fig TODO.
+I have used WebGL in the past to create a simple rendering application. My experience with using WebGL was comparable to how it is mentioned in \emph{Programming 3D Applications in HTML5 and WebGL}\cite{parisi2014programming}. The application was designed to render objects using the pure WebGL API through JavaScript without any wrapping libraries. The result was an application of exactly 400 lines that was only capable of rendering a single multi-coloured box as seen in Figure \ref{fig:webgl} - this alone is evidence of how difficult WebGL can be to use.
 
-WebGL has great potential as the foundation for a powerful game engine, with it's strengths becoming evident while using OpenGL's shader language GLSL. Though it is powerful, the workload associated with using WebGL for even a small application was excessive.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{webgl}
+	\caption{A textured cube rendered with WebGL}
+	\label{fig:webgl}
+\end{figure}
 
-TODO: Analysis of Editors
+This experience using WebGL was the origin of my idea to simplify the method for developing games using WebGL. WebGL has great potential as the foundation for a powerful game engine, with it's strengths becoming evident while using OpenGL's shader language GLSL. Though it is powerful, the workload associated with using WebGL for even a small application was excessive.
+
+A concept application was developed to examine the plausibility of using the GitHub API as a means for storing user projects without the use of storage on the server. This is discussed further in Prototyping and Development (Section 6).
 
 \subsection{Resultant Findings / Requirements}
 
 Based on the research completed, the following requirements have been determined, including optimal choices for technologies and architectures used in the project.
 
-
+Requirements, Summary of research, Optimal technology choices
 
 \subsection{Bibliography}
 
@@ -226,13 +231,17 @@ Based on the research completed, the following requirements have been determined
 
 \section{Analysis}
 
-The project will be separated into three major components; the web application, the game engine itself, and the editor for building games with the engine.
+The project will be divided into three major components; the web application which will handle user authentication and project storage, the game engine which will provide the base framework for games and rendering, and the editor for building games with the engine.
 
 \subsection{Web Application}
 \paragraph{Hosting.}
-The web application will be hosted using the Amazon Elastic Beanstalk Service, with additional EC2 Container System instances being used for EBS mounted storage and database hosting if necessary.
+The web application will be hosted using the Amazon Elastic Beanstalk Service, with additional EC2 Container System instances being used for EBS mounted storage and database hosting.
 
-The load balancing system of Elastic Beanstalk will automatically duplicate the web application instance as needed when many users are accessing it. Since there may be many of these instances at one time, the EBS volume cannot be used directly from the application instance, so an extra instance will be created that will access the volume. All application instances created by Elastic Beanstalk will then communicate with this intermediary instance to access the volume. This instance will only be accessible internally.
+The load balancing system of Elastic Beanstalk will automatically duplicate the web application instance as needed when many users are accessing it, providing multiple running web applications that are chosen per-user on the fly. Since EBS volumes can only be mounted on a single instance and there may be many of these instances at one time, the EBS volume cannot be used directly from the web application. An intermediary instance will be created specifically for file access. 
+
+This intermediary instance will run another Flask server designed only to access the EBS volume. An API will be created allowing the web application instances to perform actions such as store, retrieve and perform operations on the files stored on the volume. All web application instances created by Elastic Beanstalk will then communicate with this intermediary instance to access the volume. This instance will only be accessible internally, and will depend heavily on user authentication to provide security of the user files.
+
+A simple MongoDB database instance will also be set up for use with the web application, which will provide a method to store and query a list of games that have been published by users of the application.
 
 \paragraph{Framework.}
 The web application framework that will be used is Flask, which provides a lightweight framework that is easy to work with. Modules for added functionality will be added to Flask as needed.
@@ -255,8 +264,7 @@ Standard JavaScript will be used as the scripting language for both developing t
 \paragraph{Architecture.}
 The game engine will be built in standard JavaScript using the Entity-Component-System pattern, with rendering powered by Three.js. Standard components including collision, lighting, camera, model and position will be created as a base for creating games in the engine. The creation of custom components through scripting will be possible, allowing users to add their own component-based functionality as needed.
 
-\paragraph{Physics.}
-The physics engine used will be todo
+The Bullet physics engine will be used t
 
 \subsection{Game Editor}
 The editor will be created using HTML5 and JavaScript, using Three.js for rendering components in the scene. Multiple views will be available on the editor UI, allowing the user to switch between free-look, top-down, and camera views to ease in the creation of the scene.
@@ -270,25 +278,83 @@ A script editor will be built into the editor, allowing the user to modify scrip
 All of the Git functionality will be available through the editor interface, which will allow users to quickly sync up with collaborators. An interface will be created specifically to merge changes with the server before pushing, as this is required for collaboration via Git.
 
 \section{Approach and Methodology}
+Since the project is divided into three major components as discussed in section 3, the components will be developed in order of importance. The most important part of the application will be the web application, as all other components will rely on it heavily for user authentication, editing and creating games, and serving published games to the user.
 
+When a usable implementation of the web application back-end is completed, development will move towards the game engine and editor, which will integrate heavily with the back-end. The game engine will be focused on first, with the game editor being developed last since it will depend on the other components extensively.
+
+\subsection{Methodology.}
 A Scrum-like software development methodology will be used for the duration of this project, along with elements from the Kanban method.
 
-Scrum is a kind of agile development methodology that is based on a series of iterative cycles of development called \emph{sprints}. These sprints will often begin with a brief planning session, can last from 1 to 4 weeks, then finish with a sprint retrospective to review how it went.
+Scrum is a kind of Agile development methodology that is based on a series of iterative cycles of development called \emph{sprints}. These sprints will often begin with a brief planning session, can last from 1 to 4 weeks, then finish with a sprint retrospective to review how it went.
 
-Scrum is usually a heavily team-based process, involving several roles such as `Scrum Master`, `Product Owner' and the Scrum team. Daily 15 minute team meetings are held to assess how the sprint is going, with each role and team member talking about what they did and what they plan to do. Since this project will be completed by a single person, I will be focusing on the iterative, planning and review aspects of the Scrum methodology rather than the daily meetings and roles.
+Scrum is usually a heavily team-based process, involving several roles such as `Scrum Master`, `Product Owner' and the Scrum team. Daily 15 minute team meetings are held to assess how the sprint is going, with each role and team member talking about what they did and what they plan to do. Since this project will be completed by a single person, I will be focusing on the iterative development, planning and review aspects of the Scrum methodology rather than the daily meetings and roles.
 
-A \emph{kanban board} will be used during each sprint. Trello will be used to manage what tasks need to be completed by adding a list for each iteration in the development process. Cards will be added to these lists for each task, and labels will be used as kanban columns by using labels such as `Ready', `In Progress', and `Completed'. If cards are overdue, they can be moved to the next sprint list as a backlog, by dragging and dropping.
+% http://www.mountaingoatsoftware.com/agile/scrum
+
+Using an Agile methodology like Scrum means that most of the design of the application will be done as needed, rather than up front like the waterfall model. Design documents such as UML diagrams or entity-relationship diagrams will be left until they are necessary for the continuation of the development process, or if another part of the project depends on the design being completed.
+
+A \emph{kanban board} will be used to manage tasks during each sprint. Trello will be used as the board by adding a list for each iteration in the development process. Cards will be added to these lists for each task, and labels will be used as kanban columns by using labels such as `Ready', `In Progress', and `Completed' as can be seen in Figure \ref{fig:kanban}. If cards are overdue, they can be moved to the next sprint list as a backlog, by dragging and dropping.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.7]{kanban}
+	\caption{Kanban-style task labels in Trello}
+	\label{fig:kanban}
+\end{figure}
 
 Git will be used throughout the development process to provide version control and project management through branches. Branching will be used to manage the status of the project via stable and development branches. The Git repository will be hosted both locally and remotely on GitHub for a backup.
 
-Towards the end of the project, evaluations will carried out to determine if each aspect of the project has met it's requirements. Heuristic evaluations will be performed to identify usability problems with the user interface for the website and game editor. User testing will also be performed at this stage, with feedback from the users that will determine if any features should be added or removed before final release.
+The methods for evaluation and testing have been documented in the Testing section of this report (Section 7).
 
 \section{Design}
 \subsection{Technical Architecture}
+A technical architecture diagram was created to visualise the scope and structure of this project. todo: more
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.72]{architecture}
+	\caption{Technical Architecture for the Web Application}
+	\label{fig:architecture}
+\end{figure}
+
+\subsubsection{Web Application.}
+
+Description of:
+
+\paragraph{Web Application.}
+Flask EB, instances
+
+\paragraph{Load Balancing.}
+Load balancing
+
+\paragraph{Project Storage.}
+Container, EBS, GitHub, Database
+
+\subsubsection{Presentation.}
+\paragraph{Game Engine.}
+\paragraph{Game Editor.}
+
+
 \subsection{Other Design Documents}
+As discussed in the Approach and Methodology section, the choice of using the Scrum methodology will allow me to produce design documents as needed rather than having all design completed before development begins as in the Waterfall model. Detailed design documents for each aspect of the application will be created as development begins in these areas.
+
 \section{Prototyping and Development}
 \section{Testing}
-Integrated testing (regression)
+The Scrum methodology that will be used has a strong emphasis on integrated testing. Integration testing methods will be used during the development process, to validate that each task that was completed will work correctly in the project.
+
+When a sprint is completed, regression testing will be used to find any bugs that may be present in the application. Regression tests will be documented for re-use in the next sprint, which will provide a few base tests that can be checked against the new iteration. Reusing regression tests will allow bugs to be found quicker, specifically when two sprints are in the same area of code.
+
+% http://msdn.microsoft.com/en-us/library/aa292128%28v=vs.71%29.aspx
+% http://msdn.microsoft.com/en-us/library/aa292167(v=vs.71).aspx
+
+Stress testing will be completed to evaluate the performance and capacity of the web application back-end. This will provide insight into the amount of users the application will be able to handle at once, and if scalability will be an issue in the future of the application.
+
+Towards the end of the project, evaluations will carried out to determine if each aspect of the project has met its requirements. Heuristic evaluations will be performed to identify usability problems with the user interface for the website and game editor.
+
+User testing will also be performed at this stage, with feedback from the users that will determine if any features should be added or removed before final release. Groups of users with varying level of knowledge in the area will be involved, to get a good range of feedback about the project.
+
+Users will be asked to fill in a survey of their experience after using the web application. Areas such as usability, functionality, stability, learning curve and performance, will all be evaluated using this process. The feedback from this process will provide necessary details in improving the project further before final release of the application.
+
 \section{Issues and Risks}
 % Using Git with OAuth tokens
 % ECS Preview access
