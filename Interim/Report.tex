@@ -59,8 +59,6 @@ The architecture of the game engine is critical to how accessible it is to devel
 
 An ECS-based game engine with an integrated editor will give users the power to build games even with minimal programming knowledge. A good example of this is Unity, which allows users to build their games just by creating their scene, adding entities such as a floor, and adding physics components to those entities.\cite{unitycreatingscenes} Adding a controller such as the `First Person Controller' to their project allows the player to input and explore the scene just like in a standard first person shooter game.\cite{unitycharactercontrol}
 
-By combining the aspects of an Entity Component System into a game engine built on the web with a fully featured editor and cloud storage, inexperienced or hobbyist game developers will be able to easily create games and publish them without needing to invest a lot of time in installing software or learning APIs, so they can get straight to making their game.
-
 \subsection{Alternative Existing Solutions}
 \subsubsection{Unity}
 Unity is a 3D game engine with an integrated editor and a huge online library full of assets such as models, sounds and various scripts or tools. Unity is a cross-platform engine that is used on Windows, Linux, Mac OSX, mobiles (Android, iOS, Windows, BlackBerry), consoles (PS3, Xbox360, Wii U) and even in browsers.\cite{unity}
@@ -188,11 +186,9 @@ Dart runs in it's own Dart VM which boasts huge performance gains over JavaScrip
 \paragraph{Rendering.}
 Alternatives to Three.js were examined to determine their suitability to the project. The rendering library used should be suited to use in game development and have a flexible API.
 
-SpiderGL
+SpiderGL is a WebGL wrapper that does very little abstraction to the API, making using WebGL slightly easier while still having low level objects such as vertex buffer objects.\cite{spidergl} In comparison to Three.js, Spider lacks a lot of features for rendering complex scenes, as well as being significantly harder to use.
 
-SceneJS is a rendering library for JavaScript suited towards rendering scenes with high detail, similar to CAD, for use in medical or engineering areas.
-
-Compare
+SceneJS is a rendering library for JavaScript suited towards visualising highly accurate scenes with large amounts of detail similar to Computer-Aided Design (CAD). This library can be used to create and explore medical or engineering recreations, for example; the human body.
 
 \paragraph{Physics.}
 Existing research completed by Yogya and Kosalaa determined that out of several possible JavaScript physics engines including Bullet, Cannon and JibLib, ``Bullet is the best physics framework to be integrated into the WebGL-based game engine''.\cite{yogya2014comparison} Their conclusion is based on several factors, including performance, accuracy an compatibility with multiple browsers. 
@@ -219,13 +215,45 @@ This experience using WebGL was the origin of my idea to simplify the method for
 A concept application was developed to examine the plausibility of using the GitHub API as a means for storing user projects without the use of storage on the server. This is discussed further in Prototyping and Development (Section 6).
 
 \subsection{Resultant Findings / Requirements}
+Based on the research completed, the following requirements have been determined, including optimal choices for technologies and architectures that will be utilised in this project.
 
-Based on the research completed, the following requirements have been determined, including optimal choices for technologies and architectures used in the project.
+\subsubsection{Background research.}
+The background research has shown that web applications are becoming the standard, with almost every type of application now being able to be created on the web. Applications built on the web greatly simplify the process that users go through to access and utilise an application, and with cloud storage being utilized; the user doesn't need to store any files locally.
 
-Requirements, Summary of research, Optimal technology choices
+Game engines are being made easier to use and understand by patterns such as the Entity Component System. This system builds game objects by aggregating functionality from several smaller components, without any actual functionality being made specific to the object.
+
+By combining the aspects of an Entity Component System into a game engine built on the web with a fully featured editor and cloud storage, inexperienced or hobbyist game developers will be able to easily create games and publish them without needing to invest a lot of time in installing software or learning APIs, so they can get straight to making their game.
+
+\subsubsection{Existing Solutions.}
+A comparison of the existing solutions to this problem has revealed ...
+
+\subsubsection{Technologies.}
+\paragraph{Web Application Hosting.}
+An analysis and comparison of the examined application hosting solutions has determined that Amazon's Elastic Beanstalk service would be the optimal choice for hosting the web application, with Amazon EC2 Container Service being the second choice.
+
+Elastic Beanstalk has several strengths over the other options, with the most pronounced being the automatic load balancing and interaction with EC2 instances. While other hosting solutions such as Heroku do have load balancing, they do not have the huge library of web services that can can be integrated with like AWS does.
+
+The EC2 Container Service was a close second to Elastic Beanstalk, giving the most control over how the application would be deployed, but would require setting up the Amazon Elastic Load Balancer to interact with the containers manually.
+
+\paragraph{Web Application Framework.}
+The examined frameworks for developing web applications were fairly similar in functionality, flexibility and scalability. In my opinion, the optimal application framework to use would be Flask, as it requires minimal setup and can be extended using modules as needed. The other examined frameworks; Django and Node.js were too feature-heavy and required extra setup time respectively.
+
+\paragraph{Project Storage.}
+For user project storage, based on the findings the optimal project storage solution would either be Amazon S3 or Amazon Elastic Block Storage.
+
+S3 provides an API for storing and retrieving files, with a version control mechanism. This could provide all of the functionality needed for project storage, however using s3 could make implementing collaboration difficult compared to using Git for version control and collaboration. Using S3 with the load balancing would be straightforward, as S3 can be accessed from multiple sources at once through the API.
+
+Elastic Block Storage, which is a simple mounted volume which could be used with Git to provide a means of version control and collaboration. Using EBS with load balancing software is fairly challenging however, as the volume can only be mounted on a single application instance and load balancing will generate multiple instances of an application.
+
+\paragraph{Alternative Scripting Language.}
+Alternative scripting languages, Dart and TypeScript, were examined and compared to JavaScript. As the alternatives require compilation/transcompilation, standard JavaScript was decided as the optimal choice for use in this project. Implementing transcompilation in the web application is unnecessary as standard JavaScript can be used without major loss of functionality.
+
+\paragraph{JavaScript Libraries.}
+As a result of the research into several rendering libraries based on WebGL, Three.js was determined to be the most suitable for this project, as it has the features, flexibility, stability and power needed for use in game engines. The API it provides is abstracted significantly from the WebGL API to provide simple methods for doing normally complex tasks.
+
+The Bullet physics engine and Web Audio API are highly suited for use in this project as explored in the research.
 
 \subsection{Bibliography}
-
 \bibliography{Report}{}
 \bibliographystyle{unsrt}
 
@@ -264,7 +292,7 @@ Standard JavaScript will be used as the scripting language for both developing t
 \paragraph{Architecture.}
 The game engine will be built in standard JavaScript using the Entity-Component-System pattern, with rendering powered by Three.js. Standard components including collision, lighting, camera, model and position will be created as a base for creating games in the engine. The creation of custom components through scripting will be possible, allowing users to add their own component-based functionality as needed.
 
-The Bullet physics engine will be used t
+The Bullet physics library and Web Audio API will be used to add physics and audio processing to the game engine, as they are highly suitable for use in game engines. Having physics and audio in the game engine is essential to being able to create interactive worlds.
 
 \subsection{Game Editor}
 The editor will be created using HTML5 and JavaScript, using Three.js for rendering components in the scene. Multiple views will be available on the editor UI, allowing the user to switch between free-look, top-down, and camera views to ease in the creation of the scene.
@@ -308,7 +336,7 @@ The methods for evaluation and testing have been documented in the Testing secti
 
 \section{Design}
 \subsection{Technical Architecture}
-A technical architecture diagram was created to visualise the scope and structure of this project. todo: more
+A technical architecture diagram was created to visualise the scope and structure of this project, as seen in Figure \ref{fig:architecture}. The design of this architecture focuses on the structure of the web application at a high level, looking at which technologies are implemented on specific platforms.
 
 \begin{figure}[h]
 	\centering
@@ -318,27 +346,28 @@ A technical architecture diagram was created to visualise the scope and structur
 \end{figure}
 
 \subsubsection{Web Application.}
-
-Description of:
+This area of the diagram visualises the technologies that make up the server-side of the application. There are three major parts to this; the web application, load balancing, and the project storage section, each of which are connected.
 
 \paragraph{Web Application.}
-Flask EB, instances
+The web application is deployed on the Amazon Elastic Beanstalk platform, with multiple instances being created on demand by the load balancing system. It is powered by the Flask web application framework which handles communication with the project storage container, and serves the application itself to the user's browser via the web.
 
 \paragraph{Load Balancing.}
-Load balancing
+The load balancing is handled automatically by the Elastic Beanstalk platform. It has the capability to create multiple instances of the web application on demand, each of which will communicate with the project storage container to store, retrieve and manage user projects. Specific web application instances will be displayed to the user depending on the load at the time.
 
 \paragraph{Project Storage.}
-Container, EBS, GitHub, Database
+The project storage section shows how user created game projects will be stored in the system. The Flask application here provides an API to the web application, allowing multiple instances to access the Elastic Block Storage at once through the API. The Elastic Block Storage volume is mounted directly on the container to facilitate storage access.
+
+Git operations are performed on the EBS volume from the Flask app; which allows version control between users. Direct access to GitHub is used when pushing to a remote location, which is used for backing up and collaboration with the GitHub API.
 
 \subsubsection{Presentation.}
-\paragraph{Game Engine.}
-\paragraph{Game Editor.}
-
+The presentation side of the diagram displays the aspects of the web application that will be visible to the user. Published games are served from the web to the user's browser, along with the game engine to run the game. The game editor will be accessible to logged in users, where they can edit and create games. The game editor requires the game engine for rendering the scene and play-testing.
 
 \subsection{Other Design Documents}
 As discussed in the Approach and Methodology section, the choice of using the Scrum methodology will allow me to produce design documents as needed rather than having all design completed before development begins as in the Waterfall model. Detailed design documents for each aspect of the application will be created as development begins in these areas.
 
 \section{Prototyping and Development}
+
+
 \section{Testing}
 The Scrum methodology that will be used has a strong emphasis on integrated testing. Integration testing methods will be used during the development process, to validate that each task that was completed will work correctly in the project.
 
