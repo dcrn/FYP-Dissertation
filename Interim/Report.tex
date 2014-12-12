@@ -53,7 +53,8 @@
 
 % Document contents
 \section{Project Statement}
-This project is a game engine and editor based in a web application, designed to create games that run in the browser using WebGL. 
+The goal of this project is to create a scalable web application in the cloud that provides hobbyist game developers with a comprehensive and easy to use game engine and editor similar to Unity. The game engine, editor and created games will be powered by WebGL and JavaScript which will run in the browser on multiple platforms. Users will be provided with cloud storage for their created games. Games can be published to a public game list on the web in one click, which doubles as a portal where people can play games in their browser. Games can be developed collaboratively using the built-in Git functionality in the editor, which also provides version control in large projects.
+
 \section{Research}
 \subsection{Background Research}
 
@@ -104,7 +105,7 @@ The CopperLicht world editor, \emph{CopperCube} is an editor designed to create 
 \begin{table}[H]
 	\begin{tabular}{| l | c | c | c | c | c | c | c |}
 	\hline
-	& VC & Git & Realtime & Editor & ECS & Forking & Publish\\\hline
+	& VC & Git & Real-time & Editor & ECS & Forking & Publish\\\hline
 	Unity 		& \ding{56}	& \ding{52}	& \ding{56}	
 				& \ding{52}	& \ding{52}	& \ding{56}	& \ding{56}\\\hline
 	PlayCanvas 	& \ding{56}	& \ding{56}	& \ding{52}	
@@ -118,9 +119,9 @@ The CopperLicht world editor, \emph{CopperCube} is an editor designed to create 
 	\label{tab:solutions}
 \end{table}
 
-A comparison of my solution and alternative solutions has been performed, comparing the features available. The results of this comparison are visible in Table \ref{tab:solutions}. The features compared are: Built-in version control (VC), Git usage (Git), Realtime collaboration (Realtime), Conglomerated editor features like scripting (Editor), Entity-Component System architecture (ECS), Built-in forking of example / public projects (Forking) and one-click publishing (Publish).
+A comparison of my solution and alternative solutions has been performed, comparing the features available. The results of this comparison are visible in Table \ref{tab:solutions}. The features compared are: Built-in version control (VC), Supports Git usage (Git), Real-time collaboration (Real-time), Conglomerated editor features like scripting and management (Editor), Entity-Component System architecture (ECS), Built-in forking of example or public projects (Forking) and one-click publishing (Publish).
 
-
+The comparison reveals that many of the examined alternative solutions have areas that could be improved upon. For example, Unity has a strong engine and editor but has no methods for quick publishing of created games, apart from third party websites.
 
 \subsection{Technologies Researched}
 \subsubsection{Web Application Hosting}
@@ -250,12 +251,10 @@ Based on the research completed, the following requirements have been determined
 \subsubsection{Background research.}
 The background research has shown that web applications are becoming the standard, with almost every type of application now being able to be created on the web. Applications built on the web greatly simplify the process that users go through to access and utilise an application, and with cloud storage being utilized; the user doesn't need to store any files locally.
 
-Game engines are being made easier to use and understand by patterns such as the Entity Component System. This system builds game objects by aggregating functionality from several smaller components, without any actual functionality being made specific to the object.
-
-By combining the aspects of an Entity Component System into a game engine built on the web with a fully featured editor and cloud storage, inexperienced or hobbyist game developers will be able to easily create games and publish them without needing to invest a lot of time in installing software or learning APIs, so they can get straight to making their game.
+Game engines are being made easier to use and understand by patterns such as the Entity-Component System. This system builds game objects by aggregating functionality from several smaller components, without any actual functionality being made specific to the object.
 
 \subsubsection{Existing Solutions.}
-A comparison of the existing solutions to this problem has revealed ...
+A comparison of the existing solutions to this problem has revealed that alternative solutions can be improved upon by aggregating functionality including version control, git usage, collaboration, entity-component system based game engine, integrated editor controls for scripting and project management, forking existing projects and one-click publishing of projects. While solutions such as PlayCanvas provide a more interactive approach with real-time collaboration, my solution of using Git is a valid choice as many developers will be more familiar with it.
 
 \subsubsection{Technologies.}
 \paragraph{Web Application Hosting.}
@@ -281,7 +280,7 @@ Alternative scripting languages, Dart and TypeScript, were examined and compared
 \paragraph{JavaScript Libraries.}
 As a result of the research into several rendering libraries based on WebGL, Three.js was determined to be the most suitable for this project, as it has the features, flexibility, stability and optimisation needed for use in game engines. The API it provides is abstracted significantly from the WebGL API to provide simple methods for doing normally complex tasks.
 
-The Bullet physics engine and Web Audio API are highly suited for use in this project as explored in the research. TODO
+The Bullet physics engine and Web Audio API are highly suited for use in this project as explored in the research, providing functionality that is crucial for use in game engines.
 
 \subsection{Bibliography}
 
@@ -471,4 +470,9 @@ The plan for February is to complete development of the game engine in the first
 The sprints in March will aim to finalise the development of the application, tying everything together and improving the usability of the interface. Evaluations will be carried out beginning in the second week of March; starting with heuristic evaluations, and ending with user testing. After user testing, feedback will be checked to find any issues and improve them if necessary.
 
 \section{Conclusions}
+Web applications are slowly becoming more popular than desktop applications, including applications for document creation and even 3D modelling. One area still relatively untouched is game engines, where applications can often be hundreds of megabytes in size.
+
+By combining the aspects of an Entity-Component System into a game engine built on the web with a fully featured editor and cloud storage, inexperienced or hobbyist game developers will be able to easily create games and publish them without needing to invest a lot of time in installing software or learning APIs, so they can get straight to making their game.
+
+The scope of this project has been narrowed and focused as a result of research into the competing web application technologies available for hosting, scaling and maintaining web applications. Web-based rendering and game creation libraries have been examined and evaluated for their relevance.
 \end{document}
