@@ -1,0 +1,1025 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"padding",
+				"padding-left"
+			],
+			[
+				"valid",
+				"validateComponentScript"
+			],
+			[
+				"update",
+				"updatePropertiesList"
+			],
+			[
+				"Mesh",
+				"THREE.MeshBasicMaterial"
+			],
+			[
+				"text-",
+				"text-indent"
+			],
+			[
+				"Camera",
+				"THREE.PerspectiveCamera"
+			],
+			[
+				"backgrou",
+				"background-color"
+			],
+			[
+				"Mes",
+				"THREE.MeshDepthMaterial"
+			],
+			[
+				"Vector",
+				"THREE.Vector3"
+			],
+			[
+				"vec",
+				"THREE.Vector3"
+			],
+			[
+				"Th",
+				"THREE"
+			],
+			[
+				"BasicMater",
+				"THREE.MeshBasicMaterial"
+			],
+			[
+				"Geometry",
+				"THREE.SphereGeometry"
+			],
+			[
+				"inner",
+				"innerWidth"
+			],
+			[
+				"test_url",
+				"test_url_repo"
+			],
+			[
+				"test_rem",
+				"test_remote_name"
+			],
+			[
+				"a",
+				"a_blob"
+			],
+			[
+				"border",
+				"border-radius"
+			],
+			[
+				"bor",
+				"border-radius"
+			],
+			[
+				"backgr",
+				"background-color"
+			],
+			[
+				"e",
+				"echo	<?php echo … ?>"
+			],
+			[
+				"padi",
+				"padding-right"
+			],
+			[
+				"github",
+				"github"
+			],
+			[
+				"base_tre",
+				"base_tree_sha"
+			],
+			[
+				"base",
+				"base_tree"
+			],
+			[
+				"border-radius",
+				"border-top-left-radius"
+			],
+			[
+				"get",
+				"getElementsByClassName"
+			],
+			[
+				"border-ra",
+				"border-radius"
+			],
+			[
+				"gener",
+				"generate_seed"
+			],
+			[
+				"error_v",
+				"error_visible"
+			],
+			[
+				"fah",
+				"fahrenheit"
+			],
+			[
+				"visibl",
+				"visibility"
+			],
+			[
+				"backgro",
+				"background-color"
+			],
+			[
+				"list",
+				"list-style-type"
+			],
+			[
+				"backg",
+				"background-color"
+			],
+			[
+				"border-w",
+				"border-left-width"
+			],
+			[
+				"ma",
+				"margin-bottom"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
+				"list-s",
+				"list-style-type"
+			],
+			[
+				"bak",
+				"background-size"
+			],
+			[
+				"backr",
+				"background-color"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"sub",
+				"submit_ids"
+			],
+			[
+				"resol",
+				"resolveVanityID"
+			],
+			[
+				"crypt",
+				"cryptsetup"
+			],
+			[
+				"thread",
+				"ping_thread"
+			],
+			[
+				"inln",
+				"inline-block"
+			],
+			[
+				"ids",
+				"idstring"
+			],
+			[
+				"glp",
+				"glyphicon-remove"
+			],
+			[
+				"cat",
+				"categories"
+			],
+			[
+				"getGame",
+				"getGameCategories"
+			],
+			[
+				"keygen",
+				"keygenpanel"
+			],
+			[
+				"GridBag",
+				"GridBagLayout"
+			],
+			[
+				"de",
+				"decrypt"
+			],
+			[
+				"Grid",
+				"GridBagConstraint"
+			],
+			[
+				"GridB",
+				"GridBagConstraint"
+			],
+			[
+				"Gri",
+				"GridBagConstraints"
+			],
+			[
+				"b",
+				"BigInteger"
+			],
+			[
+				"miller",
+				"miller_rabin"
+			],
+			[
+				"mill",
+				"miller_rabin"
+			],
+			[
+				"statu",
+				"status_code"
+			],
+			[
+				"stat",
+				"status_code"
+			],
+			[
+				"calre",
+				"calendar_dict"
+			],
+			[
+				"mont",
+				"monthrange"
+			],
+			[
+				"modu",
+				"modulecode"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/home/entity/Documents/FYP/FYP-Dissertation/Interim/Report.tex",
+			"settings":
+			{
+				"buffer_size": 51258,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 30.0,
+		"selected_items":
+		[
+			[
+				"html",
+				"Set Syntax: HTML"
+			],
+			[
+				"commit",
+				"Git: Commit"
+			],
+			[
+				"diff",
+				"Git: Diff Current File"
+			],
+			[
+				"diff cur",
+				"Git: Diff Tool Current File"
+			],
+			[
+				"upper",
+				"Convert Case: Upper Case"
+			],
+			[
+				"git status",
+				"Git: Status"
+			],
+			[
+				"git commit",
+				"Git: Commit"
+			],
+			[
+				"diff curr",
+				"Git: Diff Current File"
+			],
+			[
+				"git diff",
+				"Git: Diff All Files"
+			],
+			[
+				"git diff c",
+				"Git: Diff Current File"
+			],
+			[
+				"git commi",
+				"Git: Commit"
+			],
+			[
+				"git dif",
+				"Git: Diff Current File"
+			],
+			[
+				"lower",
+				"Convert Case: Lower Case"
+			],
+			[
+				"Upper",
+				"Convert Case: Upper Case"
+			],
+			[
+				"Convert",
+				"Convert Case: Upper Case"
+			],
+			[
+				"permute",
+				"Permute Lines: Unique"
+			],
+			[
+				"unique",
+				"Permute Lines: Unique"
+			],
+			[
+				"git diff all",
+				"Git: Diff All Files"
+			],
+			[
+				"git diff allfiles",
+				"Git: Diff All Files"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"repl",
+				"SublimeREPL: Python"
+			],
+			[
+				"javasc",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"python ",
+				"SublimeREPL: Python"
+			],
+			[
+				"python",
+				"SublimeREPL: Python"
+			],
+			[
+				"shell",
+				"SublimeREPL: Shell"
+			],
+			[
+				"repl python",
+				"SublimeREPL: Python"
+			],
+			[
+				"sql",
+				"Set Syntax: SQL"
+			],
+			[
+				"pyton",
+				"Set Syntax: Python"
+			],
+			[
+				"syntax prolog",
+				"Set Syntax: SWI-Prolog"
+			],
+			[
+				"syntax",
+				"Set Syntax: Java"
+			],
+			[
+				"syntax ",
+				"Set Syntax: Pascal"
+			],
+			[
+				"repl pyth",
+				"SublimeREPL: Python"
+			],
+			[
+				"SYNTAX c++",
+				"Set Syntax: C++"
+			],
+			[
+				"syntax uml",
+				"Set Syntax: MultiMarkdown"
+			],
+			[
+				"syntax C",
+				"Set Syntax: C"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"discove",
+				"Package Control: Discover Packages"
+			],
+			[
+				"package control",
+				"Package Control: Discover Packages"
+			],
+			[
+				"repl shell",
+				"SublimeREPL: Shell"
+			],
+			[
+				"terminal",
+				"Preferences: Terminal Key Bindings – Default"
+			],
+			[
+				"REPL",
+				"SublimeREPL: Python"
+			],
+			[
+				"list p",
+				"Package Control: List Packages"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"recent",
+				"Floobits - Join Recent Workspace"
+			],
+			[
+				"join",
+				"Floobits - Join Recent Workspace"
+			],
+			[
+				"floo",
+				"Floobits - Join Recent Workspace"
+			],
+			[
+				"push",
+				"Git: Push"
+			],
+			[
+				"git add",
+				"Git: Add..."
+			],
+			[
+				"git q",
+				"Git: Quick Commit"
+			],
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"quick com",
+				"Git: Quick Commit"
+			],
+			[
+				"git comm",
+				"Git: Commit"
+			],
+			[
+				"add",
+				"Git: Add..."
+			],
+			[
+				"git quick",
+				"Git: Quick Commit"
+			],
+			[
+				"quick",
+				"Git: Quick Commit"
+			],
+			[
+				"quick comm",
+				"Git: Quick Commit"
+			],
+			[
+				"comm",
+				"Git: Commit"
+			],
+			[
+				"git",
+				"Git: Status"
+			],
+			[
+				"packag",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 414.0
+	},
+	"console":
+	{
+		"height": 235.0,
+		"history":
+		[
+			"view.__dict__",
+			"inspect.getmembers(view, predicate=lambda x: not inspect.ismethod(x))",
+			"inspect.getmembers(view, predicate=: !inspect.ismethod)",
+			"inspect.getmembers(view, predicate=inspect.ismethod)",
+			"from optparse import OptionParser",
+			"inspect",
+			"import inspect",
+			"view",
+			"view.set_viewport_position((20, 2000), True)",
+			"view.set_viewport_position((20, 0), True)",
+			"view.set_viewport_position((20, 2000))",
+			"view.set_viewport_position((20, 200))",
+			"view.set_viewport_position((20, 20))",
+			"view.set_viewport_position((20, 2))",
+			"view.set_viewport_position((2, 2))",
+			"view.set_viewport_position(vector(2, 2))",
+			"view.viewport_position(10)",
+			"view.viewport_position((10))",
+			"view.viewport_position((0, 10))",
+			"view.viewport_position()",
+			"view.layout_extent()",
+			"view.set_viewport_position(vector(2, 2))",
+			"view.set_viewport_position(vector2(2, 2))",
+			"view.viewport_position()",
+			"view.set_viewport_position((2, 2))",
+			"view.viewport_position()",
+			"view.set_viewport_position((2, 2))",
+			"view.viewport_position()",
+			"view",
+			"reload sublimerepl",
+			"import urllib.request,os; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), 'wb').write(urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ','%20')).read())"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/entity/Documents/FYP/FYP-Dissertation/Dissertation/chapters/introduction.tex",
+		"/home/entity/Documents/FYP/FYP-Dissertation/Dissertation/chapters/research.tex",
+		"/home/entity/Documents/FYP/FYP-Dissertation/Dissertation/chapters/design.tex",
+		"/home/entity/Documents/FYP/FYP-Dissertation/Dissertation/chapters/validation.tex",
+		"/home/entity/Documents/FYP/FYP-Dissertation/Dissertation/Dissertation.tex",
+		"/home/entity/Documents/FYP/FYP-Dissertation/Dissertation/chapters/plan.tex",
+		"/home/entity/Documents/FYP/FYP-Dissertation/Dissertation/chapters/conclusion.tex",
+		"/home/entity/Documents/FYP/FYP-Dissertation/Dissertation/chapters/architecture.tex",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/views/explorerscenesitemview.hbs",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/views/explorerscriptsitemview.hbs",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/views/explorerscriptsitemview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/views/explorerscriptsview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/views/propertiesview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/views/containerview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/views/mainview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/views/sceneview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/views/scriptview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/views/tabitemview.hbs",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/views/tabview.hbs",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/views/tabview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/views/tabitemview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/views/container.hbs",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/views/sceneview.hbs",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/editor.css",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/editor.html",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/views/explorerview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/views/explorerscenesview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/views/tabpanelview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/editor.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/views/editorview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/views/mainview.hbs",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/views/tabpanelview.hbs",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/views/templatetabview.hbs",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/views/explorerview.hbs",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/views/editorview.hbs",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/views/explorercomponentview.hbs",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/views/propertiesview.hbs",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/app.py",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/views/tabview.hrb",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/views/tabpanelview.hrb",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/explorersceneview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/explorerentityview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/explorerview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/explorercomponentview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/editorview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor/explorerscriptview.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor.html",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/editor/templates/editorview.hrb",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/static/editor.js",
+		"/home/entity/Documents/FYP/Implementation/fyp-refactor/web/templates/engine.html",
+		"/home/entity/temp/projstorage/dcrn/testrepo/gamedata.json",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/static/editor_explorer.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/static/engine/components/transform.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/static/engine/components/light.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/static/engine/game.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/app.py",
+		"/home/entity/Documents/FYP/Implementation/fyp/storage/storage.py",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/storage.py",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/templates/editor.html",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/static/engine/scene.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/static/engine/components/physics.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/static/editor.css",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/templates/engine.html",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/static/engine/components.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/static/engine/components/mesh.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/static/engine/components/camera.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/static/engine/components/flycontroller.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/static/engine/entity.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/static/engine/components/fpscontroller.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/templates/game.html",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/static/editor.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/github.py",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/templates/error.html",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/templates/index.html",
+		"/home/entity/Documents/FYP/Implementation/fyp/storage/storage_tests.py",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/config.cfg.example",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/config.cfg",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/templates/projects.html",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/static/style.css",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/templates/nav.html",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/templates/base.html",
+		"/home/entity/Documents/RichWeb/assignment2/app/main.js",
+		"/home/entity/Documents/Python/businessproto/templates/grades.html",
+		"/home/entity/Documents/FYP/Implementation/fyp/merged/static/engine/game.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/merged/templates/game.html",
+		"/home/entity/Documents/FYP/Implementation/fyp/merged/app.py",
+		"/home/entity/Documents/FYP/Implementation/fyp/editor/static/editor.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/game/index.html",
+		"/home/entity/Documents/FYP/Implementation/fyp/editor/templates/index.html",
+		"/home/entity/Documents/FYP/Implementation/fyp/game/game.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/game/scene.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/game/components/camera.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/game/components/fpscontroller.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/game/components/light.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/game/components/mesh.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/game/components/flycontroller.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/game/components/physics.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/game/components/transform.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/game/components.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/game/entity.js",
+		"/home/entity/Documents/FYP/Implementation/fyp/editor/editor.py",
+		"/home/entity/Documents/FYP/Implementation/fyp/editor/index.html",
+		"/home/entity/Documents/FYP/Implementation/fyp/web/web.py",
+		"/home/entity/Documents/FYP/Implementation/fyp/storage/test.py",
+		"/home/entity/Documents/FYP/Implementation/fyp/storage/app.py",
+		"/home/entity/Documents/FYP/Implementation/fyp/storage/app_tests.py",
+		"/home/entity/Documents/Python/CloudComputing/Calendar/restcal_tests.py",
+		"/home/entity/Documents/Python/CloudComputing/Calendar/restcal.py",
+		"/home/entity/Documents/FYP/Implementation/fyp/storage/config.cfg",
+		"/home/entity/Documents/FYP/Implementation/fyp/storage/config.cfg.example",
+		"/home/entity/Documents/FYP/Implementation/fyp/github.py",
+		"/home/entity/Documents/FYP/Implementation/fyp/app.py",
+		"/home/entity/Documents/FYP/Implementation/fyp/config.cfg",
+		"/home/entity/Documents/FYP/Implementation/fyp/config.cfg.example",
+		"/home/entity/Documents/FYP/Implementation/fyp/dependencies.txt",
+		"/home/entity/Documents/FYP/Implementation/fyp/templates/nav.html",
+		"/home/entity/Documents/FYP/Implementation/fyp/static/style.css",
+		"/home/entity/Documents/FYP/Implementation/fyp/templates/error.html",
+		"/home/entity/Documents/FYP/Implementation/fyp/templates/index.html",
+		"/home/entity/Documents/FYP/Implementation/fyp/templates/base.html",
+		"/home/entity/Documents/FYP/Implementation/fyp-project-storage/github.py",
+		"/home/entity/Documents/FYP/Implementation/fyp-project-storage/app.py",
+		"/home/entity/Documents/FYP/Implementation/fyp/.gitignore",
+		"/home/entity/Documents/Python/d2notify/templates/index.html",
+		"/home/entity/Documents/RichWeb/labs/week8/defeasible_reasoning_wikipedia_javascript.html",
+		"/home/entity/Documents/RichWeb/labs/week5/exercise2.html",
+		"/home/entity/Documents/Python/d2notify/app.py",
+		"/home/entity/Documents/FYP/Implementation/fyp-project-storage/__init__.py"
+	],
+	"find":
+	{
+		"height": 32.0
+	},
+	"find_in_files":
+	{
+		"height": 82.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"\\begin",
+			"Report",
+			"autoSave",
+			"showInputPopup",
+			"modal",
+			"POST",
+			"100%",
+			"1005",
+			"colour",
+			"update",
+			"updatePropertiesLis",
+			"isEq",
+			"Scenes",
+			"View",
+			"scene",
+			"properties",
+			"console.log",
+			"tab",
+			"	\n",
+			"tab",
+			"list",
+			"tablist",
+			"editor.",
+			"render_template",
+			"on('change",
+			"autoSave",
+			"{\n",
+			"onEdit",
+			"add'",
+			"explorerOnListToggle",
+			"listtoggle",
+			"explorerOnSelect",
+			"selectedComponent",
+			"add'",
+			"data-id",
+			"data-property",
+			"data-id",
+			"inputs",
+			"data-id",
+			"ActionClick",
+			"\"",
+			"ActionClick",
+			"updateSelection",
+			"selectionMesh",
+			"add(",
+			"ActiveScene",
+			"setActiveScene",
+			"onEdit",
+			"selected",
+			"camera",
+			"explorer",
+			"#explorer",
+			"Action",
+			"components",
+			"sidebar",
+			"explorer",
+			"Add New Scene",
+			"data-target",
+			"OnActionClick",
+			"explorerOnClick",
+			"actions",
+			"closebutton",
+			"action",
+			"Game.load",
+			"this.scenes",
+			"load",
+			"onEdit",
+			"inputs",
+			"checkbox",
+			"label>",
+			"_template(",
+			"_template",
+			"showInputPopup",
+			"Action",
+			"showInput",
+			"input",
+			"Action",
+			"data(",
+			"scene",
+			"Action",
+			"action",
+			"threeobj",
+			"input",
+			"button",
+			"tab",
+			"close",
+			"actions",
+			"autoSave",
+			"gamedata",
+			"autoSav",
+			"post",
+			"autoSave",
+			"onEdit",
+			"gravity",
+			"defaultCam",
+			"load(",
+			"gravity",
+			"save",
+			"gamedata",
+			"closeTab",
+			"input",
+			"validate",
+			"saveCompo",
+			"success",
+			"popover",
+			"saveC",
+			"console.log",
+			"autoSave",
+			"autosave",
+			"closeTab",
+			"autoSave",
+			"updateCamera",
+			"invalida",
+			"margin",
+			"bootstrap",
+			"setValue",
+			"closeTab",
+			"role=\"presen",
+			"actions",
+			"btn-xs",
+			"active",
+			"data-target",
+			"501",
+			"get_file",
+			"path",
+			"contents",
+			"tree",
+			"g.storage"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"FPSControllerComponent",
+			"threeobj",
+			"ThreeObj",
+			"	",
+			"</article>",
+			"<article>",
+			"	",
+			"\n",
+			"\"answers\"",
+			"&gt;",
+			"&lt;",
+			"&llt;",
+			"\"title\":",
+			"\"id\":",
+			"	",
+			"categorybox",
+			"recv(",
+			"sys.std",
+			"\n",
+			"calendardb",
+			"entrydate",
+			"calendar_dict",
+			"in",
+			"calendar_list",
+			"'",
+			"	",
+			"mycal",
+			"'",
+			"\"",
+			"	",
+			"- ",
+			"Assignment",
+			"rentPerMonth",
+			"costPerMonth"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/home/entity/Documents/FYP/FYP-Dissertation/Interim/Report.tex",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 51258,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5737,
+								5737
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/LaTeX/LaTeX.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1957.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 30.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "webgl.sublime-project",
+	"replace":
+	{
+		"height": 40.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 450.0,
+		"selected_items":
+		[
+			[
+				"",
+				"~/Documents/Python/businessproto.sublime-workspace"
+			]
+		],
+		"width": 342.0
+	},
+	"select_symbol":
+	{
+		"height": 125.0,
+		"selected_items":
+		[
+			[
+				"",
+				"RSA"
+			]
+		],
+		"width": 352.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 224.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

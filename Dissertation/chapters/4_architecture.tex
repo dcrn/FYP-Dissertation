@@ -1,0 +1,46 @@
+\chapter{Architecture \& Development}
+\section{System Architecture}
+% Overview of sys arch, diagram to rep the key elements
+%	 Architectural patterns used
+	\subsection{Environment}
+	% Local system, Python, Pip, Virtualbox, libraries needed
+	% Downloading the JS libs (Bootstrap, Handlebars, Three, Ammo, Ace, etc)
+	% Sublime, GitHub, EB CLI
+
+% MongoDB?
+
+\section{System Components}
+% Details of each component, problems encountered and resolved, challenges overcome or worked around
+% 
+	\subsection{Scalable Cloud Deployment}
+	% - Setting up AWS
+	% - Storage server {MongoDB, git, cloning the storage repo}
+	% - Deploying to Elastic Beanstalk {eb cli}
+	\subsection{Web Server}
+	% - Load balancing
+	% - Communication with storage server, GitHub API
+	% - Connecting to MongoDB on storage server
+	\subsection{Storage Server}
+	% - Why this was it's own server
+	% - Deployment was an issue compared to Elastic Beanstalk
+	\subsection{Game Engine}
+	% - Using Three.js
+	% - Using Ammo.js
+	% - Simplifying the two libraries into the ECS architecture
+	% 	This was achieved by etc.
+	\subsection{Game Editor}
+	% - Tying in the game engine with the storage backend
+	% - Properties of both the gamedata json and the displayed game entities
+	% - Pseudo MVC microframework
+
+\section{Key Development Components}
+% Identify key development components
+% Key components were the game engine, editor, web server (load balancing) and storage.
+% Git integration wasn't as important to functionality
+
+\section{External APIs}
+% Indentification/explanation of external APIs used vs own code. 
+
+\section{List of Classes}
+% List of classes of your code
+% Write block comments for code during this process?

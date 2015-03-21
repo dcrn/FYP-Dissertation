@@ -1,0 +1,120 @@
+\documentclass[a4paper, 12pt]{report}
+\usepackage[a4paper]{geometry}
+\usepackage{cite}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{pifont} % Checkmarks
+\usepackage{float} % Fix table floats
+\usepackage{titling}
+\usepackage[toc, titletoc]{appendix}
+\usepackage[nottoc, notlof, notlot]{tocbibind}
+\usepackage{titlesec}
+
+% Set the images directory
+\graphicspath{{images/}}
+
+% Show links in the TOC
+\hypersetup{hidelinks}
+
+% Disable line breaks
+\setlength\righthyphenmin{62}
+\setlength\lefthyphenmin{62}
+
+% Disable paragraph breaks
+\widowpenalties 1 10000
+
+% Fix table floats
+\restylefloat{table}
+
+\titleformat{\chapter}[hang] 
+{\normalfont\LARGE\bfseries}{\chaptertitlename\ \thechapter:}{1em}{} 
+
+% Start writing the document
+\begin{document}
+
+% Title page
+\begin{titlingpage}
+	\centering
+	\includegraphics[scale=0.5]{titleheader}\\
+	~\\
+	~\\
+	\huge
+	Stratus:\\
+	Game Engine as a Cloud Service\\
+	~\\
+	Final Year Project Report\\
+	~\\
+	\LARGE
+	DT228\\
+	BSc in Computer Science\\
+	~\\
+	\large
+	Declan Curran\\
+	\normalsize
+	Brian Keegan\\
+	~\\
+	School of Computing\\
+	Dublin Institute of Technology\\
+	~\\
+	~\\
+	~\\
+	~\\
+	\today
+	~\\
+	~\\
+	~\\
+	\includegraphics[scale=0.5]{titlefooter}
+\end{titlingpage}
+
+\pagenumbering{roman}
+
+\chapter*{Declaration}
+\addcontentsline{toc}{chapter}{Declaration}
+I hereby declare that the work described in this dissertation is, except where otherwise stated, entirely my own work and has not been submitted as an exercise for a degree at this or any other university.
+
+~\\
+Signed:
+
+~\\
+~\\
+\rule{8cm}{0.4pt}
+
+Declan Curran
+
+\today
+\newpage
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+\chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+% Table of Contents
+\setcounter{tocdepth}{2}
+\tableofcontents
+\listoftables
+\listoffigures
+\newpage
+
+\pagenumbering{arabic}
+
+\input{chapters/1_introduction.tex}
+\input{chapters/2_research.tex}
+\input{chapters/3_design.tex}
+\input{chapters/4_architecture.tex}
+\input{chapters/5_validation.tex}
+\input{chapters/6_plan.tex}
+\input{chapters/7_conclusion.tex}
+
+\bibliography{Dissertation}{}
+\bibliographystyle{unsrt}
+\newpage
+
+\begin{appendices}
+\chapter{}
+\end{appendices}
+
+\end{document}
