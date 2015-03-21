@@ -35,7 +35,7 @@ Git will be used throughout the development process to provide version control a
 
 \section{User Interface}
 % Usability, how being on the web affected interface design
-	\subsection{Main website} % todo
+	\subsection{Website} % todo
 
 	% todo wording
 	The website will be what the user interacts with initially when they visit the web application, where they are able to browse games published by other users or manage their own games. Neilsen's heuristics were taken into consideration while designing this portion of the application, leaning strongly towards aesthetic and minimal design while creating the user interface.  
@@ -66,8 +66,17 @@ Git will be used throughout the development process to provide version control a
 
 	Figure \ref{fig:dashboardprototype} shows the design of the dashboard; where logged in users can manage their games on the system. The dashboard allows logged in users to add a new game project, delete an existing one, launch into the editor for a project, or playtest their game. There are also actions available to clone a repository from GitHub, make commits, and push \& pull an existing project to and from GitHub.
 
+	\paragraph{Evaluation}
+	These prototypes were evaluated using the IxD (Interaction Design) checklist; which is a checklist of usability, feedback, and accessibility functionality for analysing the usability of a system based on Neilsen's Heuristics. The `Interface' section of the checklist was selected, as the prototypes were only medium fidelity. By going through the checklist it was determined that the prototypes were suitable for use on the web application as they met 100\% of the criteria on the checklist.
+
+	% todo: website
+
+	% ref IxD
+
 	\subsection{Game Editor}
-	The game editor will be the most important part of the website, where users will be able to construct scenes for their games by creating new scenes, entities and components. The interface for this part of the web application was designed to be similar in regards to the Unity game editor; as it provides a familiar experience for those who have used it. It was also designed with Neilsen's heuristics in mind, aiming for a high usability rating.
+	The game editor is the most important part of the website; this is where users will be able to construct scenes for their games by creating new scenes, entities and components. The interface for this part of the web application was designed to be similar in regards to the Unity game editor; as it provides a familiar experience for those who have used it. It was also designed with Neilsen's heuristics in mind, aiming for a high usability rating.
+
+	% ref neilsen
 
 	\paragraph{Horizontal Prototype.}
 	The prototype for the game editor can be seen in Figure \ref{fig:gameeditorprototype}. The layout of the editor is split into three columns; the \emph{explorer}, \emph{scene}, and \emph{properties}. There are also tabs that will contain a script editor, allowing the user to switch to it and create their own custom components.
@@ -89,27 +98,93 @@ Git will be used throughout the development process to provide version control a
 	\paragraph{Properties.}
 	The properties list shows a list of the components and their respective properties for the selected entity in the explorer. Here the user will be able to change the properties of components on entities; such as colours, position, scale, and rotation. When property changes are made, the scene will update accordingly.
 
-	\subsection{Final designs}
-	% Pictures
-	% How they changed slightly, using bootstrap, etc
+	\paragraph{Evaluation.}
+	The evaluation of the editor horizontal prototype was also carried out using the IxD checklist, using the `Interface' section of the checklist. The result of filling in the checklist determined that the prototype design of the editor was suitable for the project, as it met 100\% of the criteria in the checklist.
+
+	% ref IxD
 
 \section{System Components}
-	\subsection{Overview}
-	% Overview of entire system
-	% Overview of network
+There are several key components in this system that have been carefully designed to work together, with each component having it's own design. This section will look at the structure of these components and how they have been designed to work together.
 
-% MongoDB?
+	\subsection{Overview}
+	The main components of this system are the web server, storage server, website, game engine and game editor. Figure \ref{fig:overalldesign} visualises these components and shows how they work together. 
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.6]{overalldesign}
+		\caption{System Components}
+		\label{fig:overalldesign}
+	\end{figure}
+
+	Clients connect to the web application through the load balancer to view either the website, a game, or the game editor. When the connection to the load balancer is initiated, the load balancer can create a new instance of the web server if needed, to allow automatic scaling. The web servers will communicate with the storage server to retrieve or store game projects that have been created by users.
+
+	\paragraph{Network}
+	%ec2, beanstalk
+	The network of the system has been designed to prevent access to the storage server to normal users. Any request to store or retrieve a user's project goes through the a web server instance, which requires the client be logged in if they want to make any changes. For this purpose, the storage server is assigned a security group on Amazon VPC (Virtual Private Cloud) to allow TCP connections only from the local subnet. This means that any user trying to connect to the storage server directly will not be able to connect. This system can be seen in Figure \ref{fig:awsnetworkdesign}.
+	% todo ref VPC, security groups, load balancer?
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=1.0]{awsdesign}
+		\caption{AWS Network Design}
+		\label{fig:awsnetworkdesign}
+	\end{figure}
+
+	The network is also designed around scalability, with load balancing being the main focus. Any connection to the web application goes through the load balancer, which can create multiple instances of the web application as needed. Because multiple web applications are created, it was important to centralise the storage of the users' projects in a separate server, which could be used by all application instances.
 
 	\subsection{Storage Server}
+	% ec2
+	In order to provide cloud storage through the multiple instances of the webserver, a separate storage server was needed. The storage server was designed as a fairly simple REST API which allows actions based on the HTTP request type. For example, a HTTP \emph{GET} request will \textbf{return} a resource, a \emph{POST} request will \textbf{create} a resource, and \emph{DELETE} will \emph{delete} one. This provides a very simple interface over the web for controlling resources on a server, especially around a filesystem.
+
+	The storage server will store user projects in the filesystem in a tree structure. Each user will have their own folder, which will contain a folder for each of their projects. The API is designed around this, with the RESTful commands taking a form such as:
+
+	\framebox{GET /<user>/<repo>/file/game.json}
+
+	\paragraph{API.}
+	The API provides several methods for controlling the resources of projects on the storage server, such as retrieving information, performing Git operations, and retrieving \& storing files. The routes below were designed to provide a very strong API backend for storing projects.
+
+	\begin{itemize}
+		\item GET - Retrieve information:
+		\begin{itemize}
+			\item /<user>
+			\item /<user>/<repo>/status
+			\item /<user>/<repo>/tree
+			\item /<user>/<repo>/tree/<path>
+		\end{itemize}
+		\item POST - Perform action:
+		\begin{itemize}
+			\item /<user>/<repo>/push/<remote>
+			\item /<user>/<repo>/pull/<remote>
+			\item /<user>/<repo>/commit
+		\end{itemize}
+		\item GET/PUT/POST/DELETE - Control resource:
+		\begin{itemize}
+			\item /<user>/<repo>
+			\item /<user>/<repo>/file/<path>
+		\end{itemize}
+	\end{itemize}
+
+	% todo ref RESTful
 	% Rest API, planned routes
 	% Folder structure for storing files /user/repo
+	\paragraph{MongoDB.}
+	To provide the web application with a method of keeping track of published games, the storage server will also run a MongoDB server. The simple NoSQL structure allows for a very lightweight design document to be used for storing the published game details as seen in Figure \ref{fig:nosqldesign}.
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=1.0]{nosqldesign}
+		\caption{MongoDB document design}
+		\label{fig:nosqldesign}
+	\end{figure}
+
 
 	\subsection{Web Server}
-	% Structure
+	% Structure, Elastic Beanstalk, etc
 
 	\subsection{Game Engine}
 	% Scene, Entity, Component relationship
 	% Default components ^
+	% Creating new components
 
 	\subsection{Game Editor}
 
