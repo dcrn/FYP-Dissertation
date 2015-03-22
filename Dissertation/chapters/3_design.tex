@@ -183,7 +183,7 @@ There are several key components in this system that have been carefully designe
 	\end{figure}
 
 	\subsection{Web Server}
-	The web server is a key part of the system, as it ties all other components together and is accessed by the user. The web server runs on Flask, and is designed to be deployed on Amazon Elastic Beanstalk, which provides quick deployment and automatic load balancing through Amazon Elastic Load Balancer. This part of the system handles rendering and sending the HTML pages to the user, login using GitHub, and communicating with the storage server.
+	The web server is a key part of the system, as it ties all other components together and is the main access point for the user. The web server runs on Flask, and is designed to be deployed on Amazon Elastic Beanstalk, which provides quick deployment and automatic load balancing through Amazon Elastic Load Balancer. This part of the system handles rendering and sending the HTML pages to the user, login using GitHub, and communicating with the storage server.
 
 	\paragraph{GitHub API.}
 	The GitHub API is accessed through the web server for the purpose of authentication. Users will log into the website by clicking the \emph{login} button on the website, which redirects them to the authorisation page for the application on GitHub. GitHub will then redirect back to the website with a login token allowing the user details to be retrieved. By providing authentication through GitHub, no user details need to be stored, as they can be retrieved through GitHub on demand. Once a user has logged in, an \emph{access token} is provided to perform any GitHub API operations needed, such as creating a new repository.
@@ -196,7 +196,7 @@ There are several key components in this system that have been carefully designe
 
 	% ref jinja2
 
-	\paragraph{Routes.} % Pages
+	\paragraph{Routes.}
 	The main routes that the web server will serve to the client are laid out in Figure \ref{fig:webserverroutes}. This maps the pages (Home, Games, Dashboard, Editor) and actions a user can take on those pages. The \emph{Play Game} route allows the author of the game to be specified in the URL, while actions related to modifying a game will use the user's session details to prevent any unauthorised modification of other users' games.
 
 	\begin{figure}[h]
@@ -208,6 +208,8 @@ There are several key components in this system that have been carefully designe
 
 	\subsection{Game Engine}
 	The game engine is separated into three major objects; \textbf{Scenes}, \textbf{Entities} and \textbf{Components}. These are the basis for the game engine structure, which is visualised in Figure \ref{fig:gameenginedesign}. A number of pre-defined components are designed to assist users in creating their games without having to make the low level building blocks of the game engine. These include the \emph{transform}, \emph{mesh}, \emph{camera}, \emph{light} and \emph{physics} components. New components can be created in the editor using JavaScript to add to the functionality of the game engine.
+
+	% ref ECS design
 
 	\begin{figure}[h]
 		\centering

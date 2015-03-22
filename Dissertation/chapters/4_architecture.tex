@@ -1,8 +1,15 @@
 \chapter{Architecture \& Development}
-This chapter will detail the development stages of this project, discussing the various decisions, challenges and problems faced during the development of each individual component in the system.
+This chapter will go into detail of the development stages of this project, discussing the various decisions, challenges and problems faced during the development of each individual component in the system, and how they were resolved.
 
 \section{System Architecture}
 % Overview of sys arch, diagram to rep the key elements
+
+The majority of the system attempts to follow the MVC (Model-View-Controller) software architectural pattern where possible. This pattern simplifies the development of complex systems by separating the data, display and logic sections into more managable subsystems - the model, view and controller respectively. The structure and architectural pattern of each individual component in this system will be described in depth in Section \ref{section:systemcomponents}.
+
+% ref MVC, simplifies
+
+
+
 % Maybe show visualops.io network diagram here
 % Architectural patterns used
 	\subsection{Development Environment}
@@ -13,23 +20,32 @@ This chapter will detail the development stages of this project, discussing the 
 
 
 \section{System Components}
+\label{section:systemcomponents}
 % Details of each component, problems encountered and resolved, challenges overcome or worked around
 % 
-	\subsection{Web Server}
-	% - Communication with storage server{storing remote access_token etc}
-	% - GitHub API, login access_token, emails, list of repos for cloning etc
-	% - Connecting to MongoDB on storage server
 	\subsection{Storage Server}
+	% - Pattern - MVC-like
 	% - Why this was it's own server
 	% - restful API, flask app
 		% - GitPython usage
 		% - git operations, access_token, remotes
 	% - Talk about each API route individually
 
-	% - Deployment was difficult compared to Elastic Beanstalk (	used git to deploy latest version)
 	% - mongodb
+	\subsection{Web Server}
+	The Flask application created for the web server uses a software architectural pattern \emph{similar} to the MVC pattern. Flask lends itself well to the MVC pattern; as each page has it's own route (\textbf{Controller}) and template (\textbf{View}), and the template can be populated with \textbf{Data} by the route. This can be seen visualised in Figure \ref{fig:flaskprocess} which demonstrates how a request is handled by Flask. A client sends a request to the route, the route then retrieves any requested data (Such as a list of published games), then it renders the template for that route with the data. The rendered HTML from the template is sent back as the HTTP response.
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.8]{flaskprocess}
+		\caption{Flask request process}
+		\label{fig:flaskprocess}
+	\end{figure}
+	% - Communication with storage server{storing remote access_token etc}
+	% - GitHub API, login access_token, emails, list of repos for cloning etc
+	% - Connecting to MongoDB on storage server
 	\subsection{Game Engine}
-	% - Scene, Entity, Component
+	% - ECS pattern
 	% - Using Three.js - structuring shit to load automatically 	into the scene etc
 	% - Using Ammo.js
 	% - Simplifying the two libraries into the ECS architecture
@@ -47,9 +63,11 @@ This chapter will detail the development stages of this project, discussing the 
 	% - autosaving
 	\subsection{Scalable Cloud Deployment}
 	% - Setting up AWS
-	% - Storage server {MongoDB, git, cloning the storage repo}
-	% - Deploying to Elastic Beanstalk {eb cli}
 	% - Load balancing, separating web from storage
+	% - SSH, Git, tools
+	% - Deploying to Elastic Beanstalk {eb cli}
+	% - Storage server {MongoDB, git, cloning the storage repo}
+		% - Deployment was difficult compared to Elastic Beanstalk (used git to deploy latest version)
 
 \section{Deployment to AWS}
 % How everything was deployed etc
