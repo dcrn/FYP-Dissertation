@@ -1,5 +1,6 @@
-
 \chapter{Research}
+\label{chapter:research}
+
 This chapter documents the research that was completed prior to the development of the application. Research was undertaken to determine the scope of the project, the technologies to be used, and the desired outcome. The outcome of the research was used to examine the possible challenges of this project, including any problems that may be encountered by choosing one technology over the other.
 
 % This section outlines some reading you have done in this field, organised by ideas, research trends.
@@ -21,6 +22,58 @@ The solution to the WebGL API's complexity is to use a library that wraps it and
 The architecture of the game engine is critical to how accessible it is to developers. The Entity-Component-System is a pattern that can simplify how game objects are defined by separating behaviour into smaller components. Each empty game object can be made up of many components, which will add up to produce a dynamic and interesting object, for example; a blank `cube' object could have a model component, giving it something to render, and a physics component which will allow it to collide with the world and other physics objects.\cite{gregory2014game} This pattern essentially reduces game objects from what would normally be a class inherited from a base object, to a list of components and properties.
 
 An ECS-based game engine with an integrated editor will give users the power to build games even with minimal programming knowledge. A good example of this is Unity, which allows users to build their games just by creating their scene, adding entities such as a floor, and adding physics components to those entities.\cite{unitycreatingscenes} Adding a controller such as the `First Person Controller' to their project allows the player to input and explore the scene just like in a standard first person shooter game.\cite{unitycharactercontrol}
+
+\section{Alternative Existing Solutions}
+\subsection{Unity}
+Unity is a 3D game engine with an integrated editor and a huge online library full of assets such as models, sounds and various scripts or tools. Unity is a cross-platform engine that is used on Windows, Linux, Mac OSX, mobiles (Android, iOS, Windows, BlackBerry), consoles (PS3, Xbox360, Wii U) and even in browsers.\cite{unity}
+
+Unity's ability to publish games to the web via the Unity Web Player browser plugin make it a powerful solution to creating games for the web. The only downside to the web player is that the user must install the runtime plugin to be able to play.\cite{unityweb}
+
+The Unity game engine is based on the Entity-Component-System pattern, with the majority of components used being supplied by the engine (Such as lighting, physics, models).\cite{unitycomponents} Unity games can be scripted in one of three languages; C\#, Boo or JavaScript.
+
+The Unity scene editor allows complex entities to be created simply by adding a number of components to an empty entity from a list. The properties for each component can then be edited in the \emph{properties inspector}, such as changing the model or colour of an object. \cite{unitycreatingscenes}
+
+% Add pic of inspector
+
+\subsection{PlayCanvas}
+\begin{quote}
+PlayCanvas is a visual development platform for 3D web content. Both the tools and the web apps you build are powered by HTML5. The entire software platform is web hosted so there's nothing to install and you can access your work from any device that runs one of the supported web browsers.\cite{playcanvas}
+\end{quote}
+
+PlayCanvas features the ability to publish games, fork public and example projects, collaborate with multiple users and sync project files to GitHub. The game engine is based on the Entity-Component-System pattern, with several components being provided for building simple games out of the box, and support to create new scripted components using JavaScript.\cite{playcanvas}
+
+The PlayCanvas game editor features impressive real-time collaboration with multiple users, however it only has features intended for scene editing. The user must leave the editor to manage their project for simple tasks such as editing scripts, syncing to GitHub, and publish their project.
+
+\subsection{CopperLicht}
+\begin{quote}
+CopperLicht is an open source WebGL library and JavaScript 3D engine for creating games and 3D applications in the webbrowser. It uses the WebGL canvas supported by modern browsers and is able to render hardware accelerated 3d graphics without any plugins.\cite{copperlicht}
+\end{quote}
+
+The CopperLicht game engine uses an OOP style approach to the architecture of a game, with entities being defined via scripting rather than by selecting a group of components as Unity does. The CopperLicht engine will handle rendering, physics and animations, any extra functionality must be added manually by the user with a script.\cite{copperlichtfeatures}
+
+The CopperLicht world editor, \emph{CopperCube} is an editor designed to create the worlds used in a CopperLicht game. It works by generating a scene file which is loaded by a HTML file, generated Android APK, Windows EXE or Mac OSX App.\cite{coppercubefeatures} Actions and behaviours can be added to the game by JavaScript scripting, or by using predefined behaviours defined in CopperLicht such as `Fly in a Circle'.\cite{copperlichtbehaviours}
+
+\subsection{Comparison of Solutions}
+A comparison of Stratus and alternative solutions has been performed, comparing the features available. The results of this comparison are visible in Table \ref{tab:solutions}. The features compared are: Built-in version control (VC), Supports Git usage (Git), Real-time collaboration (Real-time), Conglomerated editor features such as scripting (Editing), Entity-Component System architecture (ECS), Built-in forking of example or public projects (Forking) and one-click publishing (Publish).
+
+\begin{table}[H]
+	\begin{tabular}{| l | c | c | c | c | c | c | c |}
+	\hline
+	& VC & Git & Real-time & Editing & ECS & Forking & Publish\\\hline
+	Unity 		& \ding{56}	& \ding{52}	& \ding{56}	
+				& \ding{52}	& \ding{52}	& \ding{56}	& \ding{56}\\\hline
+	PlayCanvas 	& \ding{56}	& \ding{52}	& \ding{52}	
+				& \ding{56}	& \ding{52}	& \ding{52}	& \ding{52}\\\hline
+	CopperLicht & \ding{56}	& \ding{52}	& \ding{56}	
+				& \ding{56}	& \ding{56}	& \ding{56}	& \ding{56}\\\hline
+	Stratus & \ding{52}	& \ding{52}	& \ding{56}	
+				& \ding{52}	& \ding{52}	& \ding{52}	& \ding{52}\\\hline
+	\end{tabular}
+	\caption{Comparison of alternative solutions.}
+	\label{tab:solutions}
+\end{table}
+
+The comparison reveals that many of the examined alternative solutions have areas that could be improved upon. For example, Unity has a strong engine and editor but has no methods for quick publishing of created games, apart from third party websites.
 
 \section{Technologies}
 \subsection{Web Application Hosting}

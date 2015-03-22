@@ -1,7 +1,7 @@
 \chapter{Design \& Methodology}
+\label{chapter:design}
 
-This chapter will discuss/detail/etc ...
-%todo
+This chapter will detail the methodology used for the duration of this project, including the software development process and the project management system. This chapter will also provide a detailed look into the design of each component of the system, including the decisions behind each design choice based on the research that was discussed in chapter \ref{chapter:research}.
 
 \section{Methodology}
 A Scrum-like software development methodology was used for the duration of this project, along with elements from the Kanban method.
@@ -33,17 +33,17 @@ A \emph{kanban board} will be used to manage tasks during each sprint. Trello wi
 
 Git will be used throughout the development process to provide version control and project management through branches. Branching will be used to manage the status of the project via stable and development branches. The Git repository will be hosted both locally and remotely on GitHub for a backup.
 
+% todo git appendices - graphs?
+
 \section{User Interface}
 % Usability, how being on the web affected interface design
-	\subsection{Website} % todo
+	\subsection{Website}
+	The website will be what the user interacts with initially when they visit the web application, which is where they are able to browse games published by other users or manage their own games. Neilsen's heuristics were taken into consideration while designing this portion of the application, leaning strongly towards aesthetic and minimal design while creating the user interface.
 
-	% todo wording
-	The website will be what the user interacts with initially when they visit the web application, where they are able to browse games published by other users or manage their own games. Neilsen's heuristics were taken into consideration while designing this portion of the application, leaning strongly towards aesthetic and minimal design while creating the user interface.  
-	% todo {website}
 	% todo ref Neilsen's Heuristics
 
 	\paragraph{Horizontal Prototype.}
-	In order to begin developing the website for this project, a medium fidelity horizontal prototype was created. The horizontal prototype allowed me to examine how the user would interact with the system, and visualise the actions that the user will perform while using it.
+	In order to begin developing the website for this project, a medium fidelity horizontal prototype was created. The horizontal prototype allowed me to examine how the user would interact with the system, and visualise the actions that the user will perform while using it. This was also helpful for minimising potential usability problems later on.
 
 	% todo ref
 
@@ -79,21 +79,21 @@ Git will be used throughout the development process to provide version control a
 	% ref neilsen
 
 	\paragraph{Horizontal Prototype.}
-	The prototype for the game editor can be seen in Figure \ref{fig:gameeditorprototype}. The layout of the editor is split into three columns; the \emph{explorer}, \emph{scene}, and \emph{properties}. There are also tabs that will contain a script editor, allowing the user to switch to it and create their own custom components.
+	The prototype for the game editor can be seen in Figure \ref{fig:gameeditorprototype}. The layout of the editor is split into three columns; the \emph{explorer}, \emph{scene view}, and \emph{properties}. There are also tabs that will contain a script editor, allowing the user to switch to it and create their own custom components.
 
 	% todo fig
 	\begin{figure}[h]
 		\centering
 		\includegraphics[scale=0.3]{placeholder}
-		\caption{Dashboard horizontal prototype}
+		\caption{Game editor horizontal prototype}
 		\label{fig:gameeditorprototype}
 	\end{figure}
 
 	\paragraph{Explorer.}
 	In the explorer, a tree of the current game is displayed, where scenes contain a list of entities, and entities contain a list of components. Actions can be performed on these scenes, entities and components such as adding, deleting or copying.
 
-	\paragraph{Scene.}
-	The scene is the centerpiece of the editor, which displays a visualisation of the currently selected scene along with all entities inside of it. The scene view updates realtime with any changes that are made in the editor, providing feedback to the user when they add, delete or change properties on an entity.
+	\paragraph{Scene View.}
+	The scene view is the centerpiece of the editor, which displays a visualisation of the currently selected scene along with all entities inside of it. The scene view updates realtime with any changes that are made in the editor, providing feedback to the user when they add, delete or change properties on an entity.
 
 	\paragraph{Properties.}
 	The properties list shows a list of the components and their respective properties for the selected entity in the explorer. Here the user will be able to change the properties of components on entities; such as colours, position, scale, and rotation. When property changes are made, the scene will update accordingly.
@@ -107,12 +107,12 @@ Git will be used throughout the development process to provide version control a
 There are several key components in this system that have been carefully designed to work together, with each component having it's own design. This section will look at the structure of these components and how they have been designed to work together.
 
 	\subsection{Overview}
-	The main components of this system are the web server, storage server, website, game engine and game editor. Figure \ref{fig:overalldesign} visualises these components and shows how they work together. 
+	The main components of this system are the web server, storage server, website, game engine and game editor. Figure \ref{fig:overalldesign} visualises these components and shows how they interact with eachother. 
 
 	\begin{figure}[h]
 		\centering
 		\includegraphics[scale=0.6]{overalldesign}
-		\caption{System Components}
+		\caption{System components overview}
 		\label{fig:overalldesign}
 	\end{figure}
 
@@ -126,7 +126,7 @@ There are several key components in this system that have been carefully designe
 	\begin{figure}[h]
 		\centering
 		\includegraphics[scale=1.0]{awsdesign}
-		\caption{AWS Network Design}
+		\caption{AWS network design}
 		\label{fig:awsnetworkdesign}
 	\end{figure}
 
@@ -134,7 +134,7 @@ There are several key components in this system that have been carefully designe
 
 	\subsection{Storage Server}
 	% ec2
-	In order to provide cloud storage through the multiple instances of the webserver, a separate storage server was needed. The storage server was designed as a fairly simple REST API which allows actions based on the HTTP request type. For example, a HTTP \emph{GET} request will \textbf{return} a resource, a \emph{POST} request will \textbf{create} a resource, and \emph{DELETE} will \emph{delete} one. This provides a very simple interface over the web for controlling resources on a server, especially around a filesystem.
+	In order to provide cloud storage through the multiple instances of the webserver, a separate storage server was needed. The storage server was designed as a fairly simple REST API running on Flask which allows actions based on the HTTP request type. For example, a HTTP \emph{GET} request will \textbf{return} a resource, a \emph{POST} request will \textbf{create} a resource, and \emph{DELETE} will \emph{delete} one. This provides a very simple interface over the web for controlling resources on a server, especially around a filesystem.
 
 	The storage server will store user projects in the filesystem in a tree structure. Each user will have their own folder, which will contain a folder for each of their projects. The API is designed around this, with the RESTful commands taking a form such as:
 
@@ -164,11 +164,14 @@ There are several key components in this system that have been carefully designe
 		\end{itemize}
 	\end{itemize}
 
+	\paragraph{GitPython.}
+	The storage server utilises a Python library called GitPython to perform Git operations on the users' game project folders. This provides a better method for performing the Git operations than using the GitHub API
+
 	% todo ref RESTful
-	% Rest API, planned routes
-	% Folder structure for storing files /user/repo
 	\paragraph{MongoDB.}
-	To provide the web application with a method of keeping track of published games, the storage server will also run a MongoDB server. The simple NoSQL structure allows for a very lightweight design document to be used for storing the published game details as seen in Figure \ref{fig:nosqldesign}.
+	To provide the web application with a method of keeping track of published games, the storage server will also run a MongoDB server. The simple NoSQL structure allows for a very lightweight document design to be used for storing the published game details as seen in Figure \ref{fig:nosqldesign}.
+
+	% todo ref mongodb
 
 	\begin{figure}[h]
 		\centering
@@ -177,16 +180,61 @@ There are several key components in this system that have been carefully designe
 		\label{fig:nosqldesign}
 	\end{figure}
 
-
 	\subsection{Web Server}
-	% Structure, Elastic Beanstalk, etc
+	The web server is a key part of the system, as it ties all other components together. The web server is designed to run on Amazon Elastic Beanstalk, which provides quick deployment and automatic load balancing through Amazon Elastic Load Balancer.
+	% flask app
+
+	\paragraph{GitHub API.}
+	% login, etc
+
+	\paragraph{MongoDB.}
+	\paragraph{Source Structure.}
+	As a flask app, the file structure of the web server is laid out into several folders; the \emph{static} folder, which contains all JavaScript, CSS and font files, and the \emph{templates} folder, which contains Jinja2 HTML templates which programmatically render HTML with inserted data. All Python and configuration files are located in the root folder of the application.
+	% ref jinja2
+
+	\paragraph{Routes.} % Pages
+	% Site map diagram?
+
+	% Login + Logout
+		% github API stuff
+	% Dashboard + operations
+	% Index + Games list
+		% mongodb connection
+	% Editor + Editor/file
+	% Game
 
 	\subsection{Game Engine}
-	% Scene, Entity, Component relationship
-	% Default components ^
-	% Creating new components
+	The game engine is separated into three major objects; Scenes, Entities and Components. These are the basis for the game engine structure, which is visualised in Figure \ref{fig:gameenginedesign}. A number of pre-defined components are designed to assist users in creating their games without having to make the low level building blocks of the game engine. These include the \emph{transform}, \emph{mesh}, \emph{camera}, \emph{light} and \emph{physics} components. New components can be created in the editor using JavaScript to add to the functionality of the game engine.
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=1.0]{gameenginedesign}
+		\caption{Game engine structural design}
+		\label{fig:gameenginedesign}
+	\end{figure}
+
+	\paragraph{Project structure.}
+	The file structure of a game created in the game engine is consistent for each game. A gamedata.json file is used to represent the Scene-Entity-Component structure in the JSON serialized format, with properties for the game engine, each entity and their components being stored. Custom components created in the editor are stored in the `components' folder. 
+	% why?
+	% how is this relevant
+	% todo more
 
 	\subsection{Game Editor}
+	% design of the JS of the editor
+	% How it manages the game, gamedata, sceneview.
 
 \section{Use Cases \& Features}
+A use case diagram was created to model the possible actions a user can take while accessing the system. Figure \ref{fig:usecasediagram} shows the use case diagram, which demonstrates the actions that a guest user may perform compared to a user who is logged in.
+
+% todo write more here
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.3]{use_case}
+	\caption{Use case diagram}
+	\label{fig:usecasediagram}
+\end{figure}
+
+
+% todo: ********
 % Clearly identify the list of features and use cases supported within the project

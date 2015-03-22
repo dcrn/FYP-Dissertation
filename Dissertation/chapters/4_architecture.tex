@@ -1,37 +1,48 @@
 \chapter{Architecture \& Development}
 \section{System Architecture}
 % Overview of sys arch, diagram to rep the key elements
-%	 Architectural patterns used
+% Maybe show visualops.io network diagram here
+% Architectural patterns used
 	\subsection{Environment}
-	% Local system, Python, Pip, Virtualbox, libraries needed
+	% OS - Local system, Python, Pip, Virtualbox, libraries needed
 	% Downloading the JS libs (Bootstrap, Handlebars, Three, Ammo, Ace, etc)
 	% Sublime, GitHub, EB CLI
 
-% MongoDB?
 
 \section{System Components}
 % Details of each component, problems encountered and resolved, challenges overcome or worked around
 % 
+	\subsection{Web Server}
+	% - Communication with storage server{storing remote access_token etc}
+	% - GitHub API, login access_token, emails, list of repos for cloning etc
+	% - Connecting to MongoDB on storage server
+	\subsection{Storage Server}
+	% - Why this was it's own server
+	% - restful API, flask app
+		% - GitPython usage
+		% - git operations, access_token, remotes
+	% - Talk about each API route individually
+
+	% - Deployment was difficult compared to Elastic Beanstalk (	used git to deploy latest version)
+	% - mongodb
+	\subsection{Game Engine}
+	% - Scene, Entity, Component
+	% - Using Three.js - structuring shit to load automatically 	into the scene etc
+	% - Using Ammo.js
+	% - Simplifying the two libraries into the ECS architecture
+	% 	This was achieved by etc.
+	% - "Game".
+	% - Each pre-defined component
+	\subsection{Game Editor}
+	% - Pseudo MVC microframework
+	% - Tying in the game engine with the storage backend
+	% - Properties of both the gamedata json and the displayed game entities
+	% - autosaving
 	\subsection{Scalable Cloud Deployment}
 	% - Setting up AWS
 	% - Storage server {MongoDB, git, cloning the storage repo}
 	% - Deploying to Elastic Beanstalk {eb cli}
-	\subsection{Web Server}
-	% - Load balancing
-	% - Communication with storage server, GitHub API
-	% - Connecting to MongoDB on storage server
-	\subsection{Storage Server}
-	% - Why this was it's own server
-	% - Deployment was an issue compared to Elastic Beanstalk
-	\subsection{Game Engine}
-	% - Using Three.js
-	% - Using Ammo.js
-	% - Simplifying the two libraries into the ECS architecture
-	% 	This was achieved by etc.
-	\subsection{Game Editor}
-	% - Tying in the game engine with the storage backend
-	% - Properties of both the gamedata json and the displayed game entities
-	% - Pseudo MVC microframework
+	% - Load balancing, separating web from storage
 
 \section{Key Development Components}
 % Identify key development components
