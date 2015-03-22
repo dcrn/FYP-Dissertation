@@ -1,12 +1,15 @@
 \chapter{Architecture \& Development}
+This chapter will detail the development stages of this project, discussing the various decisions, challenges and problems faced during the development of each individual component in the system.
+
 \section{System Architecture}
 % Overview of sys arch, diagram to rep the key elements
 % Maybe show visualops.io network diagram here
 % Architectural patterns used
-	\subsection{Environment}
+	\subsection{Development Environment}
 	% OS - Local system, Python, Pip, Virtualbox, libraries needed
 	% Downloading the JS libs (Bootstrap, Handlebars, Three, Ammo, Ace, etc)
 	% Sublime, GitHub, EB CLI
+	% Originally one repo, split into two to make deployment easier \ref deployment
 
 
 \section{System Components}
@@ -35,14 +38,21 @@
 	% - Each pre-defined component
 	\subsection{Game Editor}
 	% - Pseudo MVC microframework
+		% Looked at frameworks, all too heavy
+		% Just made my own to keep it simple, based on something similar to backbone
+	% - Detail each view
 	% - Tying in the game engine with the storage backend
 	% - Properties of both the gamedata json and the displayed game entities
+	% - Scripts, Ace editor
 	% - autosaving
 	\subsection{Scalable Cloud Deployment}
 	% - Setting up AWS
 	% - Storage server {MongoDB, git, cloning the storage repo}
 	% - Deploying to Elastic Beanstalk {eb cli}
 	% - Load balancing, separating web from storage
+
+\section{Deployment to AWS}
+% How everything was deployed etc
 
 \section{Key Development Components}
 % Identify key development components

@@ -67,7 +67,7 @@ Git will be used throughout the development process to provide version control a
 	Figure \ref{fig:dashboardprototype} shows the design of the dashboard; where logged in users can manage their games on the system. The dashboard allows logged in users to add a new game project, delete an existing one, launch into the editor for a project, or playtest their game. There are also actions available to clone a repository from GitHub, make commits, and push \& pull an existing project to and from GitHub.
 
 	\paragraph{Evaluation}
-	These prototypes were evaluated using the IxD (Interaction Design) checklist; which is a checklist of usability, feedback, and accessibility functionality for analysing the usability of a system based on Neilsen's Heuristics. The `Interface' section of the checklist was selected, as the prototypes were only medium fidelity. By going through the checklist it was determined that the prototypes were suitable for use on the web application as they met 100\% of the criteria on the checklist.
+	These prototypes were evaluated using the IxD (Interaction Design) checklist; which is a checklist of usability, feedback, and accessibility functionality for analysing the usability of a system based on Neilsen's Heuristics. The `Interface' section of the checklist was selected, as the prototypes were only medium fidelity. By going through the checklist it was determined that the prototypes were suitable for use in the web application as they met 100\% of the criteria on the checklist.
 
 	% todo: website
 
@@ -133,9 +133,11 @@ There are several key components in this system that have been carefully designe
 	The network is also designed around scalability, with load balancing being the main focus. Any connection to the web application goes through the load balancer, which can create multiple instances of the web application as needed. Because multiple web applications are created, it was important to centralise the storage of the users' projects in a separate server, which could be used by all application instances.
 
 	\subsection{Storage Server}
+	\label{subsection:storageserverdesign}
 	% ec2
 	In order to provide cloud storage through the multiple instances of the webserver, a separate storage server was needed. The storage server was designed as a fairly simple REST API running on Flask which allows actions based on the HTTP request type. For example, a HTTP \emph{GET} request will \textbf{return} a resource, a \emph{POST} request will \textbf{create} a resource, and \emph{DELETE} will \emph{delete} one. This provides a very simple interface over the web for controlling resources on a server, especially around a filesystem.
 
+	% todo ref RESTful
 	The storage server will store user projects in the filesystem in a tree structure. Each user will have their own folder, which will contain a folder for each of their projects. The API is designed around this, with the RESTful commands taking a form such as:
 
 	\framebox{GET /<user>/<repo>/file/game.json}
@@ -165,9 +167,9 @@ There are several key components in this system that have been carefully designe
 	\end{itemize}
 
 	\paragraph{GitPython.}
-	The storage server utilises a Python library called GitPython to perform Git operations on the users' game project folders. This provides a better method for performing the Git operations than using the GitHub API
+	The storage server utilises a Python library called GitPython to perform Git operations on the users' game project folders. This provides a much better method for performing the Git operations than using the GitHub API for committing and pushing any changes to the users' game projects. Operations such as performing a commit are near instant; as it's only modifying local files, whereas they could take up to 10 seconds using the GitHub API; which requires multiple requests for a single commit.
 
-	% todo ref RESTful
+	% todo ref gitpython
 	\paragraph{MongoDB.}
 	To provide the web application with a method of keeping track of published games, the storage server will also run a MongoDB server. The simple NoSQL structure allows for a very lightweight document design to be used for storing the published game details as seen in Figure \ref{fig:nosqldesign}.
 
@@ -175,58 +177,61 @@ There are several key components in this system that have been carefully designe
 
 	\begin{figure}[h]
 		\centering
-		\includegraphics[scale=1.0]{nosqldesign}
+		\includegraphics[scale=0.8]{nosqldesign}
 		\caption{MongoDB document design}
 		\label{fig:nosqldesign}
 	\end{figure}
 
 	\subsection{Web Server}
-	The web server is a key part of the system, as it ties all other components together. The web server is designed to run on Amazon Elastic Beanstalk, which provides quick deployment and automatic load balancing through Amazon Elastic Load Balancer.
-	% flask app
+	The web server is a key part of the system, as it ties all other components together and is accessed by the user. The web server runs on Flask, and is designed to be deployed on Amazon Elastic Beanstalk, which provides quick deployment and automatic load balancing through Amazon Elastic Load Balancer. This part of the system handles rendering and sending the HTML pages to the user, login using GitHub, and communicating with the storage server.
 
 	\paragraph{GitHub API.}
-	% login, etc
+	The GitHub API is accessed through the web server for the purpose of authentication. Users will log into the website by clicking the \emph{login} button on the website, which redirects them to the authorisation page for the application on GitHub. GitHub will then redirect back to the website with a login token allowing the user details to be retrieved. By providing authentication through GitHub, no user details need to be stored, as they can be retrieved through GitHub on demand. Once a user has logged in, an \emph{access token} is provided to perform any GitHub API operations needed, such as creating a new repository.
 
 	\paragraph{MongoDB.}
+	The web server connects to the MongoDB server running on the storage server using the PyMongo library. This is used primarily to store details about published games, using the structure detailed in section \ref{subsection:storageserverdesign}.
+
 	\paragraph{Source Structure.}
-	As a flask app, the file structure of the web server is laid out into several folders; the \emph{static} folder, which contains all JavaScript, CSS and font files, and the \emph{templates} folder, which contains Jinja2 HTML templates which programmatically render HTML with inserted data. All Python and configuration files are located in the root folder of the application.
+	As a flask app, the file structure of the web server is laid out into several folders; the \emph{static} folder, which contains all JavaScript, CSS and font files, and the \emph{templates} folder, which contains Jinja2 HTML templates which programmatically render HTML with inserted data. The game engine, editor and website are separated into their own folders inside the static and templates folders. All Python and configuration files are located in the root folder of the application.
+
 	% ref jinja2
 
 	\paragraph{Routes.} % Pages
-	% Site map diagram?
-
-	% Login + Logout
-		% github API stuff
-	% Dashboard + operations
-	% Index + Games list
-		% mongodb connection
-	% Editor + Editor/file
-	% Game
-
-	\subsection{Game Engine}
-	The game engine is separated into three major objects; Scenes, Entities and Components. These are the basis for the game engine structure, which is visualised in Figure \ref{fig:gameenginedesign}. A number of pre-defined components are designed to assist users in creating their games without having to make the low level building blocks of the game engine. These include the \emph{transform}, \emph{mesh}, \emph{camera}, \emph{light} and \emph{physics} components. New components can be created in the editor using JavaScript to add to the functionality of the game engine.
+	The main routes that the web server will serve to the client are laid out in Figure \ref{fig:webserverroutes}. This maps the pages (Home, Games, Dashboard, Editor) and actions a user can take on those pages. The \emph{Play Game} route allows the author of the game to be specified in the URL, while actions related to modifying a game will use the user's session details to prevent any unauthorised modification of other users' games.
 
 	\begin{figure}[h]
 		\centering
-		\includegraphics[scale=1.0]{gameenginedesign}
+		\includegraphics[scale=0.8]{webserverroutes}
+		\caption{Web server routes}
+		\label{fig:webserverroutes}
+	\end{figure}
+
+	\subsection{Game Engine}
+	The game engine is separated into three major objects; \textbf{Scenes}, \textbf{Entities} and \textbf{Components}. These are the basis for the game engine structure, which is visualised in Figure \ref{fig:gameenginedesign}. A number of pre-defined components are designed to assist users in creating their games without having to make the low level building blocks of the game engine. These include the \emph{transform}, \emph{mesh}, \emph{camera}, \emph{light} and \emph{physics} components. New components can be created in the editor using JavaScript to add to the functionality of the game engine.
+
+	\begin{figure}[h]
+		\centering
+		\includegraphics[scale=0.8]{gameenginedesign}
 		\caption{Game engine structural design}
 		\label{fig:gameenginedesign}
 	\end{figure}
 
-	\paragraph{Project structure.}
-	The file structure of a game created in the game engine is consistent for each game. A gamedata.json file is used to represent the Scene-Entity-Component structure in the JSON serialized format, with properties for the game engine, each entity and their components being stored. Custom components created in the editor are stored in the `components' folder. 
-	% why?
-	% how is this relevant
-	% todo more
+	\paragraph{File structure.}
+	The file structure of a game created in the game engine is consistent for each game. A gamedata.json file is used to represent the Scene-Entity-Component structure in the JSON serialized format, with properties for the game engine, each entity and their components being stored. Custom components created in the editor are stored in the `components' folder.
 
 	\subsection{Game Editor}
-	% design of the JS of the editor
-	% How it manages the game, gamedata, sceneview.
+	The game editor is where users will be able to modify their game projects. The game's data, which is structured as a JSON object will be modified here and saved automatically whenever changes are made to the game. The user can create new components here, by creating a script and editing it with the built-in text editor.
+
+	The editor is designed as several \emph{views} which work together. These views are responsible for handling their own HTML events and rendering, with each view being able to contain other views. This design allows the complex user interface to be built up in a modular way, by building more complicated views as a container of several smaller views.
+
+	\paragraph{SceneView.}
+	The central part of the editor, the scene view will be an implementation of the game engine. Changes to the list of scenes \& entities, or changing properties of a component will cause the view to update real-time. This provides the user with visual feedback when they make changes to their game.
+
+	\paragraph{Saving.}
+	The game editor will automatically save any changes to the game every few seconds (If there were changes made). Any scripts the user is currently editing will also be saved, either every few seconds or when the script tab has been closed. Changes will also be saved if the user navigates away from the editor, or changes window; updating the game instantly if the user switches to playing the game tab in their browser.
 
 \section{Use Cases \& Features}
-A use case diagram was created to model the possible actions a user can take while accessing the system. Figure \ref{fig:usecasediagram} shows the use case diagram, which demonstrates the actions that a guest user may perform compared to a user who is logged in.
-
-% todo write more here
+A use case diagram was created to model the possible actions a user can take while accessing the system. Figure \ref{fig:usecasediagram} shows the use case diagram, which demonstrates the actions that a guest user may perform compared to a user who is logged in. The creation of this use case diagram assisted in solidifying the features that were required for this project, as it clearly defines the minimal amount of user actions needed in the system.
 
 \begin{figure}[h]
 	\centering
@@ -235,6 +240,28 @@ A use case diagram was created to model the possible actions a user can take whi
 	\label{fig:usecasediagram}
 \end{figure}
 
+The actions available to guest users are to either play a published game, or log in. When a guest logs into the system through GitHub they become a user, where they can perform several actions in addition to the actions a guest can perform. The actions a user can take are listed below:
+
+\begin{itemize}
+	\item Create a new game
+	\item Delete one of their games
+	\item Play their game
+	\item Publish their game
+	\item Edit their game:
+	\begin{itemize}
+		\item Add a scene
+		\item Add an entity
+		\item Add a component to an entity
+		\item Change properties of an entity and it's components
+		\item Create a new scripted component
+		\item Save their changes
+	\end{itemize}
+	\item Commit changes to a game
+	\item Pull from GitHub
+	\item Push to GitHub
+	\item Clone a game project from GitHub
+	\item Log out
+\end{itemize}
 
 % todo: ********
 % Clearly identify the list of features and use cases supported within the project
