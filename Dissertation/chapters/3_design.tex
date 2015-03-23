@@ -135,12 +135,12 @@ There are several key components in this system that have been carefully designe
 	\subsection{Storage Server}
 	\label{subsection:storageserverdesign}
 	% ec2
-	In order to provide cloud storage through the multiple instances of the webserver, a separate storage server was needed. The storage server was designed as a fairly simple REST API running on Flask which allows actions based on the HTTP request type. For example, a HTTP \emph{GET} request will \textbf{return} a resource, a \emph{POST} request will \textbf{create} a resource, and \emph{DELETE} will \emph{delete} one. This provides a very simple interface over the web for controlling resources on a server, especially around a filesystem.
+	The storage server is designed as a fairly simple REST API built with Flask, which allows actions based on the HTTP request type. For example, a HTTP \emph{GET} request will \textbf{return} a resource, a \emph{POST} request will \textbf{create} a resource, and \emph{DELETE} will \emph{delete} one. This provides a very simple interface over the web for controlling resources on a server, especially around a filesystem.
 
 	% todo ref RESTful
-	The storage server will store user projects in the filesystem in a tree structure. Each user will have their own folder, which will contain a folder for each of their projects. The API is designed around this, with the RESTful commands taking a form such as:
+	The storage server will be deployed on an Amazon EC2 (Elastic Compute Cloud) instance, with a mounted Elastic Block Storage drive. The server will store user projects in the EBS filesystem in a tree structure, in which each user will have their own folder containing a folder for each of their projects. The API is designed around this, with the RESTful commands taking a form such as:
 
-	\framebox{GET /<user>/<repo>/file/game.json}
+	GET /<user>/<repo>/file/game.json
 
 	\paragraph{API.}
 	The API provides several methods for controlling the resources of projects on the storage server, such as retrieving information, performing Git operations, and retrieving \& storing files. The routes below were designed to provide a very strong API backend for storing projects.
@@ -169,9 +169,8 @@ There are several key components in this system that have been carefully designe
 	\paragraph{GitPython.}
 	The storage server utilises a Python library called GitPython to perform Git operations on the users' game project folders. This provides a much better method for performing the Git operations than using the GitHub API for committing and pushing any changes to the users' game projects. Operations such as performing a commit are near instant; as it's only modifying local files, whereas they could take up to 10 seconds using the GitHub API; which requires multiple requests for a single commit.
 
-	% todo ref gitpython
-	\paragraph{MongoDB.}
-	To provide the web application with a method of keeping track of published games, the storage server will also run a MongoDB server. The simple NoSQL structure allows for a very lightweight document design to be used for storing the published game details as seen in Figure \ref{fig:nosqldesign}.
+	\subsection{MongoDB}
+	To provide the web application with a method of keeping track of published games, a MongoDB server will be set up on the EC2 instance running the storage server. The simple NoSQL structure of MongoDB allows for a very lightweight document design to be used for storing the published game details as seen in Figure \ref{fig:nosqldesign}.
 
 	% todo ref mongodb
 
@@ -189,7 +188,7 @@ There are several key components in this system that have been carefully designe
 	The GitHub API is accessed through the web server for the purpose of authentication. Users will log into the website by clicking the \emph{login} button on the website, which redirects them to the authorisation page for the application on GitHub. GitHub will then redirect back to the website with a login token allowing the user details to be retrieved. By providing authentication through GitHub, no user details need to be stored, as they can be retrieved through GitHub on demand. Once a user has logged in, an \emph{access token} is provided to perform any GitHub API operations needed, such as creating a new repository.
 
 	\paragraph{MongoDB.}
-	The web server connects to the MongoDB server running on the storage server using the PyMongo library. This is used primarily to store details about published games, using the structure detailed in section \ref{subsection:storageserverdesign}.
+	The web server connects to the MongoDB server running on the storage EC2 instance using the PyMongo library. This is used primarily to store details about published games, using the structure detailed in section \ref{subsection:storageserverdesign}.
 
 	\paragraph{Source Structure.}
 	As a flask app, the file structure of the web server is laid out into several folders; the \emph{static} folder, which contains all JavaScript, CSS and font files, and the \emph{templates} folder, which contains Jinja2 HTML templates which programmatically render HTML with inserted data. The game engine, editor and website are separated into their own folders inside the static and templates folders. All Python and configuration files are located in the root folder of the application.
@@ -227,7 +226,7 @@ There are several key components in this system that have been carefully designe
 	The editor is designed as several \emph{views} which work together. These views are responsible for handling their own HTML events and rendering, with each view being able to contain other views. This design allows the complex user interface to be built up in a modular way, by building more complicated views as a container of several smaller views.
 
 	\paragraph{SceneView.}
-	The central part of the editor, the scene view will be an implementation of the game engine. Changes to the list of scenes \& entities, or changing properties of a component will cause the view to update real-time. This provides the user with visual feedback when they make changes to their game.
+	The central part of the editor, the scene view will be an implementation of the game engine. Changes to the list of scenes \& entities, or changing properties of a component will cause the view to update real-time. This provides the user with visual feedback when they make changes to their game. The Scene View will also display an indicator on the currently selected object, allowing them to move the object in 3D space by clicking and dragging one of the axes.
 
 	\paragraph{Saving.}
 	The game editor will automatically save any changes to the game every few seconds (If there were changes made). Any scripts the user is currently editing will also be saved, either every few seconds or when the script tab has been closed. Changes will also be saved if the user navigates away from the editor, or changes window; updating the game instantly if the user switches to playing the game tab in their browser.
