@@ -42,7 +42,7 @@ The Git version control system was used to manage the project in this environmen
 	\subsection{Web Server}
 	The web server is the core part of the system, where all user requests are handled. Everything the user does on the system goes through the web server, so it must be able to handle a lot of users. For this reason the lightweight `microframework' \emph{Flask} was chosen as the base of the server. %todo more
 
-	\paragraph{Architectural Pattern.}
+	\subsubsection{Architectural Pattern.}
 	The Flask application created for the web server uses a software architectural pattern \emph{similar} to the MVC pattern. Flask lends itself well to the MVC pattern; as each page has it's own route (\textbf{Controller}) and template (\textbf{View}), with the route generally populating the template with data (\textbf{Model}). This can be seen visualised in Figure \ref{fig:flaskprocess} which demonstrates how a request is handled by Flask. A client sends a request to the route, the route then retrieves any requested data (Such as a list of published games), then it renders the template for that route with the data. The generated HTML from the template is sent back as the HTTP response.
 
 	\begin{figure}[h]
@@ -52,10 +52,10 @@ The Git version control system was used to manage the project in this environmen
 		\label{fig:flaskprocess}
 	\end{figure}
 
-	\paragraph{GitHub Authorisation.}
+	\subsubsection{GitHub API Class}
+	\subsubsection{Storage Class}
 
-
-	\paragraph{Templates.}
+	\subsubsection{Templates.}
 	HTML templates are used to render the pages the server sends to the client. These are created using the Jinja2 templating language which is similar to embedding Python in HTML. Jinja2 has the feature of allowing templates to \emph{extend} or \emph{include} other templates, this means that they can be built upon eachother so very little HTML is repeated throughout the files. 
 
 	The template structure used for this website is built by extending a `base' template, which makes the creation of a consistently designed website easy. The base template creates the `html', `head' and `body' tags, links the stylesheets, adds a footer, then includes the `nav' template which has the top bar containing links to all of pages on the website. The rest of the body of the base template is defined as an empty `block'; which can be redefined by a template extending the base (Seen below).
@@ -86,17 +86,86 @@ The Git version control system was used to manage the project in this environmen
 	\end{lstlisting}
 
 	\subsubsection{Routes}
-	The development of this component of the system consisted of developing each URL that users could access on the website. These took the form as routes in the Flask application, designated with a URL containing variables (Denoted with <>), along with HTML templates that get rendered with data from the server (However not every route has a template).
-	% todo
-	% A paragraph for each route.
+	The development of this part of the system consisted of developing each URL that users could access on the website. These took the form as routes in the Flask application, designated with a URL containing variables (Denoted with <>), along with HTML templates that get rendered with data from the server (However not every route has a template).
 
-	\paragraph{/}
-	\paragraph{/games}
-	\paragraph{/game/<user>/<repo>}
-	\paragraph{/login}
-	\paragraph{/logout}
-	\paragraph{/dashboard}
-	\paragraph{/editor/<repo>}
+	% todo
+	%before_request, after_request
+
+	\subsubsection{/}
+	The \textbf{/} route is the homepage of the website, which displays some information about Stratus and a short list of published games. This is achieved by getting the list of published games on Mongo, limited to 5 results and sorted by timestamp. The data retrieved is then rendered with the `index.html' template, which loops through the list of games and displays them in div tags with a `play' button linking to the \textbf{/game/<user>/<repo>} route.
+	
+	\subsubsection{/games}
+	The \textbf{/games} route has a similar function to the \textbf{/} route. Instead of listing the most recently published 5 games, it shows an entire list of games published, which is sorted by user and repository.
+
+	\subsubsection{/game/<user>/<repo>}
+	The /game route is what users visit when they go to play a game on Stratus. Games that have been published can be accessed by anyone, however if they haven't been published they can only be accessed by the original owner. This is implemented by first checking the Mongo database to see if the game is published; if not then the user's session details are compared to the author of the game. If there are no session details or they don't match, the server will return a `403 Forbidden' page.
+
+	When it has been determined that the user is allowed to play the game, the gamedata JSON and component scripts are retrieved from the storage server. These are then inserted into the `game.html' template, rendering them all in script tags. Component scripts are each given their own script tag by looping through the list of components, and the gamedata is given a script tag with the MIME type `application/json' to make sure it doesn't get executed as JavaScript.
+
+	Originally this was going to be implemented using AJAX to load all files individually, but that was decided against to keep the response time as low as possible. Using AJAX would have also required the implementation of a loading screen to keep the user informed about what was going on.
+
+	A separate template, `engine.html` is also inserted into the game template, which contains all the necessary script files for running a game. This includes the Three.js and Ammo.js libraries, along with all of the Game Engine scripts. This was separated from the game template to reuse it in the game editor.
+
+	At the end of the game template, a small script initialises the game engine, which begins loading in the JSON object and building the scene.
+
+	\subsubsection{/login}
+	Authentication is performed using the GitHub OAuth API. This works by setting up an `application' in GitHub, and specifying certain `scopes', which give the application permissions related to controlling the user's settings or repositories. For the purpose of this application, the `user' and `repo' scopes were chosen, to allow the retrieval of user information and the creation of new repositories. After the application was set up, GitHub provided a \textbf{Client ID} and \textbf{Client Secret}; these are used to tell the OAuth system what application the client is using.
+
+	To create the login system, a button is added to the website which redirects the user to the GitHub OAuth page, with the client ID and scope sent with them. This URL takes a form such as:
+
+	\begin{lstlisting}
+	https://github.com/login/oauth/authorize?scope=user,repo&client_id=170c030cc1ef6a518a8e
+	\end{lstlisting}
+
+	Upon authorising the application, GitHub will redirect the user back to the `Authorization callback URL' (the \textbf{/login} route) specified in the application configuration, providing a \emph{code} in the URL which can be used to get an \textbf{access token} for the user.
+
+	\begin{lstlisting}
+	/login?code=a9888d90ed2ac97cee5e
+	\end{lstlisting}
+
+	When a user is redirected to the \textbf{/login} route with a code from GitHub, the route uses the code to get the user's access token to complete the GitHub OAuth process. This is done by sending the code, the client ID and the client secret to the GitHub API, using the class described above. The URL of this request takes the form of:
+
+	\begin{lstlisting}
+	https://github.com/login/oauth/access_token?code=a9888d90ed2ac97cee5e&client_id=170c030cc1ef6a518a8e&client_secret=3oeqft9w9zd536m0oxar
+	\end{lstlisting}
+
+	The GitHub API then responds in a JSON format, providing the access token which allows the web application to perform actions on the user's GitHub account. The user's details are retreived using this access token, which are then stored with the access token in the user's session in Flask, which allows them to be held on to for the duration of the user's stay on the website without any external storage. 
+
+	After the user's details have been retrieved successfully, the \textbf{/login} route redirects them to the \textbf{/dashboard} route, where they can manage their list of games. The session can now be used to determine if a user is logged in by checking if the access token part of the session exists and is valid.
+
+	\subsubsection{/logout}
+	When a user wishes to log out of the system, the /logout route clears the session holding their details, then redirects them back to the homepage. Since the session no longer has their details in it, they will be unable to use any of the features that require them until they log back in. The GitHub OAuth system will remember that the user has authenticated using this application before, so if they choose to log in again, they won't need to authorize the application, and will be logged in straight away.
+
+	\subsubsection{/dashboard}
+	The dashboard is where a list of the logged in user's projects are displayed, along with their respective Git status, and whether or not they are published. The dashboard route pulls all the information about the user's repositories on the system from the storage server, using the restful API. Then, for each repository it obtains the git status; checking if there are any uncommitted changes in the repository. The list of published games for the current user is also obtained from the MongoDB database. All of this information is pushed into the `dashboard.html' template, which is rendered and displayed to the user. If the \textbf{/dashboard} route is accessed without a user being logged in, a 403 Forbidden error is shown, however this normally shouldn't occur as the dashboard link is hidden for guests.
+
+	There are a number of actions available to the user on the dashboard, related to the management of their game projects on the system. Each of these actions have their own route on the system prefixed with /dashboard/ which requires a user to be logged in, and redirects back to the dashboard with a message (Action completed, error occured) when completed. These actions are detailed below:
+
+	% todo UI related to performing actions ~ popup for delete etc
+
+	\paragraph{publish/<repo>.}
+	The publish action toggles whether or not the specified repository of the current user is published on the system. It does this by searching the database to see if it currently is published; if so it deletes the entry in the database. If it isn't published, then it will add an entry specifying the current time as the publishing date.
+
+	% keep this in? vvv
+	There are two problems with this, the first being if the user has another dashboard tab open that hasn't been updated, they may end up attempting to publish a game that has already been published in the other tab, causing it to be unpublished. The second problem is that when the game is unpublished and re-published successively the timestamp will update, which could be used to abuse the system and keep that user's game at the top of the `latest' list.
+
+	\paragraph{/init/<repo>.}
+	The init action creates a new repository for a game on both the storage server and the GitHub account of the user. A popup on the dashboard asks what the user would like to call their repo, then redirects them to this route. The repository is created by first checking if there is a repository with this name, and aborting the process with a message to the user if that is the case. The route then uses the storage API to create the new repository on the storage server, passing in the user's GitHub access token which is used to complete any git push or pull actions later on. The remote repository on GitHub is created through the GitHub API which is necessary to allow the user to push their changes to GitHub. The new repository is initialised with an empty `gamedata.json' file to signify that it is a Stratus game.
+
+	Any errors that occur during this process will cause the route to redirect back to the dashboard with an error message, explaining what happened to the user. If the process completed successfully, the user is shown a `success' message on the dashboard.
+
+	\paragraph{/delete/<repo>.}
+	The delete action will delete the specified repository and all changes from the storage server, but not the remote GitHub repo. This is performed through the storage API and discards any changes that weren't pushed to GitHub, which could be devastating to a user if done by accident. The dashboard makes this slightly safer by displaying a popup to the user asking if they really want to delete it.
+
+	\paragraph{/commit/<repo>.}
+	\paragraph{/clone/<repo>.}
+	%todo : List of cloneable repos
+	\paragraph{/push/<repo>.}
+	\paragraph{/pull/<repo>.}
+	
+	\subsubsection{/editor/<repo>}
+
+	\subsubsection{Configuration}
 
 
 	% - Communication with storage server{storing remote access_token etc}
@@ -115,7 +184,7 @@ The Git version control system was used to manage the project in this environmen
 	% - Why this was it's own server
 	The development of a separate server for storing and retrieving files was determined to be necessary to allow for the automatic scaling of the web application
 
-	\paragraph{Architectural Pattern.}
+	\subsubsection{Architectural Pattern.}
 	The software pattern used for the storage server is similar to the MVC system generally used in Flask, however MVC is suited towards applications that have a user interface; a `view'. In this case the JSON output by the RESTful API could be considered the view, with the controller being routes and the model being the file structures.
 	% - Pattern - MVC-like
 	% - restful API, flask app
