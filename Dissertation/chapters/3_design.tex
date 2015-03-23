@@ -107,7 +107,7 @@ Git will be used throughout the development process to provide version control a
 There are several key components in this system that have been carefully designed to work together, with each component having it's own design. This section will look at the structure of these components and how they have been designed to work together.
 
 	\subsection{Overview}
-	The main components of this system are the web server, storage server, website, game engine and game editor. Figure \ref{fig:overalldesign} visualises these components and shows how they interact with eachother. 
+	The components of this system are the web server, storage server, MongoDB database, website, game engine and game editor. Figure \ref{fig:overalldesign} visualises these components and shows how they interact with eachother, and what the user accesses.
 
 	\begin{figure}[h]
 		\centering
@@ -116,7 +116,7 @@ There are several key components in this system that have been carefully designe
 		\label{fig:overalldesign}
 	\end{figure}
 
-	Clients connect to the web application through the load balancer to view either the website, a game, or the game editor. When the connection to the load balancer is initiated, the load balancer can create a new instance of the web server if needed, to allow automatic scaling. The web servers will communicate with the storage server to retrieve or store game projects that have been created by users.
+	Clients connect to the web application through the load balancer to view either the website, a game, or the game editor. When the connection to the load balancer is initiated, the load balancer can create a new instance of the web server if needed, to allow automatic scaling. The web servers will communicate with the storage server to retrieve or store game projects that have been created by users. The MongoDB database, which runs on the same system as the storage server, is used to store a list of games published by the users.
 
 	\paragraph{Network}
 	%ec2, beanstalk

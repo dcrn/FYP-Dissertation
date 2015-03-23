@@ -2,23 +2,25 @@
 This chapter will go into detail of the development stages of this project, discussing the various decisions, challenges and problems faced during the development of each individual component in the system, and how they were resolved.
 
 \section{System Overview}
-The system is separated into two separate projects, \emph{the web server} which contains the game engine and editor, and \emph{the storage server}. These are both web based applications which host a HTTP server through the Python-based Flask microframework. The overview of the system is shown in Figure \ref, which labels the key components of the system in red.
-% Overview of sys arch, diagram to rep the key elements
-% Two main separate projects:
-% WebServer ---- StorageServer
-%	v
-% Website
-% Editor
-% Engine
+The system is separated into two individual development projects, \emph{the web server} which contains the website, game engine and editor, and \emph{the storage server}. These are both web based applications which host a HTTP server through the Python-based Flask microframework. An overview of the system is shown in Figure \ref{fig:overallarchitecture}, which labels the key components of the system in red.
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.8]{overallarchitecture}
+	\caption{Key components in the system}
+	\label{fig:overallarchitecture}
+\end{figure}
+
+\paragraph{Architectural Patterns.}
 The majority of the system follows the MVC (Model-View-Controller) software architectural pattern where possible. This pattern simplifies the development of complex systems by separating the data, display and logic sections into more managable subsystems - the model, view and controller respectively. The structure and architectural pattern of each individual component in this system will be described in-depth in Section \ref{section:systemcomponents}.
 
 % ref MVC, simplifies
 
 \section{Development Environment}
-The environment used throughout development of the system consisted of the Sublime Text 3 editor running on the Fedora 19 operating system. For each individual Flask project (The web server and storage server) a virtual environment was set up using \textbf{virtualenv}. Use of virtualenv allowed Python 3.4.2 (separate to the version on Fedora 19) and the required Python libraries to be installed individually for each project.
+The environment used throughout development of the project consisted of the Sublime Text 3 editor running on the Fedora 19 operating system. For each individual Flask project (The web server and storage server) a virtual environment was set up using \textbf{virtualenv}. Use of virtualenv allowed Python 3.4.2 (separate to the version on Fedora 19) and the required Python libraries to be installed individually for each project.
 
-For both projects, Flask and it's dependencies (itsdangerous, Jinja2, MarkupSafe and Werkzeug) were installed using \textbf{pip} in the virtualenv, along with the libraries specific to each project:
+For both projects, Flask and it's dependencies (itsdangerous, Jinja2, MarkupSafe and Werkzeug) were installed using \textbf{pip} in the virtualenv, along with the libraries specific to each project as seen below:
+
 \begin{itemize}
 	\item Web server:
 	\begin{itemize}
@@ -31,9 +33,9 @@ For both projects, Flask and it's dependencies (itsdangerous, Jinja2, MarkupSafe
 	\end{itemize}
 \end{itemize}
 
-The Git version control system was used to manage the project in this environment, with the project repository being hosted on GitHub as an external backup source. Originally, the two projects were in the same Git repository, however this proved to be unsuitable as rolling back changes on one project could be troublesome. The two projects were split into their own Git repositories using the \textbf{git subtree split} command, which maintained all commit history relevant to each project.
-
 The tools required to manage the Amazon Web Services were also installed in this environment, including the AWS CLI (Command Line Interface), and the Elastic Beanstalk CLI. These tools allow remote management of all AWS resources and quick deployment of applications to the Elastic Beanstalk platform.
+
+The Git version control system was used to manage the project in this environment, with the project repository being hosted on GitHub as an external backup source. Originally, the two projects were in the same Git repository, however this proved to be unsuitable as rolling back changes on one project would be troublesome. The two projects were split into their own Git repositories using the \textbf{git subtree split} command, which maintained all commit history relevant to each project.
 
 \section{System Components}
 \label{section:systemcomponents}
@@ -50,13 +52,57 @@ The tools required to manage the Amazon Web Services were also installed in this
 		\label{fig:flaskprocess}
 	\end{figure}
 
-	\paragraph{Internal Workings} % title
+	\paragraph{GitHub Authorisation.}
+
+
+	\paragraph{Templates.}
+	HTML templates are used to render the pages the server sends to the client. These are created using the Jinja2 templating language which is similar to embedding Python in HTML. Jinja2 has the feature of allowing templates to \emph{extend} or \emph{include} other templates, this means that they can be built upon eachother so very little HTML is repeated throughout the files. 
+
+	The template structure used for this website is built by extending a `base' template, which makes the creation of a consistently designed website easy. The base template creates the `html', `head' and `body' tags, links the stylesheets, adds a footer, then includes the `nav' template which has the top bar containing links to all of pages on the website. The rest of the body of the base template is defined as an empty `block'; which can be redefined by a template extending the base (Seen below).
+	\lstset{language=HTML,frame=single}
+	\begin{lstlisting}
+{% block content %}{% endblock %}
+	\end{lstlisting}
+
+	The nav template uses conditionals in Jinja2 to programmatically change how the navigation bar is displayed to the user; it does this by accessing the session variable on the server to check if the user has logged in. When a user is logged in, they are shown the link to the dashboard, along with their avatar, name and a `log out' button. If a user isn't logged in then the `log in' button is shown. This can be seen below:
+
+	\begin{lstlisting}
+{% if 'access_token' in session %}
+	<div class="userbox">
+	<img src="{{session['user_info']['avatar_url']}}&amp;s=30" alt="">
+	{{ session['user_info']['name'] }} 
+	<a href="/logout">logout</a>
+	</div>
+{% else %}
+	<form 
+		action="https://github.com/login/oauth/authorize" method="get">
+		<button type="submit" class="btn btn-default">
+			Log in with GitHub
+		</button>
+		<input type="hidden" name="scope" value="{{config.GITHUB_SCOPES}}"/>
+		<input type="hidden" name="client_id" value="{{config.GITHUB_CLIENT_ID}}"/>
+	</form>
+{% endif %}
+	\end{lstlisting}
+
+	\subsubsection{Routes}
+	The development of this component of the system consisted of developing each URL that users could access on the website. These took the form as routes in the Flask application, designated with a URL containing variables (Denoted with <>), along with HTML templates that get rendered with data from the server (However not every route has a template).
+	% todo
+	% A paragraph for each route.
+
+	\paragraph{/}
+	\paragraph{/games}
+	\paragraph{/game/<user>/<repo>}
+	\paragraph{/login}
+	\paragraph{/logout}
+	\paragraph{/dashboard}
+	\paragraph{/editor/<repo>}
+
+
 	% - Communication with storage server{storing remote access_token etc}
 	% - GitHub API, login access_token, emails, list of repos for cloning etc
 	% - Connecting to MongoDB on storage server
-
-	\paragraph{Routes}
-
+	% Config files
 	% Every route
 		% Login shit etc
 		% Talking to storage for dashboard
@@ -76,6 +122,7 @@ The tools required to manage the Amazon Web Services were also installed in this
 		% - GitPython usage
 		% - git operations, access_token, remotes
 	% - Talk about each API route individually
+	% Config files
 
 	% - mongodb
 	\subsection{Game Engine}
