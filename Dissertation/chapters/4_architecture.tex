@@ -214,7 +214,15 @@ The Git version control system was used to manage the project in this environmen
 	The development of a separate server for storing and retrieving files was determined to be necessary to allow for the automatic scaling of the web application
 
 	\subsubsection{Architectural Pattern.}
-	The software pattern used for the storage server is similar to the MVC system generally used in Flask, however MVC is suited towards applications that have a user interface; a `view'. In this case the JSON output by the RESTful API could be considered the view, with the controller being routes and the model being the file structures.
+	The software pattern used for the storage server is similar to the MVC system generally used in Flask, however MVC is more suited towards applications that have a user interface; a `view'. In this case the JSON output by the RESTful API could be considered the view, with the controller being routes and the model being the file structures.
+
+	\subsubsection{GitPython}
+	The GitPython library was included in this project to provide a method of performing git operations on the local files via Python. GitPython is a wrapper around the \textbf{git} command, which provides an interface that is familiar to executing git commands manually. % More
+
+	% todo ref gitpython, ref api?
+
+	\subsubsection{Routes}
+
 	% - Pattern - MVC-like
 	% - restful API, flask app
 		% - GitPython usage
