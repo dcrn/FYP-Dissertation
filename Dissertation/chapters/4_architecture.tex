@@ -43,7 +43,7 @@ The Git version control system was used to manage the project in this environmen
 	The web server is the core part of the system, where all user requests are handled. Everything the user does on the system goes through the web server, so it must be able to handle a lot of users. For this reason the lightweight `microframework' \emph{Flask} was chosen as the base of the server. %todo more
 
 	\subsubsection{Architectural Pattern.}
-	The Flask application created for the web server uses a software architectural pattern \emph{similar} to the MVC pattern. Flask lends itself well to the MVC pattern; as each page has it's own route (\textbf{Controller}) and template (\textbf{View}), with the route generally populating the template with data (\textbf{Model}). This can be seen visualised in Figure \ref{fig:flaskprocess} which demonstrates how a request is handled by Flask. A client sends a request to the route, the route then retrieves any requested data (Such as a list of published games), then it renders the template for that route with the data. The generated HTML from the template is sent back as the HTTP response.
+	The Flask application created for the web server uses a software architectural pattern \emph{similar} to the MVC pattern. Flask lends itself well to the MVC pattern; as each page has it's own URL route (\textbf{Controller}) and template (\textbf{View}), with the route generally populating the template with data (\textbf{Model}). This can be seen visualised in Figure \ref{fig:flaskprocess} which demonstrates how a request is handled by Flask. A client sends a request to the route, the route then retrieves any requested data (Such as a list of published games), then it renders the template for that route with the data. The generated HTML from the template is sent back as the HTTP response.
 
 	\begin{figure}[h]
 		\centering
@@ -134,7 +134,7 @@ The Git version control system was used to manage the project in this environmen
 	https://github.com/login/oauth/access_token?code=a9888d90ed2ac97cee5e&client_id=170c030cc1ef6a518a8e&client_secret=3oeqft9w9zd536m0oxar
 	\end{lstlisting}
 
-	The GitHub API then responds in a JSON format, providing the access token which allows the web application to perform actions on the user's GitHub account. The user's details are retreived using this access token, which are then stored with the access token in the user's session in Flask, which allows them to be held on to for the duration of the user's stay on the website without any external storage. 
+	The GitHub API then responds in a JSON format, providing the access token which allows the web application to perform actions on the user's GitHub account. The user's details are retrieved using this access token, which are then stored with the access token in the user's session in Flask, which allows them to be held on to for the duration of the user's stay on the website without any external storage. 
 
 	After the user's details have been retrieved successfully, the \textbf{/login} route redirects them to the \textbf{/dashboard} route, where they can manage their list of games. The session can now be used to determine if a user is logged in by checking if the access token part of the session exists and is valid.
 
@@ -144,7 +144,7 @@ The Git version control system was used to manage the project in this environmen
 	\subsubsection{/dashboard}
 	The dashboard is where a list of the logged in user's projects are displayed, along with their respective Git status, and whether or not they are published. The dashboard route pulls all the information about the user's repositories on the system from the storage server, using the restful API. Then, for each repository it obtains the git status; checking if there are any uncommitted changes in the repository. The list of published games for the current user is also obtained from the MongoDB database. All of this information is pushed into the `dashboard.html' template, which is rendered and displayed to the user. If the \textbf{/dashboard} route is accessed without a user being logged in, a 403 Forbidden error is shown, however this normally shouldn't occur as the dashboard link is hidden for guests.
 
-	There are a number of actions available to the user on the dashboard, related to the management of their game projects on the system. Each of these actions have their own route on the system prefixed with /dashboard/ which requires a user to be logged in, and redirects back to the dashboard with a message (Action completed, error occured) when completed. These actions are detailed below:
+	There are a number of actions available to the user on the dashboard, related to the management of their game projects on the system. Each of these actions have their own route on the web application prefixed with /dashboard/ which requires a user to be logged in, and redirects back to the dashboard with a message (Action completed, error occured) when completed. These actions are detailed below:
 
 	\paragraph{publish/<repo>.}
 	The publish action toggles whether or not the specified repository of the current user is published on the system. It does this by searching the database to see if it currently is published; if so it deletes the entry in the database. If it isn't published, then it will add an entry specifying the current time as the publishing date.
@@ -157,7 +157,7 @@ The Git version control system was used to manage the project in this environmen
 	Any errors that occur during this process will cause the route to redirect back to the dashboard with an error message, explaining what happened to the user. If the process completed successfully, the user is shown a `success' message on the dashboard.
 
 	\paragraph{delete/<repo>.}
-	The delete action will delete the specified repository and all changes from the storage server, but not the remote GitHub repo. This is performed through the storage API and discards any changes that weren't pushed to GitHub, which could be devastating to a user if done by accident. The dashboard makes this slightly safer by displaying a popup to the user asking if they really want to delete it before sending them to this route.
+	The delete action will delete the specified repository and all changes from the storage server, but not the remote GitHub repo. This is performed through the storage API and discards any changes that weren't pushed to GitHub, which could be devastating to a user if done by accident. The dashboard makes this slightly safer by displaying a popup to the user asking if they really want to delete it before sending them to this route. Any repo that is currently published when being deleted will have their entry removed from the MongoDB \emph{published} collection.
 
 	\paragraph{commit/<repo>.}
 	The commit action will create a new commit of any new changes in the specified repository. The dashboard provides a pop-up textarea for inputting the commit message, which then POSTs the message to the repository specific route when the user submits it. 
@@ -207,21 +207,76 @@ The Git version control system was used to manage the project in this environmen
 
 	\subsection{Storage Server}
 	\label{subsection:devstorageserver}
-	% What it is. It's a restful API for accessing files.
-	The storage server is where all user created games are stored and retrieved. The storage 
-	% each route outputs JSON, even on failure
-	% - Why this was it's own server
-	The development of a separate server for storing and retrieving files was determined to be necessary to allow for the automatic scaling of the web application
+
+	The storage server is a REST API that provides a central access point for each web server instance's storage needs. It was required to be separated from the web server so that the stored data would be persistent accross each instance of the web server that is created. A REST (Representational State Transfer) API was chosen for this part of the server as it provides a very simple interface for the management of resources; in this case it is for managing files on the filesystem. 
+
+	The storage API is developed using Flask and provides several routes (URLs) that are prefixed with a user and repository for specifying the game to work on. These routes usually take the form of `/<user>/<repo>/<action>/<...>', with a good example being `/dcrn/stratus-pool/file/gamedata.json'. Each route supports several HTTP request types, including \textbf{GET}, \textbf{POST}, \textbf{PUT} and \textbf{DELETE}; with each request type having an action to perform on the resource requested:
+	\\
+	~\\
+	GET requests will \textbf{retrieve} a resource, or the status of a resource.\\
+	POST requests will \textbf{create} a resource or perform an action.\\
+	PUT requests will \textbf{update} a resource.\\
+	DELETE requests will \textbf{delete} a resource.\\
 
 	\subsubsection{Architectural Pattern.}
 	The software pattern used for the storage server is similar to the MVC system generally used in Flask, however MVC is more suited towards applications that have a user interface; a `view'. In this case the JSON output by the RESTful API could be considered the view, with the controller being routes and the model being the file structures.
 
 	\subsubsection{GitPython}
-	The GitPython library was included in this project to provide a method of performing git operations on the local files via Python. GitPython is a wrapper around the \textbf{git} command, which provides an interface that is familiar to executing git commands manually. % More
+	The GitPython library was included in this project to provide a method of performing git operations on the local files via Python. GitPython is a wrapper around the \textbf{git} command, which provides an interface that is familiar to executing git commands manually. The usage of this library is seen below in the routes related to performing Git operations.
 
 	% todo ref gitpython, ref api?
 
 	\subsubsection{Routes}
+
+	GET - Retrieve information:
+	
+	\paragraph{/<user>.}
+	This route retrieves the list of repositories on the storage server for the specified user; obtained by searching the user's directory with Python's built-in \textbf{os.listdirs} function. For each directory found, it checks if there is a git repository initialised; by using the GitPython library's git.Repo method. The git.Repo method will throw an InvalidGitRepositoryError exception if the directory has no git repository in it.
+
+	Then, for each repository, the number of \emph{unpushed commits} is calculated to provide the dashboard with information about the remote git repository. This is done by calling repo.iter\_commits, a method similar to the \textbf{git rev-parse} command. Iter\_commits is used to retrieve the symmetric difference between the last pulled remote version and the latest commit (the HEAD) by specifying the git rev-parse arguments `remote/branch..' which is a shorthand version of `remote/branch..HEAD'. This only works if there \textbf{is} a remote version at all, which is troublesome in the case of newly created repositories. Because of this, the remote reference is checked to see if it exists, and if it doesn't then the number of commits ahead of the remote is set to 1.
+
+	The output of this route is returned as a JSON object listing the repository names as the keys and their values being the number of commits ahead of the remote (Seen below). In the event of an error, an empty JSON object is returned and the appropriate status code is returned; such as 404 for a user that doesn't exist.
+
+	\begin{lstlisting}
+{
+	"stratus-pool": 0,
+	"test-repo": 0,
+	"test-repo2": 1
+}\end{lstlisting}
+
+	\paragraph{/<user>/<repo>/status.}
+	The status route retrieves the status of a git repository, similar to the \textbf{git status} command, returning a list of added, deleted, modified, renamed and untracked files in the specified repository. The GitPython library is used to obtain the most recent commit (if any), and compares it to the working version of the repository, calculating the `diffs' (differences) between them. The diffs are then iterated, categorising the changes by type (modified, deleted, ..) and storing the filenames for that diff. The results of this are then sent back in a JSON format along with a list of any untracked files in the repository. In the case that there is no previous commit to compare to, only the list of untracked files in the repository is used.
+
+	\paragraph{/<user>/<repo>/tree/<path>.}
+	The tree route uses the built-in Python function \textbf{os.walk} to get the directory tree of all files in the specified repository and path. This is used in the editor when listing out the custom components users have made. The `path' specified at the end of the route is optional, and defaults to the root of the repository. The result of this is returned in a JSON format, which structures directories as an \textbf{object} and files as the value \textbf{true} (Seen below).
+
+	\begin{lstlisting}
+{
+	"components": {
+		"cuecontroller.js": true
+	},
+	"gamedata.json": true
+}\end{lstlisting}
+	
+	POST - Perform action:
+
+	\paragraph{/<user>/<repo>/push/<remote>.}
+	The push route performs the \textbf{git push} action on the repository, with the specified remote. This is equivalent to running `git push <remote> master' in a terminal. This is done by finding the remote on the repo object (if it exists), then running the GitPython method \textbf{remote.push}, specifying the a reference to the latest commit in the repo (repo.head.reference). If the push command is rejected by the remote for some reason, the output from this route will be a 409 Conflict status code, along with an empty JSON object. If the push is completed successfully, a 200 OK status code is returned.
+
+	\paragraph{/<user>/<repo>/pull/<remote>.}
+	The pull route performs a \textbf{git pull} action using GitPython. This is done by first fetching any changes from the remote using the remote.fetch method, which is similar to the \textbf{git fetch} action, then replacing the local HEAD reference with the remote HEAD reference using the remote.pull method. When the pull action is completed, the route returns an empty JSON object and the 200 OK status code. If fetching or pulling the changes causes any errors, this will return a 409 Conflict status code.
+
+	\paragraph{/<user>/<repo>/commit.}
+	This route is used to create a commit on the storage server, and is similar to using the \textbf{git add}, \textbf{git remove} and \textbf{git commit} commands all together. The route requires that some JSON is sent along with the POST request, which should contain a list of files to be added and removed, and a commit message.
+
+	The list of files to be added is iterated and added to the repository's index (Also referred to as the staging area), which is a list of files that will be in the next commit. Any files that are in the removal list are removed from the index. When this is completed, a new commit is created, specifying the message passed in with the JSON. This will automatically push the new commit to the HEAD reference.
+
+	An issue that was encountered here was that when the commits were pushed to GitHub, it showed them as being made by `root', instead of the correct author. This was resolved by sending the author details (full name, email address) over from the web application, and setting them as the author and committer on the commit.
+	
+	GET/PUT/POST/DELETE - Control resource:
+	
+	\paragraph{/<user>/<repo>.}
+	\paragraph{/<user>/<repo>/file/<path>.}
 
 	% - Pattern - MVC-like
 	% - restful API, flask app
