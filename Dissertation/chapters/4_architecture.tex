@@ -65,10 +65,9 @@ The Git version control system was used to manage the project in this environmen
 	HTML templates are used to render the pages the server sends to the client. These are created using the Jinja2 templating language which is similar to embedding Python in HTML. Jinja2 has the feature of allowing templates to \emph{extend} or \emph{include} other templates, this means that they can be built upon eachother so very little HTML is repeated throughout the files. 
 
 	The template structure used for this website is built by extending a `base' template, which makes the creation of a consistently designed website easy. The base template creates the `html', `head' and `body' tags, links the stylesheets, adds a footer, then includes the `nav' template which has the top bar containing links to all of pages on the website. The rest of the body of the base template is defined as an empty `block'; which can be redefined by a template extending the base (Seen below).
-	\lstset{language=HTML,frame=single}
+
 	\begin{lstlisting}
-{% block content %}{% endblock %}
-	\end{lstlisting}
+{% block content %}{% endblock %}\end{lstlisting}
 
 	The nav template uses conditionals in Jinja2 to programmatically change how the navigation bar is displayed to the user; it does this by accessing the session variable on the server to check if the user has logged in. When a user is logged in, they are shown the link to the dashboard, along with their avatar, name and a `log out' button. If a user isn't logged in then the `log in' button is shown. This can be seen below:
 
@@ -88,8 +87,7 @@ The Git version control system was used to manage the project in this environmen
 		<input type="hidden" name="scope" value="{{config.GITHUB_SCOPES}}"/>
 		<input type="hidden" name="client_id" value="{{config.GITHUB_CLIENT_ID}}"/>
 	</form>
-{% endif %}
-	\end{lstlisting}
+{% endif %}\end{lstlisting}
 
 	\subsubsection{Routes}
 	The development of this part of the system consisted of developing each URL that users could access on the website. These took the form as routes in the Flask application, designated with a URL containing variables (Denoted with <>), along with HTML templates that get rendered with data from the server (However not every route has a template).
@@ -119,20 +117,17 @@ The Git version control system was used to manage the project in this environmen
 	To create the login system, a button is added to the website which redirects the user to the GitHub OAuth page, with the client ID and scope sent with them. This URL takes a form such as:
 
 	\begin{lstlisting}
-	https://github.com/login/oauth/authorize?scope=user,repo&client_id=170c030cc1ef6a518a8e
-	\end{lstlisting}
+	https://github.com/login/oauth/authorize?scope=user,repo&client_id=170c030cc1ef6a518a8e\end{lstlisting}
 
 	Upon authorising the application, GitHub will redirect the user back to the `Authorization callback URL' (the \textbf{/login} route) specified in the application configuration, providing a \emph{code} in the URL which can be used to get an \textbf{access token} for the user.
 
 	\begin{lstlisting}
-	/login?code=a9888d90ed2ac97cee5e
-	\end{lstlisting}
+	/login?code=a9888d90ed2ac97cee5e\end{lstlisting}
 
 	When a user is redirected to the \textbf{/login} route with a code from GitHub, the route uses the code to get the user's access token to complete the GitHub OAuth process. This is done by sending the code, the client ID and the client secret to the GitHub API, using the class described above. The URL of this request takes the form of:
 
 	\begin{lstlisting}
-	https://github.com/login/oauth/access_token?code=a9888d90ed2ac97cee5e&client_id=170c030cc1ef6a518a8e&client_secret=3oeqft9w9zd536m0oxar
-	\end{lstlisting}
+	https://github.com/login/oauth/access_token?code=a9888d90ed2ac97cee5e&client_id=170c030cc1ef6a518a8e&client_secret=3oeqft9w9zd536m0oxar\end{lstlisting}
 
 	The GitHub API then responds in a JSON format, providing the access token which allows the web application to perform actions on the user's GitHub account. The user's details are retrieved using this access token, which are then stored with the access token in the user's session in Flask, which allows them to be held on to for the duration of the user's stay on the website without any external storage. 
 
@@ -190,8 +185,7 @@ The Git version control system was used to manage the project in this environmen
                 1
 >>>>>>> 96a40b322727f0c034e26a438461d53962bdec7e
         ]
-}
-	\end{lstlisting}
+}\end{lstlisting}
 
 	When this is the case, it's impossible to create a commit until this has been resolved; as it will always fail. This can also cause the editor and game routes to become dysfunctional if it happens on the gamedata.json file, as it will no longer be valid JSON.
 
@@ -227,8 +221,9 @@ The Git version control system was used to manage the project in this environmen
 	% todo ref gitpython, ref api?
 
 	\subsubsection{Routes}
+	The following sections detail the API routes created for the storage server, categorised by the request types available on that route.
 
-	GET - Retrieve information:
+	\subsubsection{GET - Retrieve information}
 	
 	\paragraph{/<user>.}
 	This route retrieves the list of repositories on the storage server for the specified user; obtained by searching the user's directory with Python's built-in \textbf{os.listdirs} function. For each directory found, it checks if there is a git repository initialised; by using the GitPython library's git.Repo method. The git.Repo method will throw an InvalidGitRepositoryError exception if the directory has no git repository in it.
@@ -258,7 +253,7 @@ The Git version control system was used to manage the project in this environmen
 	"gamedata.json": true
 }\end{lstlisting}
 	
-	POST - Perform action:
+	\subsubsection{POST - Perform actions}
 
 	\paragraph{/<user>/<repo>/push/<remote>.}
 	The push route performs the \textbf{git push} action on the repository, with the specified remote. This is equivalent to running `git push <remote> master' in a terminal. This is done by finding the remote on the repo object (if it exists), then running the GitPython method \textbf{remote.push}, specifying the a reference to the latest commit in the repo (repo.head.reference). If the push command is rejected by the remote for some reason, the output from this route will be a 409 Conflict status code, along with an empty JSON object. If the push is completed successfully, a 200 OK status code is returned.
@@ -273,20 +268,40 @@ The Git version control system was used to manage the project in this environmen
 
 	An issue that was encountered here was that when the commits were pushed to GitHub, it showed them as being made by `root', instead of the correct author. This was resolved by sending the author details (full name, email address) over from the web application, and setting them as the author and committer on the commit.
 	
-	GET/PUT/POST/DELETE - Control resource:
+	\subsubsection{GET, PUT, POST \& DELETE - Control resources}
 	
 	\paragraph{/<user>/<repo>.}
+	This route is used to create, update, delete and get information about a repository. The action performed depends on the request type. Each of these requests will determine if the repository exists and return the appropriate status code with a JSON object.
+
+	To create a repository, the POST request method is used. The repository is initialised using the Repo.init method of the GitPython library, which creates a repository in the specified folder. Details about the remote Git server can be sent with the POST request as a JSON object, detailing the remote name and URL to be used for the remote. This was a crucial part of the implementation of Git into the system, as the remote needs to specify the username and their access token in the URL or the push and pull actions won't function.  An example remote URL would be:
+
+	\begin{lstlisting}
+https://username:accesstoken@github.com/username/repository.git\end{lstlisting}
+
+	Updating a repository is done through the PUT request method, which allows the remotes specified for the repository to be changed to the values specified in the JSON object sent with the request.
+
+	A DELETE request will delete the repository, including any changes the user hadn't pushed to the remote server.
+
+	The GET request will return a list of the remotes for the repository, and the hex code of the HEAD commit. This is returned as a JSON object and with the 200 status code if the repository exists.
+
 	\paragraph{/<user>/<repo>/file/<path>.}
+	This route is used to get, create, update and delete files in the specified repository.
 
-	% - Pattern - MVC-like
-	% - restful API, flask app
-		% - GitPython usage
-		% - git operations, access_token, remotes
-	% - Talk about each API route individually
-	% Config files
+	The GET request method will return the contents of the requested file in a JSON object, specifying the `data' as the content of the file. If the file doesn't exist then a 404 status code will be returned.
 
-	% - mongodb
+	The POST request will create the file, and expects a JSON object to be passed along with the request that contains a `data' value to populate the file with. If the file already exists, the route will abort and return a 409 conflict status code.
+
+	A PUT request will update a file's contents, provided it exists and the request contains a JSON object with a `data' value in it. If the file doesn't exist then a 404 status code is returned.
+
+	A DELETE request deletes the specified file if it exists, returning a 200 OK status code if completed successfully.
+
 	\subsection{Game Engine}
+	\subsubsection{Architectural Pattern}
+	E-C-S and Scenes
+	\subsubsection{The Game object}
+	\subsubsection{Scene}
+	\subsubsection{Entity}
+	\subsubsection{Component}
 	% - ECS pattern
 	% - "Game" object.
 	% - Loading from JSON, initialization
@@ -309,16 +324,13 @@ The Git version control system was used to manage the project in this environmen
 	% - Properties of both the gamedata json and the displayed game entities
 	% - Scripts, Ace editor
 	% - autosaving
-	\subsection{Scalable Cloud Deployment}
+\section{Scalable Cloud Deployment}
 	% - Setting up AWS
 	% - Load balancing, separating web from storage
 	% - SSH, Git, tools
 	% - Deploying to Elastic Beanstalk {eb cli}
 	% - Storage server {Setting up MongoDB, git, cloning the storage repo}
 		% - Deployment was difficult compared to Elastic Beanstalk (used git to deploy latest version)
-
-\section{Deployment to AWS}
-% How everything was deployed etc
 
 \section{Key Development Components}
 % Identify key development components
