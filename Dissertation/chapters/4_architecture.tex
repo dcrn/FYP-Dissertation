@@ -459,8 +459,10 @@ After machine was fully set up, the storage server application was cloned from G
 Many external APIs and libraries were used in building this project, including several JavaScript libraries, Python libraries and the GitHub API. These have been listed below:
 
 \begin{itemize}
+	\itemsep-0.6em
 	\item JavaScript libraries:
 	\begin{itemize}
+		\itemsep-0.6em
 		\item Ace
 		\item jQuery
 		\item Bootstrap
@@ -471,6 +473,7 @@ Many external APIs and libraries were used in building this project, including s
 	
 	\item Python libraries:
 	\begin{itemize}
+		\itemsep-0.6em
 		\item Flask
 		\item Flask-Compress
 		\item itsdangerous
@@ -485,8 +488,115 @@ Many external APIs and libraries were used in building this project, including s
 
 	\item External APIs:
 	\begin{itemize}
+		\itemsep-0.6em
 		\item GitHub API
 	\end{itemize}
 \end{itemize}
 
 \section{List of Classes}
+The following is a list of all Python, JavaScript, CSS and HTML template files that were created in the process of developing the project:
+
+\subsubsection{Storage server}
+\begin{itemize}
+	\itemsep-0.6em
+	\item application.py
+	\item application\_tests.py
+\end{itemize}
+\subsubsection{Web server}
+\begin{itemize}
+	\itemsep-0.6em
+	\item application.py
+	\item storage.py
+	\item github.py
+	\item static/
+	\begin{itemize}
+		\itemsep-0.6em
+		\item editor/
+		\begin{itemize}
+			\itemsep-0.6em
+			\item editor.css
+			\item editor.js
+			\item selectionobject.js
+			\item views/
+			\begin{itemize}
+				\itemsep-0.6em
+				\item containerview.js
+				\item editorview.js
+				\item explorerscenesitemview.js
+				\item explorerscenesview.js
+				\item explorerscriptsitemview.js
+				\item explorerscriptsview.js
+				\item explorerview.js
+				\item mainview.js
+				\item modalinputview.js
+				\item propertiesview.js
+				\item sceneview.js
+				\item scriptview.js
+				\item tabitemview.js
+				\item tabpanelview.js
+				\item tabview.js
+			\end{itemize}
+		\end{itemize}
+		\item engine/
+		\begin{itemize}
+			\itemsep-0.6em
+			\item components.js
+			\item entity.js
+			\item game.js
+			\item scene.js
+			\item components/
+			\begin{itemize}
+				\itemsep-0.6em
+				\item camera.js
+				\item flycontroller.js
+				\item fpscontroller.js
+				\item light.js
+				\item mesh.js
+				\item physics.js
+				\item transform.js
+			\end{itemize}
+		\end{itemize}
+		\item web/
+		\begin{itemize}
+			\itemsep-0.6em
+			\item style.css
+		\end{itemize}
+	\end{itemize}
+	\item templates/
+	\begin{itemize}
+		\itemsep-0.6em
+		\item editor/
+		\begin{itemize}
+			\itemsep-0.6em
+			\item editor.html
+			\item views/
+			\begin{itemize}
+				\itemsep-0.6em
+				\item explorerscenesitemview.hbs
+				\item explorerscriptsitemview.hbs
+				\item modalinputview.hbs
+				\item propertiesview.hbs
+				\item tabitemview.hbs
+				\item tabpanelview.hbs
+				\item tabview.hbs
+			\end{itemize}
+		\end{itemize}
+		\item game/
+		\begin{itemize}
+			\itemsep-0.6em
+			\item engine.html
+			\item game.html
+		\end{itemize}
+		\item web/
+		\begin{itemize}
+			\itemsep-0.6em
+			\item base.html
+			\item dashboard.html
+			\item error.html
+			\item games.html
+			\item index.html
+			\item nav.html
+		\end{itemize}
+	\end{itemize}
+\end{itemize}
+
