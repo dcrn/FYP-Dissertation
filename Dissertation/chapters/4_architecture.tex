@@ -306,7 +306,9 @@ https://username:accesstoken@github.com/username/repository.git\end{lstlisting}
 
 	When the Game is initialised, it first creates a Three.js \textbf{renderer}, which it uses to render the currently active scene. The game can then be started, which begins running the main \textbf{update} function. The update function is responsible for rendering and updating the scene every frame, as well as sending the deltatime to each scene which lets it deal with varying framerates. The HTML5 requestAnimationFrame function is used to specify that the update function should run on the next frame draw event, and must be called every frame for it to continue updating.
 
-	The Game object also has several methods available to control the renderer, such as setting the currently active scene and camera, changing various shadow rendering properties, and setting the background colour.
+	The Game object also has several methods available to control the renderer, such as setting the currently active scene and camera, changing various shadow rendering properties, and setting the background colour. A `pointer lock` setting was also added which uses the HTML5 Pointer Lock API to lock the player's pointer, which is useful when applied with the Fly Controller or FPS controller, as the mouse will be hidden and lock to the center of the screen; allowing continuous looking around without hitting the border of the screen.
+
+	% todo ref pointerlock
 
 	\subsubsection{Scene}
 	The Scene class is, simply put, a wrapper around the Three.js Scene class, combined with the Ammo.js DiscreteDynamicsWorld class. These objects together allow the Scene class to manage any renderable objects and physics objects that are in the scene.
@@ -377,28 +379,55 @@ Components.register('mesh', MeshComponent, {
 	\paragraph{Fly Controller.}
 	A controller component is a component that is designed to take input from events and allow the player to control the parent entity in a certain way. This idea has been seen in Unity as the `First Person Shooter' controller, among others.
 
-	The fly controller component is one that takes input from the player's mouse and keyboard (Using JavaScript document events) and allows them to \emph{fly} around the scene. This is a pretty useful component as it can be quickly added onto an entity with a camera to explore the scene.
+	The fly controller component is one that takes input from the player's mouse and keyboard (Using JavaScript document events) and allows them to \emph{fly} around the scene. This is a pretty useful component as it can be quickly added onto an entity with a camera to explore the scene. The keydown, keyup and mousemove events are used to allow the user to move around using the W, A, S and D keys, while moving their mouse to look around.
 
 	\paragraph{FPS Controller.}
 	The FPS controller component is another controller, that is similar to the `First Person Shooter' controller implemented in Unity. This controller has a physics component built into it that allows the player to walk around the scene, pushing  objects with their body. User input is translated into forces on the physics object, instead of setting the position like the fly controller does.
 
 	\subsection{Game Editor}
 	\label{subsection:gameeditor}
-	The Game Editor is a key part of the system, which utilises the game engine and storage server heavily to provide the user with a positive experience in creating their games.
-	% - Tying in the game engine with the storage backend
+	The Game Editor is a key part of the system, which utilises the game engine and storage server heavily to provide the user with a positive experience in creating their games. This is where the gamedata JSON structure is created and modified, by allowing the user to create new scenes, entities, components and modify properties on those components. New scripts can be created through the editor's built-in script editor provided by the Ace editor JavaScript library.
+
+	The editor also makes heavy use of a templating engine called Handlebars.js, which allows template HTML files to be populated with data from JavaScript, which are then inserted into the page via jQuery. This was necessary as the editor has several small UI elements that are often repeated or reconstructed (Such as the properties view).
 	
 	\subsubsection{Architectural Pattern}
-	% - Pseudo MVC microframework
-		% Looked at frameworks, all too heavy
-		% Just made my own to keep it simple, based on something similar to backbone
+	The architectural pattern used in the construction of this component in the system is heavily influenced by the MVC pattern, as well as some JavaScript frameworks including Backbone.js and soma.js. The editor consists of a single `Editor' object, which could be considered the controller. Several small view classes were constructed for each element of the editor's interface, with some views even containing other views (Similar to Backbone.js).
+
+	Views in the editor follow a trend of having a `render' method on them, which returns an element. The majority of the views have a related Handlebars.js template, which will be populated with data and returned from the render method, while some just have a `div' or `ul' tag.
+
 	\subsubsection{Views}
-	% - Detail each view
-	\paragraph{Scene.}
-	% - Scene view - 
-			% How it loads the gamedata, selection object
-	\paragraph{Properties.}
-	% - Properties of both the gamedata json and the displayed game entities
+	There are several views in the editor, most of which are simply wrappers around %todo
+
 	\paragraph{Explorer.}
+	The explorer view consists of a tab view, which has a tab item for the scenes and scripts in the game. The scenes tab is where the gamedata JSON is visualised, showing the tree of scenes, entities and components currently in the game. The scripts tab shows all of the component scripts in the repository (in the /components directory).
+
+	The scenes tab consists of a tree of ExplorerSceneViews (which is a `ul' HTML tag), containing several ExplorerSceneItemViews (a `li' tag) - each of which can have their own child ExplorerSceneView. This represents the structure of the gamedata JSON; where each scene has a number of child entities, and each child entity can have a number of child components. Events on these items such as clicking on the `duplicate' button on an entity will be sent to the Editor object, which will perform the operation on the gamedata JSON and update the views accordingly. Each item in the tree can be selected, updating the properties or scene view.
+
+	The scripts tab uses views fairly similar to the scenes tab, but doesn't need to be in the tree structure. The scripts tab lists all custom component scripts in the ExplorerScriptsView with ExplorerScriptsItemViews. These item views render the related handlebars.js template to construct the `li' tag with buttons that perform actions such as editing, duplicating or deleting scripts.
+
+	\paragraph{Properties.}
+	The properties view is what shows the component properties for the currently selected entity in the explorer. When the user selects an entity in the explorer, the Editor object receives the event and gets the specific JSON related to that entity along with the properties defined for each component on the entity. This data is sent to the properties view which is then re-rendered; updating the display with inputs for each type of property, categorised by component.
+
+	The properties view displays this by rendering the view's template using the data passed in directly. The template is able to loop through each component and each property on that component, displaying the related input for that type of property. Unfortunately the Handlebars.js library isn't able to check if two values are equal, or if an object is a list. This was crucial to implementing the properties where a value is chosen from a list, such as the mesh component's shape.
+
+	Two operators were added to Handlebars.js by registering `helpers' through the Handlebars object. The operators `isArray' and `eq' were added, which was fairly simple but solved all issues related to rendering the properties.
+
+	After the properties view is rendered from the template, event handlers are added to the inputs through jQuery. The event handlers are set up to receive any inputs, convert them back to the correct property type (e.g. vector, quaternion, colour), then the event is sent back to the Editor object where it uses the new property value to update the gamedata JSON and the scene view.
+
+	\paragraph{Scene View.}
+	The scene view is where the currently selected scene is rendered, providing visual feedback to the user. A Three.js renderer is created in the same way the Game Engine works, which gets returned from the render method on the scene view. When the scene view is initialised with the gamedata from the Editor object, it is loaded using the Game.load method in the game engine, which returns a list of game engine scene objects. These are rendered in the same way was the Game, but using the scene view's renderer, and a separate camera created for the scene view.
+
+	Events were added to the scene view element to provide the user with the ability to move around the scene while creating it. These consisted of the keydown, keyup, mouseup, mousedown and mousemove events. These events allow the user to move the scene view's camera around the scene using W, A, S, D and change perspective by moving the mouse. Instead of having this active all the time, it was changed to only be active while the user is clicking on the scene; this makes it a bit easier to use the editor without accidentally looking around the scene.
+
+	A visual indicator was added to the scene view to indicate what entity the user had selected in the explorer. This consisted of a wireframe box surrounding the object, but this evolved into the selection object (described below) to provide the user with a more intuitive method of moving entities around a scene.
+
+	\paragraph{Selection Object.}
+	The selection object is a Three.js object that consists of a wireframe box to outline the selected object, and three `handles'; one for each axis. It was created to allow the user to click and drag objects around the scene rather than having to change the position values in the properties editor.
+
+	This is achieved by using the Three.js raycaster object to check if the user's click event has `hit' any of the handles on the selection object; if they have, then whenever the mouse is moved the following happens:
+
+	%todo
+	
 	\subsubsection{Script editor}
 	% - Scripts, Ace editor
 	\subsubsection{Autosaving}
@@ -420,6 +449,7 @@ Components.register('mesh', MeshComponent, {
 % Git integration wasn't as important to functionality
 
 \section{External APIs}
+% jquery, bootstrap, handlebars, 
 % Indentification/explanation of external APIs used vs own code. 
 
 \section{List of Classes}
