@@ -295,23 +295,92 @@ https://username:accesstoken@github.com/username/repository.git\end{lstlisting}
 
 	A DELETE request deletes the specified file if it exists, returning a 200 OK status code if completed successfully.
 
+
+
+
+
+
 	\subsection{Game Engine}
+	The Game Engine is the JavaScript code that runs user's created games. %todo
+
+
 	\subsubsection{Architectural Pattern}
-	E-C-S and Scenes
-	\subsubsection{The Game object}
+	The Game engine follows the Entity-Component-System architectural pattern as discussed in the design section. It works by having each game object be a container of several components, each with individual properties. This simplifies the method of creating complex game objects down to adding several small components together.
+
+	\subsubsection{Game object}
+	For the implementation of the ECS pattern, a `Game' object was created which acts as the `System' part of the ECS pattern. The Game object is responsible for loading the game data (Scenes, entities and components) from the serialized JSON form, which it then starts running and updating. 
+
+	When the Game is initialised, it first creates a Three.js \textbf{renderer}, which it uses to render the currently active scene. The game can then be started, which begins running the main \textbf{update} function. The update function is responsible for rendering and updating the scene every frame, as well as sending the deltatime to each scene which lets it deal with varying framerates. The HTML5 requestAnimationFrame function is used to specify that the update function should run on the next frame draw event, and must be called every frame for it to continue updating.
+
+	The Game object also has several methods available to control the renderer, such as setting the currently active scene and camera, changing various shadow rendering properties, and setting the background colour.
+
 	\subsubsection{Scene}
+	The Scene class is, simply put, a wrapper around the Three.js Scene class, combined with the Ammo.js DiscreteDynamicsWorld class. These objects together allow the Scene class to manage any renderable objects and physics objects that are in the scene.
+
+	This class holds a list of entities that it contains, and upon adding an entity it checks to see if any of the entity's components contain a Three.js object or an Ammo.js object. These are found on the component under the properties `threeobj' and `ammoobj'. If a threeobj is found, it is added to the Three.js scene object so it can be rendered, and any ammoobj objects are added into the dynamics world.
+
+	A game can have several scenes in it, but only one currently rendering and updating at a time. For this reason an \emph{activate} method was added, which makes that scene the active scene on the Game. When a scene is active, it receives an \emph{update} call every frame, which allows it to update the dynamics world object along with all of the entities in the scene. When a scene is activated, it will also activate a camera in the scene, which is necessary for objects in the scene to be visible when rendering.
+
 	\subsubsection{Entity}
+	The Entity class is the base for creating a complex object in the world. It starts as an empty `components' container that can be populated with various components to give it functionality such as a shape and a physics collision box. 
+
+	The entity class allows components to be added or removed using the \textbf{add} and \textbf{remove} methods, which trigger an event on the child components, \textbf{onComponentAdded} and \textbf{onComponentRemoved}. These events are used to tell the component about it's siblings incase they have any interactions. When the scene containing the entity is \textbf{updated}, the entity object will then update all of it's children components.
+
 	\subsubsection{Component}
-	% - ECS pattern
-	% - "Game" object.
-	% - Loading from JSON, initialization
-	% - Walkthrough of how the process works. Setting up renderer in Game, updating all scenes with deltatime, updating all entities, updating all components.
-	% - Adding, removing components
-	% - Using Three.js - setting up the renderer, setting up the Scene to add threeobjs as they are added
-	% - Using Ammo.js - Setting up the world, gravity etc, adding ammoobjs as they are added
-	% - Simplifying the two libraries into the ECS architecture, predefined components
-	% 	This was achieved by etc.
-	% - Each pre-defined component
+	Components are what add functionality to the game, including the ability to render shapes and add collision to those shapes. Each component is created by defining a new class that can then be registered as a component using the global \textbf{Components} object. The simplest form of this would be:
+
+	\begin{lstlisting}[language=Java]
+	ExampleComponent = function(options) {};
+	ExampleComponent.prototype.update = function(deltatime) {};
+
+	Components.register('example', ExampleComponent);\end{lstlisting}
+
+	When the new component has been registered it can then be created using Components.create('example'). The Components.register function can also be used to define properties for the component, which will then show them as changable properties in the game editor interface. Properties are given a name, type and a default value. A good example of this is the properties for the `mesh' component:
+
+	\begin{lstlisting}[language=Java]
+Components.register('mesh', MeshComponent, {
+	shape: {type: ['box', 'sphere', 'cylinder'], default: 'box'},
+	castShadow: {type: 'bool', default: false},
+	receiveShadow: {type: 'bool', default: false},
+	materialType: {type: ['phong', 'lambert', 'basic'], default: 'phong'},
+	materialColour: {type: 'colour', default: 0xFFFFFF}
+});\end{lstlisting}
+
+	This shows the properties for shape, shadows and materials available on the \textbf{mesh} component. The type of property set on the shape and materialType are a list of possible values, which means the properties UI should show a selection box. These properties can now be changed in the game editor, and get stored in the gamedata JSON file.
+
+	When a component is created using Components.create, properties can be passed in to initialise the component with some values, as done in the Game object's loading stage. Any properties that are missing will use the previously set default properties (if any), which are then passed to the constructor of the component as the `options' variable.
+
+	Several optional methods can be implemented on a component, which are used to respond to certain events in the game engine. The previously discussed onComponentAdded and onComponentRemoved can be added to listen for new components being added to the parent entity, or if the component itself was added to a new entity. A method called applyOptions can also be implemented which allows the editor to update the entity displayed in the editor with new properties.
+
+	\subsubsection{Predefined components}
+	There are several predefined components supplied with the game engine that make it easier for users creating games. Without these components, making a game would be like creating the entire game engine from scratch. Each component is discussed in detail below:
+
+	\paragraph{Transform.}
+	The transform component handles the positioning, rotation and scale of any entity that it's attached to. It does this by storing a Three.js `Object3D' object, which contains it's own position vector, rotation quaternion and scale vector. Methods for setting and getting these properties are exposed, such as getPosition and setPosition. 
+
+	The transform component also has the ability to `subscribe' to another component. This is a very useful ability, as it changes all getter and setter methods to operate on the desired component instead of the local values the transform holds. This is currently used for any entities with a `physics' component; since the position and angle should be based on that instead of staying fixed.
+
+	\paragraph{Mesh.}
+	The mesh component is a wrapper around the creation of Three.js mesh objects. It starts with a blank mesh object, then adds a geometry object specified by the properties (e.g. `box', `sphere' or `cylinder'). Material settings can be changed such as the type (Phong, lambert, basic) and colour, as well as if the mesh should receive and cash shadows.
+
+	In order for the mesh to follow any physics objects on the entity it is attached to, the Three.js mesh object's position, rotation and scale are copied from the transform component (If there is one) on the same entity whenever it updates.
+
+	\paragraph{Light.}
+	The light component is a wrapper around the Three.js \textbf{AmbientLight}, \textbf{SpotLight}, \textbf{DirectionalLight} and \textbf{PointLight} classes. It dynamically creates one of those classes depending on the `type' property on the light. Making the light component work when removing or changing type was a huge problem that was encountered. This was because of the way Three.js works internally; any light that is created stays in the scene forever even if removed, and any new light that is created won't cast shadows on existing objects.
+
+	This was remedied by following the author's guidelines on updating Three.js objects realtime. Any light that is removed from the scene is first set to stop casting shadows and the intensity of the light is set to 0. Any newly created light triggers the scene to search for all material objects and set `needsUpdate = true' on them.
+
+	% todo ref https://github.com/mrdoob/three.js/wiki/Updates
+
+	\paragraph{Physics.}
+	The physics component is an interface for the Ammo.js rigid body object, btRigidBody. This represents a collision object in the world, which can collide with any other collision objects that have been added to the scene. Methods that act upon the rigid body object are exposed as methods on the component, such as changing the mass of the object or applying forces to it with \textbf{setMass} and \textbf{applyCentralForce} respectively.
+
+	When the physics component is added to an entity (or a transform component is added to the physics component's parent entity), it will automatically set the transform component to subscribe to the physics component. This means that any other components on the entity will follow the physics object's position and rotation.
+
+	\paragraph{Camera.}
+	\paragraph{Fly Controller.}
+	\paragraph{FPS Controller.}
+
 	\subsection{Game Editor}
 	\label{subsection:gameeditor}
 	% - Pseudo MVC microframework

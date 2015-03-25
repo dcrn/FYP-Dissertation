@@ -15,7 +15,7 @@ Scrum is usually a heavily team-based process, involving several roles such as `
 
 % todo: http://www.mountaingoatsoftware.com/agile/scrum
 
-Using an Agile methodology like Scrum means that most of the design of the application will be done as needed, rather than up front such as in the waterfall model. Design documents such as  entity-relationship diagrams will be completed as they become necessary for the continuation of the development process, or if another part of the project depends on the design being completed.
+Using an Agile methodology like Scrum means that most of the design of the application will be done as needed, rather than up front such as in the waterfall model. Design documents such as entity-relationship diagrams will be completed as they become necessary for the continuation of the development process, or if another part of the project depends on the design being completed.
 
 \subsection{Project Management}
 A \emph{kanban board} will be used to manage tasks during each sprint. Trello will be used as the board by adding a list for each iteration in the development process. Cards will be added to these lists for each task, and labels will be used as kanban columns by using labels such as `Ready', `In Progress', and `Completed' as can be seen in Figure \ref{fig:kanban}. If cards are overdue, they can be moved to the next sprint list as a backlog, by dragging and dropping.
@@ -205,7 +205,7 @@ There are several key components in this system that have been carefully designe
 	\end{figure}
 
 	\subsection{Game Engine}
-	The game engine is separated into three major objects; \textbf{Scenes}, \textbf{Entities} and \textbf{Components}. These are the basis for the game engine structure, which is visualised in Figure \ref{fig:gameenginedesign}. A number of pre-defined components are designed to assist users in creating their games without having to make the low level building blocks of the game engine. These include the \emph{transform}, \emph{mesh}, \emph{camera}, \emph{light} and \emph{physics} components. New components can be created in the editor using JavaScript to add to the functionality of the game engine.
+	The game engine follows the Entity-Component-System architectural pattern and is separated into three major objects; \textbf{Scenes}, \textbf{Entities} and \textbf{Components}. These are the basis for the game engine structure, which is visualised in Figure \ref{fig:gameenginedesign}. A number of pre-defined components are designed to assist users in creating their games without having to make the low level building blocks of the game engine. These include the \emph{transform}, \emph{mesh}, \emph{camera}, \emph{light} and \emph{physics} components. New components can be created in the editor using JavaScript to add to the functionality of the game engine.
 
 	% ref ECS design
 
