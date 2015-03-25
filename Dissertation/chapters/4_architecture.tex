@@ -295,14 +295,8 @@ https://username:accesstoken@github.com/username/repository.git\end{lstlisting}
 
 	A DELETE request deletes the specified file if it exists, returning a 200 OK status code if completed successfully.
 
-
-
-
-
-
 	\subsection{Game Engine}
-	The Game Engine is the JavaScript code that runs user's created games. %todo
-
+	The game engine is the code that runs all of the created games on Stratus. It is built in JavaScript, using the Three.js and Ammo.js libraries to create a game engine capable of complex graphics such as lights and shadows, along with integrated physics.
 
 	\subsubsection{Architectural Pattern}
 	The Game engine follows the Entity-Component-System architectural pattern as discussed in the design section. It works by having each game object be a container of several components, each with individual properties. This simplifies the method of creating complex game objects down to adding several small components together.
@@ -378,21 +372,40 @@ Components.register('mesh', MeshComponent, {
 	When the physics component is added to an entity (or a transform component is added to the physics component's parent entity), it will automatically set the transform component to subscribe to the physics component. This means that any other components on the entity will follow the physics object's position and rotation.
 
 	\paragraph{Camera.}
+	The camera component wraps the Three.js \textbf{PerspectiveCamera} class, which represents a position, angle and perspective matrix in the scene. The camera object is used during rendering and can be `activated' like a scene to make it the active camera. The field of view angle, near and far plane values can be set on this component to change how the player will view the world.
+
 	\paragraph{Fly Controller.}
+	A controller component is a component that is designed to take input from events and allow the player to control the parent entity in a certain way. This idea has been seen in Unity as the `First Person Shooter' controller, among others.
+
+	The fly controller component is one that takes input from the player's mouse and keyboard (Using JavaScript document events) and allows them to \emph{fly} around the scene. This is a pretty useful component as it can be quickly added onto an entity with a camera to explore the scene.
+
 	\paragraph{FPS Controller.}
+	The FPS controller component is another controller, that is similar to the `First Person Shooter' controller implemented in Unity. This controller has a physics component built into it that allows the player to walk around the scene, pushing  objects with their body. User input is translated into forces on the physics object, instead of setting the position like the fly controller does.
 
 	\subsection{Game Editor}
 	\label{subsection:gameeditor}
+	The Game Editor is a key part of the system, which utilises the game engine and storage server heavily to provide the user with a positive experience in creating their games.
+	% - Tying in the game engine with the storage backend
+	
+	\subsubsection{Architectural Pattern}
 	% - Pseudo MVC microframework
 		% Looked at frameworks, all too heavy
 		% Just made my own to keep it simple, based on something similar to backbone
+	\subsubsection{Views}
 	% - Detail each view
+	\paragraph{Scene.}
 	% - Scene view - 
 			% How it loads the gamedata, selection object
-	% - Tying in the game engine with the storage backend
+	\paragraph{Properties.}
 	% - Properties of both the gamedata json and the displayed game entities
+	\paragraph{Explorer.}
+	\subsubsection{Script editor}
 	% - Scripts, Ace editor
+	\subsubsection{Autosaving}
 	% - autosaving
+
+
+
 \section{Scalable Cloud Deployment}
 	% - Setting up AWS
 	% - Load balancing, separating web from storage
