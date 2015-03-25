@@ -15,7 +15,7 @@ Web-based applications are becoming increasingly popular as the web develops; th
 According to Taivalsaari and Mikkonen, ``Towards the end of this decade, the Web will become the dominant platform for the majority of 
 end user software''.\cite{6068340} It's only a matter of time until game engine suites such as Unity\cite{unity}, CryEngine\cite{cryengine} and Unreal Engine\cite{unreal} adapt to the web. Creating a web application in this area now will make it easier for new game developers to get started on building games without having to download software. This also eases game publishing significantly by allowing users to publish their games instantly to the cloud with a single click.
 
-WebGL is an open-source API for rendering 2D and 3D graphics in the browser, which is based on OpenGL ES; a commonly used graphics processing API that powers 3D graphics on the iPhone, iPad and Android devices.\cite{parisi2012webgl} WebGL is quickly becoming ``the new standard for 3D graphics on the Web''\cite[p2]{parisi2012webgl} as it is the most powerful and flexible way to render graphics in-browser without any extra dependencies or plugins needed. The JavaScript programming language is used to access the WebGL API, which can be rather complicated to program with; ``To do anything more than the most basic tasks using [WebGL] out of the box requires serious effort and literally hundreds of lines of code.''\cite[p44]{parisi2014programming}
+WebGL is an open-source API for rendering 2D and 3D graphics in the browser, which is based on OpenGL ES; a commonly used graphics processing API that powers 3D graphics on the iPhone, iPad and Android devices.\cite{parisi2012webgl} WebGL is quickly becoming ``the new standard for 3D graphics on the Web''\cite[p2]{parisi2012webgl} as it is the most powerful and flexible way to render graphics in-browser without any extra dependencies or plugins required. The JavaScript programming language is used to access the WebGL API, which can be rather complicated to program with; ``To do anything more than the most basic tasks using [WebGL] out of the box requires serious effort and literally hundreds of lines of code.''\cite[p44]{parisi2014programming}
 
 The solution to the WebGL API's complexity is to use a library that wraps it and simplifies the interface. The Three.js\cite{threejs} JavaScript library accomplishes this by providing easy to use classes such as models, lighting, scenes and cameras. ``A program written in raw WebGL style using hundreds of lines of code can be expressed in just a few dozen lines of code with Three.js.''\cite[p57]{parisi2014programming} While Three.js greatly simplifies the process of rendering scenes in the browser, it's not good enough for the development of games, as it only provides a framework for rendering scenes without any game logic.
 
@@ -42,7 +42,7 @@ PlayCanvas is a visual development platform for 3D web content. Both the tools a
 
 PlayCanvas features the ability to publish games, fork public and example projects, collaborate with multiple users and sync project files to GitHub. The game engine is based on the Entity-Component-System pattern, with several components being provided for building simple games out of the box, and support to create new scripted components using JavaScript.\cite{playcanvas}
 
-The PlayCanvas game editor features impressive real-time collaboration with multiple users, however it only has features intended for scene editing. The user must leave the editor to manage their project for simple tasks such as editing scripts, syncing to GitHub, and publish their project.
+The PlayCanvas game editor features impressive real-time collaboration with multiple users, however it only has features intended for scene editing. The user must leave the editor to manage their project for simple tasks such as editing scripts, syncing to GitHub, and publishing their project.
 
 \subsection{CopperLicht}
 \begin{quote}
@@ -51,7 +51,7 @@ CopperLicht is an open source WebGL library and JavaScript 3D engine for creatin
 
 The CopperLicht game engine uses an OOP style approach to the architecture of a game, with entities being defined via scripting rather than by selecting a group of components as Unity does. The CopperLicht engine will handle rendering, physics and animations, any extra functionality must be added manually by the user with a script.\cite{copperlichtfeatures}
 
-The CopperLicht world editor, \emph{CopperCube} is an editor designed to create the worlds used in a CopperLicht game. It works by generating a scene file which is loaded by a HTML file, generated Android APK, Windows EXE or Mac OSX App.\cite{coppercubefeatures} Actions and behaviours can be added to the game by JavaScript scripting, or by using predefined behaviours defined in CopperLicht such as `Fly in a Circle'.\cite{copperlichtbehaviours}
+The CopperLicht world editor, \emph{CopperCube} is an editor designed to create the worlds used in a CopperLicht game. It works by generating a scene file which is loaded by an HTML file, generated Android APK, Windows EXE or Mac OSX App.\cite{coppercubefeatures} Actions and behaviours can be added to the game by JavaScript scripting, or by using predefined behaviours defined in CopperLicht such as `Fly in a Circle'.\cite{copperlichtbehaviours}
 
 \subsection{Comparison of Solutions}
 A comparison of Stratus and alternative solutions has been performed, comparing the features available. The results of this comparison are visible in Table \ref{tab:solutions}. The features compared are: Built-in version control (VC), Supports Git usage (Git), Real-time collaboration (Real-time), Conglomerated editor features such as scripting (Editing), Entity-Component System architecture (ECS), Built-in forking of example or public projects (Forking) and one-click publishing (Publish).
@@ -124,7 +124,7 @@ Flask is lightweight Python-based web application microframework that comes only
 
 \subsection{Project Storage}
 \paragraph{Criteria.}
-User project storage is an extremely important part of this project. How the projects are stored will define how the application performs while saving projects, serving project files to players, and managing how users will collaborate on projects.
+User project storage is a very important part of this project. How the projects are stored will define how the application performs while saving projects, serving project files to players, and managing how users will collaborate on projects.
 
 The project storage medium should be able to support some kind of version control, have good read/write performance, and should be scalable to some extent.
 
@@ -227,7 +227,7 @@ Based on the research completed, the following requirements have been determined
 \subsection{Background research.}
 The background research has shown that web applications are becoming the standard, with almost every type of application now being able to be created on the web. Applications built on the web greatly simplify the process that users go through to access and utilise an application, and with cloud storage being utilized; the user doesn't need to store any files locally.
 
-Game engines are being made easier to use and understand by patterns such as the Entity-Component System. This system builds game objects by aggregating functionality from several smaller components, without any actual functionality being made specific to the object.
+Game engines are being made easier to use and understand by patterns such as the Entity-Component System. This system builds game objects by aggregating functionality from several smaller components, without any actual functionality being created specific to the object.
 
 \subsection{Existing Solutions.}
 A comparison of the existing solutions to this problem has revealed that alternative solutions can be improved upon by aggregating functionality including version control, git usage, collaboration, entity-component system based game engine, integrated editor controls for scripting and project management, forking existing projects and one-click publishing of projects. While solutions such as PlayCanvas provide a more interactive approach with real-time collaboration, my solution of using Git is a valid choice as many developers will be more familiar with it.
@@ -244,7 +244,7 @@ The EC2 Container Service was a close second to Elastic Beanstalk, giving the mo
 The examined frameworks for developing web applications were fairly similar in functionality, flexibility and scalability. In my opinion, the optimal application framework to use would be Flask, as it requires minimal setup and can be extended using modules as needed. The other examined frameworks; Django and Node.js were too feature-heavy and required extra setup time respectively.
 
 \paragraph{Project Storage.}
-For user project storage, based on the findings the optimal project storage solution would either be Amazon S3 or Amazon Elastic Block Storage.
+For user project storage, based on the findings the optimal project storage solution would either be Amazon S3 or Amazon Elastic Block Storage mounted on an EC2 instance.
 
 S3 provides an API for storing and retrieving files, with a version control mechanism. This could provide all of the functionality needed for project storage, however using S3 could make implementing collaboration difficult compared to using Git for version control and collaboration. Using S3 with the load balancing would be straightforward, as S3 can be accessed from multiple sources at once through the API.
 

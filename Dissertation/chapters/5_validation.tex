@@ -21,7 +21,13 @@ This chapter will go into detail about the testing and evaluation performed duri
 
 \section{Evaluation}
 	\subsection{Usability}
-	The usability of the fully completed system was 
+	The usability of the developed system was evaluated using the IxD checklist, a tool that is used to quickly evaluate websites for usability issues. The system was evaluated using all categories of the IxD checklist, including the interface, typography, iconography, interaction and navigation categories. Each category selected adds several check boxes to the checklist, in different usability areas.
+
+	The checklist was completed by evaluating the system vs each checklist item, with the items being usability guidelines such as `The controls map to the result in a simple and logical way' and `Current state of the system is easily understood by the user'. If the guideline is passed, then the checkbox for that item is ticked.
+
+	% todo ref ixd & quotes
+
+	Out of the 28 items on the list, 7 items were not ticked. The sections with the most unpassed items were in the simplicity, tolerance and accessibility areas of the checklist. This indicates that the while the user may understand the interfaces, and can use the system, it's not as easy as it could be. Adding a page providing `help and support', and controls for undoing actions would help improve the usability of the system greatly.
 
 	\subsection{Performance}
 	The performance and memory usage of the game editor and game engine were evaluated and compared to existing platforms as a baseline.
@@ -46,7 +52,7 @@ This chapter will go into detail about the testing and evaluation performed duri
 	\paragraph{Frames per second}
 	The framerate of the game engine was evaluated using Google Chrome's built-in `FPS Counter' which is disabled by default. The FPS counter can be enabled to show the current amount of frames per second on the page, which provides a good measure of how well a game is performing. A framerate of 60 frames per second is the standard for the majority of video games, with most computer monitors only supporting up to 60hz.
 
-	Several games were tested on two computers, with the majority of the games giving a solid 60 frames per second on both machines. Instances of lower frames per second (\~40) were observed when the number of physics entities was very high, but only when all of them were active and moving around the scene. This shows that having a large amount of moving physics objects will reduce the performance of the games significantly, but this can be resolved by using as many static physics objects as possible. Shadows can also cause a performance loss, but these can be tweaked to have a different `type' (Soft, basic) in the game settings, which can improve the performance of shadows at the cost of quality.
+	Several games were tested on two computers (Windows and Linux), with the majority of the games giving a solid 60 frames per second on both machines. Instances of lower frames per second (\~40) were observed when the number of physics entities was very high, but only when all of them were active and moving around the scene. This shows that having a large amount of moving physics objects will reduce the performance of the games significantly, but this can be resolved by using as many static physics objects as possible. Shadows can also cause a performance loss, but these can be tweaked to have a different `type' (Soft, basic) in the game settings, which can improve the performance of shadows at the cost of quality.
 
 	\subsection{Compatibility}
 	The compatibility of the game engine was tested using multiple devices and internet browsers. The result of this was that the game engine performs perfectly on the Google Chrome browser, while running with a slightly lower performance on the Mozilla Firefox browser.
@@ -68,3 +74,4 @@ This chapter will go into detail about the testing and evaluation performed duri
 
 \section{Demonstration}
 % Identify what features can be demonstrated and show screenshots or reference a video online to show the project demonstration
+% TODO!
