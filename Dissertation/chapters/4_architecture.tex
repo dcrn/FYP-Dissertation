@@ -62,7 +62,7 @@ The Git version control system was used to manage the project in this environmen
 	The web application loads it's configuration from the config.cfg file in the same directory. The configuration holds the required keys for the GitHub API such as the client ID, client secret and scopes, as well as the storage server's address and port, the MongoDB server address, and the expiry time for the access tokens. These configuration details are loaded in using Flask's built-in config loading methods, and allow the application to be easily reconfigured without having to change any internal code. This was especially useful for deployment, as the address of the storage server and MongoDB server are different once deployed to AWS.
 
 	\subsubsection{Templates.}
-	HTML templates are used to render the pages the server sends to the client. These are created using the Jinja2 templating language which is similar to embedding Python in HTML. Jinja2 has the feature of allowing templates to \emph{extend} or \emph{include} other templates, this means that they can be built upon eachother so very little HTML is repeated throughout the files. 
+	HTML templates are used to render the pages the server sends to the client. These are created using the Jinja2 templating language which is similar to embedding Python in HTML. Jinja2 has the feature of allowing templates to \emph{extend} or \emph{include} other templates, this means that they can be built upon eachother so very little HTML is repeated throughout the files. The Bootstrap library is used heavily here as well, which makes it easy to build visually pleasing templates.
 
 	The template structure used for this website is built by extending a `base' template, which makes the creation of a consistently designed website easy. The base template creates the `html', `head' and `body' tags, links the stylesheets, adds a footer, then includes the `nav' template which has the top bar containing links to all of pages on the website. The rest of the body of the base template is defined as an empty `block'; which can be redefined by a template extending the base (Seen below).
 
@@ -388,7 +388,7 @@ Components.register('mesh', MeshComponent, {
 	\label{subsection:gameeditor}
 	The Game Editor is a key part of the system, which utilises the game engine and storage server heavily to provide the user with a positive experience in creating their games. This is where the gamedata JSON structure is created and modified, by allowing the user to create new scenes, entities, components and modify properties on those components. New scripts can be created through the editor's built-in script editor provided by the Ace editor JavaScript library.
 
-	The editor also makes heavy use of a templating engine called Handlebars.js, which allows template HTML files to be populated with data from JavaScript, which are then inserted into the page via jQuery. This was necessary as the editor has several small UI elements that are often repeated or reconstructed (Such as the properties view).
+	The editor also makes heavy use of a templating engine called Handlebars.js, which allows template HTML files to be populated with data from JavaScript, which are then inserted into the page via jQuery. This was necessary as the editor has several small UI elements that are often repeated or reconstructed (Such as the properties view). The majority of the editor UI uses components from Bootstrap to make it appealing to the user.
 	
 	\subsubsection{Architectural Pattern}
 	The architectural pattern used in the construction of this component in the system is heavily influenced by the MVC pattern, as well as some JavaScript frameworks including Backbone.js and soma.js. The editor consists of a single `Editor' object, which could be considered the controller. Several small view classes were constructed for each element of the editor's interface, with some views even containing other views (Similar to Backbone.js).
@@ -396,21 +396,21 @@ Components.register('mesh', MeshComponent, {
 	Views in the editor follow a trend of having a `render' method on them, which returns an element. The majority of the views have a related Handlebars.js template, which will be populated with data and returned from the render method, while some just have a `div' or `ul' tag.
 
 	\subsubsection{Views}
-	There are several views in the editor, most of which are simply wrappers around %todo
+	There are several views in the editor, most of which are simply wrappers around a Handlebars.js template, inserting the data then rendering it. The essential views in the editor including the scene explorer, properties and the scene view are described below:
 
 	\paragraph{Explorer.}
 	The explorer view consists of a tab view, which has a tab item for the scenes and scripts in the game. The scenes tab is where the gamedata JSON is visualised, showing the tree of scenes, entities and components currently in the game. The scripts tab shows all of the component scripts in the repository (in the /components directory).
 
 	The scenes tab consists of a tree of ExplorerSceneViews (which is a `ul' HTML tag), containing several ExplorerSceneItemViews (a `li' tag) - each of which can have their own child ExplorerSceneView. This represents the structure of the gamedata JSON; where each scene has a number of child entities, and each child entity can have a number of child components. Events on these items such as clicking on the `duplicate' button on an entity will be sent to the Editor object, which will perform the operation on the gamedata JSON and update the views accordingly. Each item in the tree can be selected, updating the properties or scene view.
 
-	The scripts tab uses views fairly similar to the scenes tab, but doesn't need to be in the tree structure. The scripts tab lists all custom component scripts in the ExplorerScriptsView with ExplorerScriptsItemViews. These item views render the related handlebars.js template to construct the `li' tag with buttons that perform actions such as editing, duplicating or deleting scripts.
+	The scripts tab uses views fairly similar to the scenes tab, but doesn't need to be in the tree structure. The scripts tab lists all custom component scripts in the ExplorerScriptsView with ExplorerScriptsItemViews. These item views render the related Handlebars.js template to construct the `li' tag with buttons that perform actions such as editing, duplicating or deleting scripts.
 
 	\paragraph{Properties.}
 	The properties view is what shows the component properties for the currently selected entity in the explorer. When the user selects an entity in the explorer, the Editor object receives the event and gets the specific JSON related to that entity along with the properties defined for each component on the entity. This data is sent to the properties view which is then re-rendered; updating the display with inputs for each type of property, categorised by component.
 
-	The properties view displays this by rendering the view's template using the data passed in directly. The template is able to loop through each component and each property on that component, displaying the related input for that type of property. Unfortunately the Handlebars.js library isn't able to check if two values are equal, or if an object is a list. This was crucial to implementing the properties where a value is chosen from a list, such as the mesh component's shape.
+	The properties view displays this by rendering the view's template using the data passed in directly. The template is able to loop through each component and each property on that component, displaying the related input for that type of property. For complex types such as a vector, colour or quaternion, sliders are added for each axis (x, y, z or r, g, b).
 
-	Two operators were added to Handlebars.js by registering `helpers' through the Handlebars object. The operators `isArray' and `eq' were added, which was fairly simple but solved all issues related to rendering the properties.
+	Unfortunately the Handlebars.js library isn't able to check if two values are equal, or if an object is a list. This was crucial to implementing the properties where a value is chosen from a list, such as the mesh component's shape. Two operators were added to Handlebars.js by registering `helpers' through the Handlebars object. The operators `isArray' and `eq' were added, which was fairly simple but solved all issues related to rendering the properties.
 
 	After the properties view is rendered from the template, event handlers are added to the inputs through jQuery. The event handlers are set up to receive any inputs, convert them back to the correct property type (e.g. vector, quaternion, colour), then the event is sent back to the Editor object where it uses the new property value to update the gamedata JSON and the scene view.
 
@@ -424,34 +424,69 @@ Components.register('mesh', MeshComponent, {
 	\paragraph{Selection Object.}
 	The selection object is a Three.js object that consists of a wireframe box to outline the selected object, and three `handles'; one for each axis. It was created to allow the user to click and drag objects around the scene rather than having to change the position values in the properties editor.
 
-	This is achieved by using the Three.js raycaster object to check if the user's click event has `hit' any of the handles on the selection object; if they have, then whenever the mouse is moved the following happens:
+	This is achieved by using the Three.js raycaster object to check if the user's click event has `hit' any of the handles on the selection object; if they have, then whenever the mouse is moved the object will follow their mouse.
 
-	%todo
+	Two planes are created, on the x and y axis. When a user has clicked on the handle for the x axis and begins moving their mouse, a new raycast is performed to the y axis plane, which then uses the `hit' position to calculate how much to move the object by. This uses the dot product of the hit point relative to the object and the axis' unit vector. The dot product gives back a distance to the `handle', which is added to the position of the object to move it towards the user's mouse cursor.
+
+	The same is performed on the y axis handle, which raycasts to the x axis plane, and the z axis handle which raycasts to both the x and y axis planes; which is necessary as the user could be viewing the object from a point that is perpendicular to one of the planes.
+
+	The updated position is sent to the global Editor object, which updates the gamedata for that object and re-renders the properties view to update the position sliders.
 	
 	\subsubsection{Script editor}
-	% - Scripts, Ace editor
+	The script editor was implemented using the c9 Ace editor, a javascript library which provides a rich script editor to webpages. The Ace editor has the ability to choose a `mode', such as `JavaScript', which provides rich syntax highlighting along with pointing out any syntax errors that occur when writing a custom component.
+
+	Automatic saving was added to the script editor, so whenever the `change' event is triggered a timer will start at four seconds. If any change events happen again during those four seconds, it will reset the timer. At the end of the timer's duration, the Editor will be told to save that file with the contents of the script editor. It will also save the script immediately if the tab holding the script editor is closed.
+
 	\subsubsection{Autosaving}
-	% - autosaving
+	Automatic saving was added to the Editor, which is triggered whenever the `modified' method is called. This again starts a timer similar to the script editor's functionality, POSTing the gamedata JSON to the web server using AJAX in the background. The modified method is called whenever any of the editor changes the gamedata JSON, such as adding a new scene or changing properties of a component on an entity.
 
-
+	In the event that the user closes their editor tab, or even changes to a different tab in their browser, the editor will save immediately. This was added incase the user is swapping back and forth between the editor and their game in a different tab as done during testing the system; an update may not have been saved before reloading the game page, so the user would need to wait until the autosave happens.
 
 \section{Scalable Cloud Deployment}
-	% - Setting up AWS
-	% - Load balancing, separating web from storage
-	% - SSH, Git, tools
-	% - Deploying to Elastic Beanstalk {eb cli}
-	% - Storage server {Setting up MongoDB, git, cloning the storage repo}
-		% - Deployment was difficult compared to Elastic Beanstalk (used git to deploy latest version)
+Deployment to Amazon Web Services was crucial in creating a scalable web application with cloud storage. This was done using the web-based AWS management console, where the Elastic Beanstalk application and EC2 instance was set up for the web server and storage server respectively.
 
-\section{Key Development Components}
-% Identify key development components
-% Key components were the game engine, editor, web server (load balancing) and storage.
-% Git integration wasn't as important to functionality
+Deploying using Elastic Beanstalk was very simple, all that was required was to create an `application' and `environment', specifying the max number of instances that can be created for load balancing and the type of instance they should be running on. For this the max instances was set to 4, which can be increased later if needed, and the instance type was set to `t2.micro' which is one of the lower tiers of instances.
+
+When the Elastic Beanstalk environment was set up, the web server application was deployed using the EB-CLI tool, simply running the \textbf{eb deploy} command in the correct folder, which then zips the project and uploads it to Elastic Beanstalk, deploying it when it's finished.
+
+The EC2 instance for the storage server was much more difficult to set up compared to Elastic Beanstalk. It required setting up the instance (Also t2.micro), adding the Elastic Block Storage for holding projects, then creating the security group so only the local instances could communicate with it.
+
+SSH was used to connect to the EC2 machine to set up the machine and and install any requirements for the storage server (mongodb, python3.4, pip, virtualenv). The Elastic Block Storage volume was required to be added to the \textbf{/etc/fstab} file, making it get mounted into the \textbf{/data} directory on startup. It was also required to set MongoDB to start on boot by running \textbf{sudo chkconfig mongod on}. MongoDB was set to use the elastic block storage volume for the database storage, by changing the /etc/mongod.conf file to use the /data/mongodb folder (And setting the owner of the folder to `mongod').
+
+After machine was fully set up, the storage server application was cloned from GitHub, and started in a GNU screen; which allows it to stay running in the background forever. The configuration for the storage server was set to use \textbf{/data/projects} folder. The storage server was then set to run on boot by adding a startup script which would create the screen, and adding the startup script to the `/etc/rc.d/rc.local' file. This file is used on Linux to specify any scripts that should be run at boot.
 
 \section{External APIs}
-% jquery, bootstrap, handlebars, 
-% Indentification/explanation of external APIs used vs own code. 
+Many external APIs and libraries were used in building this project, including several JavaScript libraries, Python libraries and the GitHub API. These have been listed below:
+
+\begin{itemize}
+	\item JavaScript libraries:
+	\begin{itemize}
+		\item Ace
+		\item jQuery
+		\item Bootstrap
+		\item Handlebars.js
+		\item Three.js
+		\item Ammo.js
+	\end{itemize}
+	
+	\item Python libraries:
+	\begin{itemize}
+		\item Flask
+		\item Flask-Compress
+		\item itsdangerous
+		\item Jinja2
+		\item MarkupSafe
+		\item pymongo
+		\item Werkzeug
+		\item GitPython
+		\item gitdb
+		\item smmap
+	\end{itemize}
+
+	\item External APIs:
+	\begin{itemize}
+		\item GitHub API
+	\end{itemize}
+\end{itemize}
 
 \section{List of Classes}
-% List of classes of your code
-% Write block comments for code during this process?
