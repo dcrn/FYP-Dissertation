@@ -414,8 +414,8 @@ Components.register('mesh', MeshComponent, {
 
 	A visual indicator was added to the scene view to indicate what entity the user had selected in the explorer. This consisted of a wireframe box surrounding the object, but this evolved into the selection object (described below) to provide the user with a more intuitive method of moving entities around a scene.
 
-	\paragraph{Selection Object.}
-	The selection object is a Three.js object that consists of a wireframe box to outline the selected object, and three `handles'; one for each axis. It was created to allow the user to click and drag objects around the scene rather than having to change the position values in the properties editor.
+	\subsubsection{Selection Object.}
+	The selection object is a class based the Three.js Mesh object that consists of a wireframe box to outline the selected entity, and three `handles'; one for each axis. It was created to allow the user to click and drag entities around the scene rather than having to change the position values in the properties editor.
 
 	This is achieved by using the Three.js raycaster object to check if the user's click event has `hit' any of the handles on the selection object; if they have, then whenever the mouse is moved the object will follow their mouse.
 
