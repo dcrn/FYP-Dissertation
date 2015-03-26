@@ -442,7 +442,14 @@ Deploying using Elastic Beanstalk was very simple, all that was required was to 
 
 When the Elastic Beanstalk environment was set up, the web server application was deployed using the EB-CLI tool, simply running the \textbf{eb deploy} command in the correct folder, which then zips the project and uploads it to Elastic Beanstalk, deploying it when it's finished.
 
-The EC2 instance for the storage server was much more difficult to set up compared to Elastic Beanstalk. It required setting up the instance (Also t2.micro), adding the Elastic Block Storage for holding projects, then creating the security group so only the local instances could communicate with it.
+The EC2 instance for the storage server was much more difficult to set up compared to Elastic Beanstalk. It required setting up the instance (Also t2.micro), adding the Elastic Block Storage for holding projects, then creating the security group so only the local instances could communicate with it. A visualisation of the deployed EC2, Elastic Beanstalk and security group components on AWS can be seen in Figure \ref{fig:awsnetwork}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.7]{awsnetwork}
+	\caption{Visualisation of the deployed AWS network}
+	\label{fig:awsnetwork}
+\end{figure}
 
 SSH was used to connect to the EC2 machine to set up the machine and and install any requirements for the storage server (mongodb, python3.4, pip, virtualenv). The Elastic Block Storage volume was required to be added to the \textbf{/etc/fstab} file, making it get mounted into the \textbf{/data} directory on startup. It was also required to set MongoDB to start on boot by running \textbf{sudo chkconfig mongod on}. MongoDB was set to use the elastic block storage volume for the database storage, by changing the /etc/mongod.conf file to use the /data/mongodb folder (And setting the owner of the folder to `mongod').
 
