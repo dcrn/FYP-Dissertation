@@ -14,8 +14,6 @@ The system is separated into two individual development projects, \emph{the web 
 \paragraph{Architectural Patterns.}
 The majority of the system follows the MVC (Model-View-Controller) software architectural pattern where possible. This pattern simplifies the development of complex systems by separating the data, display and logic sections into more manageable subsystems - the model, view and controller respectively. The structure and architectural pattern of each individual component in this system will be described in-depth in Section \ref{section:systemcomponents}.
 
-% ref MVC, simplifies
-
 \section{Development Environment}
 The environment used throughout development of the project consisted of the Sublime Text 3 editor running on the Fedora 19 operating system. For each individual Flask project (The web server and storage server) a virtual environment was set up using \textbf{virtualenv}. Use of virtualenv allowed Python 3.4.2 (separate to the version on Fedora 19) and the required Python libraries to be installed individually for each project.
 
@@ -33,8 +31,6 @@ For both projects, Flask and it's dependencies (itsdangerous, Jinja2, MarkupSafe
 	\end{itemize}
 \end{itemize}
 
-% todo ref these
-
 The tools required to manage the Amazon Web Services were also installed in this environment, including the AWS CLI (Command Line Interface), and the Elastic Beanstalk CLI. These tools allow remote management of all AWS resources and quick deployment of applications to the Elastic Beanstalk platform.
 
 The Git version control system was used to manage the project in this environment, with the project repository being hosted on GitHub as an external backup source. Originally, the two projects were in the same Git repository, however this proved to be unsuitable as rolling back changes on one project would be troublesome. The two projects were split into their own Git repositories using the \textbf{git subtree split} command, which maintained all commit history relevant to each project.
@@ -42,7 +38,8 @@ The Git version control system was used to manage the project in this environmen
 \section{System Components}
 \label{section:systemcomponents}
 	\subsection{Web Server}
-	The web server is the core part of the system, where all user requests are handled. Everything the user does on the system goes through the web server, so it must be able to handle a lot of users. For this reason the lightweight `microframework' \emph{Flask} was chosen as the base of the server. %todo more
+	\label{subsection:webserverdev}
+	The web server is the core part of the system, where all user requests are handled. Everything the user does on the system goes through the web server, so it must be able to handle a lot of users. For this reason the lightweight `microframework' \emph{Flask} was chosen as the base of the server.
 
 	\subsubsection{Architectural Pattern.}
 	The Flask application created for the web server uses a software architectural pattern \emph{similar} to the MVC pattern. Flask lends itself well to the MVC pattern; as each page has it's own URL route (\textbf{Controller}) and template (\textbf{View}), with the route generally populating the template with data (\textbf{Model}). This can be seen visualised in Figure \ref{fig:flaskprocess} which demonstrates how a request is handled by Flask. A client sends a request to the route, the route then retrieves any requested data (Such as a list of published games), then it renders the template for that route with the data. The generated HTML from the template is sent back as the HTTP response.
@@ -220,8 +217,6 @@ The Git version control system was used to manage the project in this environmen
 	\subsubsection{GitPython}
 	The GitPython library was included in this project to provide a method of performing git operations on the local files via Python. GitPython is a wrapper around the \textbf{git} command, which provides an interface that is familiar to executing git commands manually. The usage of this library is seen below in the routes related to performing Git operations.
 
-	% todo ref gitpython, ref api?
-
 	\subsubsection{Routes}
 	The following sections detail the API routes created for the storage server, categorised by the request types available on that route.
 
@@ -308,9 +303,7 @@ https://username:accesstoken@github.com/username/repository.git\end{lstlisting}
 
 	When the Game is initialised, it first creates a Three.js \textbf{renderer}, which it uses to render the currently active scene. The game can then be started, which begins running the main \textbf{update} function. The update function is responsible for rendering and updating the scene every frame, as well as sending the deltatime to each scene which lets it deal with varying framerates. The HTML5 requestAnimationFrame function is used to specify that the update function should run on the next frame draw event, and must be called every frame for it to continue updating.
 
-	The Game object also has several methods available to control the renderer, such as setting the currently active scene and camera, changing various shadow rendering properties, and setting the background colour. A `pointer lock` setting was also added which uses the HTML5 Pointer Lock API to lock the player's pointer, which is useful when applied with the Fly Controller or FPS controller, as the mouse will be hidden and lock to the centre of the screen; allowing continuous looking around without hitting the border of the screen.
-
-	% todo ref pointerlock
+	The Game object also has several methods available to control the renderer, such as setting the currently active scene and camera, changing various shadow rendering properties, and setting the background colour. A `pointer lock` setting was also added which uses the HTML5 Pointer Lock API to lock the player's pointer, which is useful when applied with the Fly Controller or FPS controller, as the mouse will be hidden and lock to the centre of the screen; allowing continuous looking around without hitting the border of the screen.\cite{pointerlock}
 
 	\subsubsection{Scene}
 	The Scene class is, simply put, a wrapper around the Three.js Scene class, combined with the Ammo.js DiscreteDynamicsWorld class. These objects together allow the Scene class to manage any renderable objects and physics objects that are in the scene.
@@ -366,9 +359,7 @@ Components.register('mesh', MeshComponent, {
 	\paragraph{Light.}
 	The light component is a wrapper around the Three.js \textbf{AmbientLight}, \textbf{SpotLight}, \textbf{DirectionalLight} and \textbf{PointLight} classes. It dynamically creates one of those classes depending on the `type' property on the light. Making the light component work when removing or changing type was a huge problem that was encountered. This was because of the way Three.js works internally; any light that is created stays in the scene forever even if removed, and any new light that is created won't cast shadows on existing objects.
 
-	This was remedied by following the author's guidelines on updating Three.js objects real time. Any light that is removed from the scene is first set to stop casting shadows and the intensity of the light is set to 0. Any newly created light triggers the scene to search for all material objects and set `needsUpdate = true' on them.
-
-	% todo ref https://github.com/mrdoob/three.js/wiki/Updates
+	This was remedied by following the author's guidelines on updating Three.js objects real time.\cite{threejsupdates} Any light that is removed from the scene is first set to stop casting shadows and the intensity of the light is set to 0. Any newly created light triggers the scene to search for all material objects and set `needsUpdate = true' on them.
 
 	\paragraph{Physics.}
 	The physics component is an interface for the Ammo.js rigid body object, btRigidBody. This represents a collision object in the world, which can collide with any other collision objects that have been added to the scene. Methods that act upon the rigid body object are exposed as methods on the component, such as changing the mass of the object or applying forces to it with \textbf{setMass} and \textbf{applyCentralForce} respectively.
@@ -494,8 +485,6 @@ Many external APIs and libraries were used in building this project, including s
 		\item GitHub API
 	\end{itemize}
 \end{itemize}
-
-% todo ref these
 
 \section{List of Classes}
 The following is a list of all Python, JavaScript, CSS and HTML template files that were created in the process of developing the project:

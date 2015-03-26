@@ -21,11 +21,9 @@ This chapter will go into detail about the testing and evaluation performed duri
 
 \section{Evaluation}
 	\subsection{Usability}
-	The usability of the developed system was evaluated using the IxD checklist, a tool that is used to quickly evaluate websites for usability issues. The system was evaluated using all categories of the IxD checklist, including the interface, typography, iconography, interaction and navigation categories. Each category selected adds several check boxes to the checklist, in different usability areas.
+	The usability of the developed system was evaluated using the IxD checklist, a tool that is used to quickly evaluate websites for usability issues. The system was evaluated using all categories of the IxD checklist, including the interface, typography, iconography, interaction and navigation categories.\cite{ixdchecklist} Each category selected adds several check boxes to the checklist, in different usability areas.
 
-	The checklist was completed by evaluating the system vs each checklist item, with the items being usability guidelines such as `The controls map to the result in a simple and logical way' and `Current state of the system is easily understood by the user'. If the guideline is passed, then the checkbox for that item is ticked.
-
-	% todo ref ixd & quotes
+	The checklist was completed by evaluating the system vs each checklist item, with the items being usability guidelines such as `The controls map to the result in a simple and logical way' and `Current state of the system is easily understood by the user'.\cite{ixdchecklist} If the guideline is passed, then the checkbox for that item is ticked.
 
 	Out of the 28 items on the list, 7 items were not ticked. The sections with the most unpassed items were in the simplicity, tolerance and accessibility areas of the checklist. This indicates that the while the user may understand the interfaces, and can use the system, it's not as easy as it could be. Adding a page providing `help and support', and controls for undoing actions would help improve the usability of the system greatly.
 
@@ -36,16 +34,12 @@ This chapter will go into detail about the testing and evaluation performed duri
 	The memory usage of the editor was rather significant, hitting about 140 megabytes of memory on average, compared to the homepage of the website which only uses 20 megabytes. However, the memory usage of a commercial website such as Facebook, which averages around 200 megabytes of memory, shows that the editor is still quite efficient at memory management. The memory usage of a sample game uses only around 115 megabytes of memory.
 
 	\paragraph{Page loading speed}
-	The loading speed of several pages were tested, with the slowest page being the editor; as it can loads over 34 files. It takes about 800 milliseconds for the editor content to load fully (without caching). Using the PageSpeed test on the Google Developers website, the website was tested to determine if this could be improved. The result of the PageSpeed test (Figure \ref{fig:pagespeed}) showed that the page size could be reduced significantly (by 78\%) by adding `compression' to the server. A Flask plugin called Flask-Compress was found that can implement this rather easily. Adding it to the web application improved the loading speed of the editor down to only 500 milliseconds total, compared to Facebook which can take up to 5 seconds to load fully.
-
-	% todo ref:
-	% https://developers.google.com/speed/pagespeed/insights
-	% https://flask-compress.readthedocs.org/en/latest/
+	The loading speed of several pages were tested, with the slowest page being the editor; as it can loads over 34 files. It takes about 800 milliseconds for the editor content to load fully (without caching). Using the PageSpeed test on the Google Developers website, the website was tested to determine if this could be improved.\cite{pagespeed} The result of the PageSpeed test (Figure \ref{fig:pagespeed}) showed that the page size could be reduced significantly (by 78\%) by adding `compression' to the server. A Flask plugin called Flask-Compress was found that can implement this rather easily.\cite{flaskcompress} Adding it to the web application improved the loading speed of the editor down to only 500 milliseconds total, compared to Facebook which can take up to 5 seconds to load fully.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=0.5]{compression}
-	\caption{Google Developers PageSpeed test result}
+	\caption{Google Developers PageSpeed result}
 	\label{fig:pagespeed}
 \end{figure}
 
@@ -73,5 +67,8 @@ This chapter will go into detail about the testing and evaluation performed duri
 	After that, the most common feedback was that it was difficult to set specific values on on the sliders for position, scale and rotation. Adding in an input box with the specific value beside each slider would assist with this, allowing users to input the value they want. This is a feature that would be very useful in the editor interface, and is planned for future developments.
 
 \section{Demonstration}
-% Identify what features can be demonstrated and show screenshots or reference a video online to show the project demonstration
-% TODO!
+A demonstration video was recorded, showing the creation of a game using Stratus from start to finish. A pool game was made which showcases the physics capability of the engine, however it lacks pockets to pot the balls in. The majority of the video is spent scripting a custom component which is used to aim the cue stick and apply force to the cueball entity when the user clicks.
+
+The demonstration video (at 4x speed) can be viewed here:
+
+\url{https://youtu.be/iPEaLqCfWZU}

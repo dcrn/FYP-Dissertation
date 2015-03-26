@@ -1,6 +1,4 @@
 \chapter{Project Plan}
-% todo words
-
 \section{Analysis}
 The project plan was created in Trello as a series of lists representing each week. These weeks then contained several tasks that were to be completed, following the Scrum methodology laid out in section \ref{sec:methodology}. The original development plan can be seen in Appendix \ref{appendix:plan}, which lists the sprints for each week of semester 2 up until when the report was to be started. As for semester 1, the tasks consisted purely of research and the construction of concept applications.
 
@@ -12,3 +10,22 @@ While the original project plan was a good reference, the development of the pro
 The delay from the storage server pushed all of the other tasks laid out back by about 10 days, meaning the user testing happened in week 9 rather than week 7. There was also a change in the way the project was to be deployed to AWS, which was going be done throughout development. Instead, the deployment was left until development was complete which continued with the AWS service structure in mind. The research into the AWS services for selecting technologies aided in keeping the project compatible with Elastic Beanstalk, which only accepts certain versions of Python.
 
 Due to time constraints, several features were dropped from the project, including the Web Audio API integration, and the visual merging tool on the web application. If this project was repeated, more time would have been allocated towards development during semester 1.
+
+\section{Future Work}
+\label{section:futurework}
+Several features are planned for future development on this project, which are detailed below:
+
+\paragraph{Merge Conflict GUI.}
+The creation of a merge conflict UI, discussed in section \ref{subsection:webserverdev}, would benefit users who plan to collaborate on game development projects on the system.
+
+\paragraph{More Pre-Defined Components.}
+Developing several more pre-defined components would ease development for users with little experience in programming. Some examples would be other types of controllers, audio emitters using the Web Audio API, or particle emitters.
+
+\paragraph{Multiple Selection.}
+The ability to select multiple entities in the editor, and change properties on all of them at once would be a very useful change. This was evident while testing the editor with scenes with a large amount of objects.
+
+\paragraph{Textures and Model Loading.}
+Loading of textures and custom models into the game engine would allow the user to create scenes with a much larger amount of detail, which would raise the quality of the games created significantly.
+
+\paragraph{Game Engine Documentation.}
+A full scripting API and documentation containing examples will provide users with a reference when scripting new components in the engine. This is absolutely necessary for users to be able to learn how to add custom features to their game. In addition, when creating a new component script, a blank \emph{default} component should be present in the editor which the user can then edit to more easily create their custom component.
