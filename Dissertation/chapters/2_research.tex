@@ -107,7 +107,7 @@ Django is a web application framework built on Python, which uses an MVC-like ap
 While Django makes complex web application development simple, it is bloated with features that may not be used at all in a lot of projects. For the purpose of creating this project, Object-Relational Modelling and automatic administration page generation may be entirely unused. 
 
 \paragraph{Flask.}
-Flask is lightweight Python-based web application microframework that comes only with a server and a templating engine. Flask is designed to be relatively simple at it's core, but becomes powerful through the use of modules that add extra functionality if needed.\cite{flask} The simplistic nature of Flask means it can be up and running relatively quick compared to other frameworks.
+Flask is lightweight Python-based web application microframework that comes only with a server and a templating engine. Flask is designed to be relatively simple at its core, but becomes powerful through the use of modules that add extra functionality if needed.\cite{flask} The simplistic nature of Flask means it can be up and running relatively quick compared to other frameworks.
 
 \subsection{Project Storage}
 \paragraph{Criteria.}
@@ -132,7 +132,7 @@ Implementing load balancing while using a mounted storage such as this may be pr
 \paragraph{Amazon Simple Storage Service.}
 Amazon Simple Storage Service (S3) is a storage system that is accessible through a REST-like API, which can be used with the AWS SDK which is available for several languages.\cite{awss3} S3 stores data as objects inside a container called a \emph{bucket}, where buckets can store any number of files up to 5GB each.
 
-S3 is a powerful and cost-effective storage medium, especially suited to content delivery. It's backup and version control systems make it fairly suitable for this project.\cite{awss3} It may be hard to implement other systems like Git for user project storage and collaboration on S3 since buckets are only accessible via an API.
+S3 is a powerful and cost-effective storage medium, especially suited to content delivery. Its backup and version control systems make it fairly suitable for this project.\cite{awss3} It may be hard to implement other systems like Git for user project storage and collaboration on S3 since buckets are only accessible via an API.
 
 \paragraph{MongoDB GridFS.}
 MongoDB GridFS is a high performance file system based on the MongoDB document database. It is designed to be used when documents that are larger than 16MB are to be stored in a MongoDB database, but can be used for small documents for consistency without any significant performance loss.\cite{gridfs}
@@ -147,9 +147,9 @@ Alternative browser-based scripting languages could be used to add typing and Ob
 TypeScript is another alternative to JavaScript that was created by Microsoft to replace JavaScript. It provides a strong level of OOP functionality, scalability for large projects and optional type declarations on top of standard JavaScript syntax.\cite{typescript} In order to use existing JavaScript libraries with TypeScript, a header file is required to make the functions visible to TypeScript. TypeScript is transcompiled directly to JavaScript, and because of this it will often perform just as well as JavaScript does and doesn't require a virtual machine.
 
 \paragraph{Dart.}
-Dart is a compiled JavaScript alternative created by Google, with it's own virtual machine that supports OOP principals and static typing. Dart can also be transcompiled to JavaScript which allows dynamic loading of either the Dart file or the JavaScript file depending on what is supported by the browser.\cite{dart} Dart supports interaction with standard JavaScript libraries such as jQuery without needing to be modified in any way.
+Dart is a compiled JavaScript alternative created by Google, with its own virtual machine that supports OOP principals and static typing. Dart can also be transcompiled to JavaScript which allows dynamic loading of either the Dart file or the JavaScript file depending on what is supported by the browser.\cite{dart} Dart supports interaction with standard JavaScript libraries such as jQuery without needing to be modified in any way.
 
-Dart runs in it's own Dart VM which boasts huge performance gains over JavaScript virtual machines, however the Dart VM is currently only supported on the \emph{Dartium} browser; a branch of Google Chrome. When using other browsers such as Firefox or the standard version of Chrome, Dart code transcompiled to JavaScript will often perform worse compared to standard JavaScript.\cite{dartperformance}
+Dart runs in its own Dart VM which boasts huge performance gains over JavaScript virtual machines, however the Dart VM is currently only supported on the \emph{Dartium} browser; a branch of Google Chrome. When using other browsers such as Firefox or the standard version of Chrome, Dart code transcompiled to JavaScript will often perform worse compared to standard JavaScript.\cite{dartperformance}
 
 \subsection{JavaScript Libraries}
 
@@ -181,7 +181,7 @@ I have used WebGL in the past to create a simple rendering application. My exper
 	\label{fig:webgl}
 \end{figure}
 
-This experience using WebGL was the origin of my idea to simplify the method for developing games using WebGL. WebGL has great potential as the foundation for a powerful game engine, with it's strengths becoming evident while using OpenGL's shader language GLSL. Though it is powerful, the workload associated with using WebGL for even a small application was excessive.
+This experience using WebGL was the origin of my idea to simplify the method for developing games using WebGL. WebGL has great potential as the foundation for a powerful game engine, with its strengths becoming evident while using OpenGL's shader language GLSL. Though it is powerful, the workload associated with using WebGL for even a small application was excessive.
 
 \paragraph{GitHub API Concept Application.}
 A concept application was created to explore the plausibility of using the GitHub API for project storage, version control and collaboration. The application was developed using Flask, JavaScript and the Python 3 libraries urllib and json. The interface of the application can be seen in Figure \ref{fig:proto1}.

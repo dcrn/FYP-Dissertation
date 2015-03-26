@@ -17,7 +17,7 @@ The majority of the system follows the MVC (Model-View-Controller) software arch
 \section{Development Environment}
 The environment used throughout development of the project consisted of the Sublime Text 3 editor running on the Fedora 19 operating system. For each individual Flask project (The web server and storage server) a virtual environment was set up using \textbf{virtualenv}. Use of virtualenv allowed Python 3.4.2 (separate to the version on Fedora 19) and the required Python libraries to be installed individually for each project.
 
-For both projects, Flask and it's dependencies (itsdangerous, Jinja2, MarkupSafe and Werkzeug) were installed using \textbf{pip} in the virtualenv, along with the libraries specific to each project as seen below:
+For both projects, Flask and its dependencies (itsdangerous, Jinja2, MarkupSafe and Werkzeug) were installed using \textbf{pip} in the virtualenv, along with the libraries specific to each project as seen below:
 
 \begin{itemize}
 	\item Web server:
@@ -42,7 +42,7 @@ The Git version control system was used to manage the project in this environmen
 	The web server is the core part of the system, where all user requests are handled. Everything the user does on the system goes through the web server, so it must be able to handle a lot of users. For this reason the lightweight `microframework' \emph{Flask} was chosen as the base of the server.
 
 	\subsubsection{Architectural Pattern.}
-	The Flask application created for the web server uses a software architectural pattern \emph{similar} to the MVC pattern. Flask lends itself well to the MVC pattern; as each page has it's own URL route (\textbf{Controller}) and template (\textbf{View}), with the route generally populating the template with data (\textbf{Model}). This can be seen visualised in Figure \ref{fig:flaskprocess} which demonstrates how a request is handled by Flask. A client sends a request to the route, the route then retrieves any requested data (Such as a list of published games), then it renders the template for that route with the data. The generated HTML from the template is sent back as the HTTP response.
+	The Flask application created for the web server uses a software architectural pattern \emph{similar} to the MVC pattern. Flask lends itself well to the MVC pattern; as each page has its own URL route (\textbf{Controller}) and template (\textbf{View}), with the route generally populating the template with data (\textbf{Model}). This can be seen visualised in Figure \ref{fig:flaskprocess} which demonstrates how a request is handled by Flask. A client sends a request to the route, the route then retrieves any requested data (Such as a list of published games), then it renders the template for that route with the data. The generated HTML from the template is sent back as the HTTP response.
 
 	\begin{figure}[h]
 		\centering
@@ -55,10 +55,10 @@ The Git version control system was used to manage the project in this environmen
 	A \emph{GitHub} class was created to simplify communication with the GitHub API, by defining methods that would initiate the HTTP connection to GitHub and perform the desired API action, rather than having to set up a connection each time it was needed. Methods were created to handle OAuth operations like obtaining an access token and retrieving user information, as well as getting a list of the user's repositories or creating a new repository on GitHub.
 
 	\subsubsection{Storage API Class}
-	The \emph{Storage} class was also created to handle connections to the storage server through it's REST API. A method was created for nearly every route and request type on the storage server, which provided a very simple method of interacting with it from the web application. More information about the routes of the storage server are in section \ref{subsection:devstorageserver}.
+	The \emph{Storage} class was also created to handle connections to the storage server through its REST API. A method was created for nearly every route and request type on the storage server, which provided a very simple method of interacting with it from the web application. More information about the routes of the storage server are in section \ref{subsection:devstorageserver}.
 
 	\subsubsection{Configuration}
-	The web application loads it's configuration from the config.cfg file in the same directory. The configuration holds the required keys for the GitHub API such as the client ID, client secret and scopes, as well as the storage server's address and port, the MongoDB server address, and the expiry time for the access tokens. These configuration details are loaded in using Flask's built-in config loading methods, and allow the application to be easily reconfigured without having to change any internal code. This was especially useful for deployment, as the address of the storage server and MongoDB server are different once deployed to AWS.
+	The web application loads its configuration from the config.cfg file in the same directory. The configuration holds the required keys for the GitHub API such as the client ID, client secret and scopes, as well as the storage server's address and port, the MongoDB server address, and the expiry time for the access tokens. These configuration details are loaded in using Flask's built-in config loading methods, and allow the application to be easily reconfigured without having to change any internal code. This was especially useful for deployment, as the address of the storage server and MongoDB server are different once deployed to AWS.
 
 	\subsubsection{Templates.}
 	HTML templates are used to render the pages the server sends to the client. These are created using the Jinja2 templating language which is similar to embedding Python in HTML. Jinja2 has the feature of allowing templates to \emph{extend} or \emph{include} other templates, this means that they can be built upon each other so very little HTML is repeated throughout the files. The Bootstrap library is used heavily here as well, which makes it easy to build visually pleasing templates.
@@ -191,7 +191,7 @@ The Git version control system was used to manage the project in this environmen
 	Currently there is no implemented method to resolve merge conflicts on Stratus, however this is one of the first features that will be added if the project is continued, as it will greatly help with the collaboration of team members working on a game together through Git.
 
 	\paragraph{clone/<repo>.}
-	The clone route performs an action similar to the \textbf{git clone} command. It \emph{clones} the specified remote repository from GitHub, along with all of it's contents, and stores them on the storage server. This is actually done as a two step process, where the local repository is initialised with the same details as the remote repository, then it is \emph{pulled} to retrieve all of the contents from the remote. A list of repositories on GitHub is retrieved using the GitHub API and displayed on the dashboard, which allows the user to select from a list rather than having to input the repository name.
+	The clone route performs an action similar to the \textbf{git clone} command. It \emph{clones} the specified remote repository from GitHub, along with all of its contents, and stores them on the storage server. This is actually done as a two step process, where the local repository is initialised with the same details as the remote repository, then it is \emph{pulled} to retrieve all of the contents from the remote. A list of repositories on GitHub is retrieved using the GitHub API and displayed on the dashboard, which allows the user to select from a list rather than having to input the repository name.
 	
 	\subsubsection{/editor/<repo>}
 	The editor route is where users will be able to modify their games. Users may click on the `edit' button for one of their games in the dashboard, which will bring them to the editor for their selected game. In a similar method to the \textbf{/game/<user>/<repo>} route, all of the game files are retrieved from the storage server and then inserted into the `editor.html' template, along with the list of files in the repository. The template itself loads all of the necessary files for the editor, such as the numerous `view' script files, and the templates for those views. This is discussed further in section \ref{subsection:gameeditor}.
@@ -315,7 +315,7 @@ https://username:accesstoken@github.com/username/repository.git\end{lstlisting}
 	\subsubsection{Entity}
 	The Entity class is the base for creating a complex object in the world. It starts as an empty `components' container that can be populated with various components to give it functionality such as a shape and a physics collision box. 
 
-	The entity class allows components to be added or removed using the \textbf{add} and \textbf{remove} methods, which trigger an event on the child components, \textbf{onComponentAdded} and \textbf{onComponentRemoved}. These events are used to tell the component about it's siblings in case they have any interactions. When the scene containing the entity is \textbf{updated}, the entity object will then update all of it's children components.
+	The entity class allows components to be added or removed using the \textbf{add} and \textbf{remove} methods, which trigger an event on the child components, \textbf{onComponentAdded} and \textbf{onComponentRemoved}. These events are used to tell the component about its siblings in case they have any interactions. When the scene containing the entity is \textbf{updated}, the entity object will then update all of its children components.
 
 	\subsubsection{Component}
 	Components are what add functionality to the game, including the ability to render shapes and add collision to those shapes. Each component is created by defining a new class that can then be registered as a component using the global \textbf{Components} object. The simplest form of this would be:
@@ -347,7 +347,7 @@ Components.register('mesh', MeshComponent, {
 	There are several predefined components supplied with the game engine that make it easier for users creating games. Without these components, making a game would be like creating the entire game engine from scratch. Each component is discussed in detail below:
 
 	\paragraph{Transform.}
-	The transform component handles the positioning, rotation and scale of any entity that it's attached to. It does this by storing a Three.js `Object3D' object, which contains it's own position vector, rotation quaternion and scale vector. Methods for setting and getting these properties are exposed, such as getPosition and setPosition. 
+	The transform component handles the positioning, rotation and scale of any entity that it's attached to. It does this by storing a Three.js `Object3D' object, which contains its own position vector, rotation quaternion and scale vector. Methods for setting and getting these properties are exposed, such as getPosition and setPosition. 
 
 	The transform component also has the ability to `subscribe' to another component. This is a very useful ability, as it changes all getter and setter methods to operate on the desired component instead of the local values the transform holds. This is currently used for any entities with a `physics' component; since the position and angle should be based on that instead of staying fixed.
 
