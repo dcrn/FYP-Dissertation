@@ -65,7 +65,7 @@ Git will be used throughout the development process to provide version control a
 		\label{fig:dashboardprototype}
 	\end{figure}
 
-	Figure \ref{fig:dashboardprototype} shows the design of the dashboard; where logged in users can manage their games on the system. The dashboard allows logged in users to add a new game project, delete an existing one, launch into the editor for a project, or playtest their game. There are also actions available to clone a repository from GitHub, make commits, and push \& pull an existing project to and from GitHub.
+	Figure \ref{fig:dashboardprototype} shows the design of the dashboard; where logged in users can manage their games on the system. The dashboard allows logged in users to add a new game project, delete an existing one, launch into the editor for a project, or play test their game. There are also actions available to clone a repository from GitHub, make commits, and push \& pull an existing project to and from GitHub.
 
 	\paragraph{Evaluation}
 	These prototypes were evaluated using the IxD (Interaction Design) checklist; which is a checklist of usability, feedback, and accessibility functionality for analysing the usability of a system based on Neilsen's Heuristics. The `Interface' section of the checklist was selected, as the prototypes were only medium fidelity. By going through the checklist it was determined that the prototypes were suitable for use in the web application as they met 100\% of the criteria on the checklist.
@@ -94,7 +94,7 @@ Git will be used throughout the development process to provide version control a
 	In the explorer, a tree of the current game is displayed, where scenes contain a list of entities, and entities contain a list of components. Actions can be performed on these scenes, entities and components such as adding, deleting or copying.
 
 	\paragraph{Scene View.}
-	The scene view is the centerpiece of the editor, which displays a visualisation of the currently selected scene along with all entities inside of it. The scene view updates realtime with any changes that are made in the editor, providing feedback to the user when they add, delete or change properties on an entity.
+	The scene view is the centrepiece of the editor, which displays a visualisation of the currently selected scene along with all entities inside of it. The scene view updates real time with any changes that are made in the editor, providing feedback to the user when they add, delete or change properties on an entity.
 
 	\paragraph{Properties.}
 	The properties list shows a list of the components and their respective properties for the selected entity in the explorer. Here the user will be able to change the properties of components on entities; such as colours, position, scale, and rotation. When property changes are made, the scene will update accordingly.
@@ -108,7 +108,7 @@ Git will be used throughout the development process to provide version control a
 There are several key components in this system that have been carefully designed to work together, with each component having it's own design. This section will look at the structure of these components and how they have been designed to work together.
 
 	\subsection{Overview}
-	The components of this system are the web server, storage server, MongoDB database, website, game engine and game editor. Figure \ref{fig:overalldesign} visualises these components and shows how they interact with eachother, and what the user accesses.
+	The components of this system are the web server, storage server, MongoDB database, website, game engine and game editor. Figure \ref{fig:overalldesign} visualises these components and shows how they interact with each other, and what the user accesses.
 
 	\begin{figure}[h]
 		\centering
@@ -182,10 +182,10 @@ There are several key components in this system that have been carefully designe
 	\end{figure}
 
 	\subsection{Web Server}
-	The web server is a key part of the system, as it ties all other components together and is the main access point for the user. The web server runs on Flask, and is designed to be deployed on Amazon Elastic Beanstalk, which provides quick deployment and automatic load balancing through Amazon Elastic Load Balancer. This part of the system handles rendering and sending the HTML pages to the user, login using GitHub, and communicating with the storage server.
+	The web server is a key part of the system, as it ties all other components together and is the main access point for the user. The web server runs on Flask, and is designed to be deployed on Amazon Elastic Beanstalk, which provides quick deployment and automatic load balancing through Amazon Elastic Load Balancer. This part of the system handles rendering and sending the HTML pages to the user, log in using GitHub, and communicating with the storage server.
 
 	\paragraph{GitHub API.}
-	The GitHub API is accessed through the web server for the purpose of authentication. Users will log into the website by clicking the \emph{login} button on the website, which redirects them to the authorisation page for the application on GitHub. GitHub will then redirect back to the website with a login token allowing the user details to be retrieved. By providing authentication through GitHub, no user details need to be stored, as they can be retrieved through GitHub on demand. Once a user has logged in, an \emph{access token} is provided to perform any GitHub API operations needed, such as creating a new repository.
+	The GitHub API is accessed through the web server for the purpose of authentication. Users will log into the website by clicking the \emph{log in} button on the website, which redirects them to the authorisation page for the application on GitHub. GitHub will then redirect back to the website with a log in token allowing the user details to be retrieved. By providing authentication through GitHub, no user details need to be stored, as they can be retrieved through GitHub on demand. Once a user has logged in, an \emph{access token} is provided to perform any GitHub API operations needed, such as creating a new repository.
 
 	\paragraph{MongoDB.}
 	The web server connects to the MongoDB server running on the storage EC2 instance using the PyMongo library. This is used primarily to store details about published games, using the structure detailed in section \ref{subsection:storageserverdesign}.
@@ -218,7 +218,7 @@ There are several key components in this system that have been carefully designe
 	\end{figure}
 
 	\paragraph{File structure.}
-	The file structure of a game created in the game engine is consistent for each game. A gamedata.json file is used to represent the Scene-Entity-Component structure in the JSON serialized format, with properties for the game engine, each entity and their components being stored. Custom components created in the editor are stored in the `components' folder.
+	The file structure of a game created in the game engine is consistent for each game. A gamedata.json file is used to represent the Scene-Entity-Component structure in the JSON serialised format, with properties for the game engine, each entity and their components being stored. Custom components created in the editor are stored in the `components' folder.
 
 	\subsection{Game Editor}
 	The game editor is where users will be able to modify their game projects. The game's data, which is structured as a JSON object will be modified here and saved automatically whenever changes are made to the game. The user can create new components here, by creating a script and editing it with the built-in text editor.

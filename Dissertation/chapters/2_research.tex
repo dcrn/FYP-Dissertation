@@ -3,17 +3,11 @@
 
 This chapter documents the research that was completed prior to the development of the application. Research was undertaken to determine the scope of the project, the technologies to be used, and the desired outcome. The outcome of the research was used to examine the possible challenges of this project, including any problems that may be encountered by choosing one technology over the other.
 
-% This section outlines some reading you have done in this field, organised by ideas, research trends.
-% Have you found similar software that inspires your system?
-% Objective of this chapter is to tell the reader that this is an important and interesting problem, other people have done work on it before, and this is inspiring your development.
-
 \section{Background Research}
-% Research related to identifying the problem this project solves, research into solution definition
-
 Web-based applications are becoming increasingly popular as the web develops; they are often favoured over traditional desktop applications when it comes to activities such as writing documents (Google Drive, Office Live) or backing up files.\cite{6068340} Desktop applications will often require downloading large installation files, dependencies (Java, .NET), and can often be limited to a single platform. Web apps are now becoming the norm, as they are far more flexible, can be updated or distributed instantly and are almost entirely cross platform.\cite{5936687}
 
 According to Taivalsaari and Mikkonen, ``Towards the end of this decade, the Web will become the dominant platform for the majority of 
-end user software''.\cite{6068340} It's only a matter of time until game engine suites such as Unity\cite{unity}, CryEngine\cite{cryengine} and Unreal Engine\cite{unreal} adapt to the web. Creating a web application in this area now will make it easier for new game developers to get started on building games without having to download software. This also eases game publishing significantly by allowing users to publish their games instantly to the cloud with a single click.
+end user software''.\cite{6068340} It's only a matter of time until game engine suites such as Unity\cite{unity}, CryEngine\cite{cryengine} and Unreal Engine\cite{unreal} adapt to the web. Creating a web application in this area now will make it easier for new game developers to get started on building games without having to download software. This can also ease game publishing significantly by allowing users to publish their games instantly to the cloud with a single click.
 
 WebGL is an open-source API for rendering 2D and 3D graphics in the browser, which is based on OpenGL ES; a commonly used graphics processing API that powers 3D graphics on the iPhone, iPad and Android devices.\cite{parisi2012webgl} WebGL is quickly becoming ``the new standard for 3D graphics on the Web''\cite[p2]{parisi2012webgl} as it is the most powerful and flexible way to render graphics in-browser without any extra dependencies or plugins required. The JavaScript programming language is used to access the WebGL API, which can be rather complicated to program with; ``To do anything more than the most basic tasks using [WebGL] out of the box requires serious effort and literally hundreds of lines of code.''\cite[p44]{parisi2014programming}
 
@@ -46,7 +40,7 @@ The PlayCanvas game editor features impressive real-time collaboration with mult
 
 \subsection{CopperLicht}
 \begin{quote}
-CopperLicht is an open source WebGL library and JavaScript 3D engine for creating games and 3D applications in the webbrowser. It uses the WebGL canvas supported by modern browsers and is able to render hardware accelerated 3d graphics without any plugins.\cite{copperlicht}
+CopperLicht is an open source WebGL library and JavaScript 3D engine for creating games and 3D applications in the web browser. It uses the WebGL canvas supported by modern browsers and is able to render hardware accelerated 3d graphics without any plugins.\cite{copperlicht}
 \end{quote}
 
 The CopperLicht game engine uses an OOP style approach to the architecture of a game, with entities being defined via scripting rather than by selecting a group of components as Unity does. The CopperLicht engine will handle rendering, physics and animations, any extra functionality must be added manually by the user with a script.\cite{copperlichtfeatures}
@@ -90,11 +84,6 @@ Amazon Elastic Compute Cloud (EC2), part of the Amazon Web Services (AWS) collec
 
 EC2 provides the flexibility, scalability and power needed for this project by automatically scaling up and down EC2 instances as needed.\cite{awsec2} Load balancing can be achieved using the Elastic Load Balancing service provided by Amazon.\cite{elasticloadbalancing} The only downside to using EC2 is that each EC2 instance will require setting up and deploying which could increase the workload significantly.
 
-\paragraph{Amazon EC2 Container Service.}
-Amazon EC2 Container Service (ECS) brings EC2 one step further by making deployment as simple as possible. Docker.io \emph{dockerfiles} are used to automatically create EC2 instances based on a specification created in a simple text file.\cite{awsecs} These instances can then be populated with apps and data specified in the dockerfile.\cite{dockerfile}
-
-Using ECS would significantly speed up the time required to set up the necessary EC2 instances, especially if multiple instances are required; such as a load balancer, application and a database. ECS is currently in a preview state which must be applied for, so it may be unusable for this project unless the state of this changes.
-
 \paragraph{Heroku.}
 Heroku is a \emph{Platform as a Service} web application platform for deploying scalable web apps in the cloud. Heroku will automatically scale and manage applications deployed on the platform, making sure the application performs perfectly even under stress.\cite{heroku} Heroku has support for deploying applications built in many languages including Java, Node.js and Python.
 
@@ -133,7 +122,7 @@ Storing user projects via the GitHub API without any server-side storage was the
 
 All storage can be performed directly through API requests to GitHub by submitting the user's files without any storage on the server.\cite{githubapicommit} This provides both version control and the cloud-based user storage this project requires, however access to the API is depended on heavily, which may be unavailable or slow at times.
 
-There are a few problems with this approach. First is that it is very volatile; changes made by the user may be discarded if the user leaves the page without committing. Secondly, using the GitHub API does not do any merging of files, but instead overwrites files entirely, making collaboration hard for the users. This is discussed in greater detail in the Prototyping and Development area of this report (Section 6).
+There are a few problems with this approach. First is that it is very volatile; changes made by the user may be discarded if the user leaves the page without committing. Secondly, using the GitHub API does not do any merging of files, but instead overwrites files entirely, making collaboration hard for the users.
 
 \paragraph{Amazon Elastic Block Storage.}
 Amazon Elastic Block Storage (EBS) is a scalable solution to storage for use on Amazon EC2 instances. Performance on EBS is very high, as there are options for selecting between high/normal performance SSDs and standard hard drives. EBS volumes can be mounted directly to EC2 instances allowing standard file storage without any APIs.\cite{awsebs}
@@ -234,14 +223,12 @@ A comparison of the existing solutions to this problem has revealed that alterna
 
 \subsection{Technologies.}
 \paragraph{Web Application Hosting.}
-An analysis and comparison of the examined application hosting solutions has determined that Amazon's Elastic Beanstalk service would be the optimal choice for hosting the web application, with Amazon EC2 Container Service being the second choice.
+An analysis and comparison of the examined application hosting solutions has determined that Amazon's Elastic Beanstalk service would be the optimal choice for hosting the web application, with Amazon EC2 being the second choice.
 
 Elastic Beanstalk has several strengths over the other options, with the most pronounced being the automatic load balancing and interaction with EC2 instances. While other hosting solutions such as Heroku do have load balancing, they do not have the huge library of web services that can can be integrated with like AWS does.
 
-The EC2 Container Service was a close second to Elastic Beanstalk, giving the most control over how the application would be deployed, but would require setting up the Amazon Elastic Load Balancer to interact with the containers manually.
-
 \paragraph{Web Application Framework.}
-The examined frameworks for developing web applications were fairly similar in functionality, flexibility and scalability. In my opinion, the optimal application framework to use would be Flask, as it requires minimal setup and can be extended using modules as needed. The other examined frameworks; Django and Node.js were too feature-heavy and required extra setup time respectively.
+The examined frameworks for developing web applications were fairly similar in functionality, flexibility and scalability. It was determined that the optimal application framework to use would be Flask, as it requires minimal setup and can be extended using modules as needed. The other examined frameworks; Django and Node.js were too feature-heavy and required extra setup time respectively.
 
 \paragraph{Project Storage.}
 For user project storage, based on the findings the optimal project storage solution would either be Amazon S3 or Amazon Elastic Block Storage mounted on an EC2 instance.
@@ -257,15 +244,3 @@ Alternative scripting languages, Dart and TypeScript, were examined and compared
 As a result of the research into several rendering libraries based on WebGL, Three.js was determined to be the most suitable for this project, as it has the features, flexibility, stability and optimisation needed for use in game engines. The API it provides is abstracted significantly from the WebGL API to provide simple methods for doing normally complex tasks.
 
 The Bullet physics engine and Web Audio API are highly suited for use in this project as explored in the research, providing functionality that is crucial for use in game engines.
-
-
-% todo
-% other research done
-% Using Threejs
-% Ammo.js for Bullet in JS
-% Choosing a simple database for storing a list of published games
-% 	Why AWS DynamoDB wasn't used etc
-% 	
-
-% todo
-% Change from ECS to EC2, why
